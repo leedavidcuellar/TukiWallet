@@ -26,6 +26,7 @@ public class Cuenta {
     private String alias;
     private Float saldo;
     private String cvu;
+    private Boolean alta;
     
     @OneToOne
     private List<Actividad> actividad;
@@ -110,14 +111,23 @@ public class Cuenta {
         this.actividad = actividad;
     }
 
-    @Override
-    public String toString() {
-        return "Cuenta{" + "id=" + id + ", alias=" + alias + ", saldo=" + saldo + ", cvu=" + cvu + ", actividad=" + actividad + '}';
+    /**
+     * @return the alta
+     */
+    public Boolean getAlta() {
+        return alta;
     }
 
+    /**
+     * @param alta the alta to set
+     */
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
 
+    @Override
+    public String toString() {
+        return "Cuenta{" + "id=" + id + ", alias=" + alias + ", saldo=" + saldo + ", cvu=" + cvu + ", alta=" + alta + ", actividad=" + actividad + '}';
+    }
 
-
-    
-    
 }

@@ -26,6 +26,8 @@ public class CuentaComun {
     
     private String nombre;
     
+    private Boolean alta;
+    
     @OneToMany
     private List<Usuario> usuarios;
     
@@ -96,12 +98,23 @@ public class CuentaComun {
         this.actividad = actividad;
     }
 
-    @Override
-    public String toString() {
-        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
+    /**
+     * @return the alta
+     */
+    public Boolean getAlta() {
+        return alta;
     }
 
+    /**
+     * @param alta the alta to set
+     */
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
 
-    
+    @Override
+    public String toString() {
+        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
+    }
     
 }
