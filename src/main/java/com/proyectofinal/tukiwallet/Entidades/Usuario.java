@@ -58,6 +58,7 @@ public class Usuario {
         this.foto = foto;
         this.cuenta = cuenta;
         this.cuentaComun = cuentaComun;
+        this.alta = Boolean.TRUE;
     }
 
     /**
@@ -221,7 +222,7 @@ public class Usuario {
 
     
     
-    
+        
     
     
 }

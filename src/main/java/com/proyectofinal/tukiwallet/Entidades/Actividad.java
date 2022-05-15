@@ -25,6 +25,7 @@ public class Actividad {
     private Float monto;
     private String motivo;
     private Date fecha;
+    private Boolean alta;
 
     public Actividad() {
     }
@@ -91,13 +92,23 @@ public class Actividad {
         this.fecha = fecha;
     }
 
-    @Override
-    public String toString() {
-        return "Actividad{" + "id=" + id + ", monto=" + monto + ", motivo=" + motivo + ", fecha=" + fecha + '}';
+    /**
+     * @return the alta
+     */
+    public Boolean getAlta() {
+        return alta;
     }
 
+    /**
+     * @param alta the alta to set
+     */
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
+
+    @Override
+    public String toString() {
+        return "Actividad{" + "id=" + id + ", monto=" + monto + ", motivo=" + motivo + ", fecha=" + fecha + ", alta=" + alta + '}';
+    }
  
-    
-    
-    
 }

@@ -40,6 +40,7 @@ public class CuentaComun {
     public CuentaComun(String nombre, List<Usuario> usuarios) {
         this.nombre = nombre;
         this.usuarios = usuarios;
+        this.alta = Boolean.TRUE;
     }
 
     /**

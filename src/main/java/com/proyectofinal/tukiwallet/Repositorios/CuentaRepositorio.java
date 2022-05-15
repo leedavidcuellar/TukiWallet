@@ -5,10 +5,16 @@
  */
 package com.proyectofinal.tukiwallet.Repositorios;
 
+import com.proyectofinal.tukiwallet.Entidades.Cuenta;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author leedavidcuellar
  */
-public class CuentaRepositorio {
+
+@Repository
+public interface CuentaRepositorio extends JpaRepository<Cuenta, String>{
     
 }

@@ -39,6 +39,8 @@ public class Cuenta {
         this.saldo = saldo;
         this.cvu = cvu;
         this.actividad = actividad;
+        this.alta = Boolean.TRUE;
+        
     }
 
     /**
@@ -128,6 +130,5 @@ public class Cuenta {
     @Override
     public String toString() {
         return "Cuenta{" + "id=" + id + ", alias=" + alias + ", saldo=" + saldo + ", cvu=" + cvu + ", alta=" + alta + ", actividad=" + actividad + '}';
-    }
 
 }

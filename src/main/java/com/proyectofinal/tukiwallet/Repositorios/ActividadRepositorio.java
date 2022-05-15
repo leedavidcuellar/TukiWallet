@@ -5,10 +5,15 @@
  */
 package com.proyectofinal.tukiwallet.Repositorios;
 
+import com.proyectofinal.tukiwallet.Entidades.Actividad;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author leedavidcuellar
  */
-public class ActividadRepositorio {
-    
+
+@Repository
+public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
 }
