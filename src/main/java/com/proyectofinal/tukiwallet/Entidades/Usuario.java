@@ -219,6 +219,8 @@ public class Usuario {
     public String toString() {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", mail=" + mail + ", clave=" + clave + ", alta=" + alta + ", nacimiento=" + nacimiento + ", foto=" + foto + ", cuenta=" + cuenta + ", cuentaComun=" + cuentaComun + '}';
     }
+
+    
     
         
     

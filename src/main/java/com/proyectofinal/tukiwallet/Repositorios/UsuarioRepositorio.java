@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author leedavidcuellar
  */
+
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
     @Query("SELECT u FROM Usuario u WHERE u.mail = :mail")
@@ -32,5 +33,5 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
     
     @Query("SELECT u FROM Usuario u WHERE u.cuentacomun.id = :idCuentaComun")
     public Usuario buscarPorCuentaComunId(@Param("idCuentaComun") String idCuentaComun);
-    
+
 }

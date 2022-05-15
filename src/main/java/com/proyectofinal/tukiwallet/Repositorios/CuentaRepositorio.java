@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author leedavidcuellar
  */
+
 @Repository
 public interface CuentaRepositorio extends JpaRepository<Cuenta, String>{
     

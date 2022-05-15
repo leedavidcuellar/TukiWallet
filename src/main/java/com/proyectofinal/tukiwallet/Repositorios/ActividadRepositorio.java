@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author leedavidcuellar
  */
+
 @Repository
 public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
-    
 }
