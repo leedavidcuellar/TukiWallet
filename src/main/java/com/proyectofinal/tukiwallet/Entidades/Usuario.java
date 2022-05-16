@@ -31,6 +31,7 @@ public class Usuario {
     private String dni;
     private String mail;
     private String clave;
+    private Boolean alta;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date nacimiento;
@@ -57,6 +58,7 @@ public class Usuario {
         this.foto = foto;
         this.cuenta = cuenta;
         this.cuentaComun = cuentaComun;
+        this.alta = Boolean.TRUE;
     }
 
     /**
@@ -199,12 +201,28 @@ public class Usuario {
         this.cuentaComun = cuentaComun;
     }
 
+    /**
+     * @return the alta
+     */
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    /**
+     * @param alta the alta to set
+     */
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", mail=" + mail + ", clave=" + clave + ", nacimiento=" + nacimiento + ", foto=" + foto + ", cuenta=" + cuenta + ", cuentaComun=" + cuentaComun + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", mail=" + mail + ", clave=" + clave + ", alta=" + alta + ", nacimiento=" + nacimiento + ", foto=" + foto + ", cuenta=" + cuenta + ", cuentaComun=" + cuentaComun + '}';
     }
+
     
     
+        
     
     
 }
