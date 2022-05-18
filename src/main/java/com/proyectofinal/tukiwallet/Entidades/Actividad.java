@@ -21,7 +21,7 @@ public class Actividad {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-        
+    private Integer nOperacion;
     private Float monto;
     private String motivo;
     private Date fecha;
@@ -108,7 +108,21 @@ public class Actividad {
 
     @Override
     public String toString() {
-        return "Actividad{" + "id=" + id + ", monto=" + monto + ", motivo=" + motivo + ", fecha=" + fecha + ", alta=" + alta + '}';
+        return "Actividad{" + "id=" + getId() + ", monto=" + getMonto() + ", motivo=" + getMotivo() + ", fecha=" + getFecha() + ", alta=" + alta + '}';
+    }
+
+    /**
+     * @return the nOperacion
+     */
+    public Integer getnOperacion() {
+        return nOperacion;
+    }
+
+    /**
+     * @param nOperacion the nOperacion to set
+     */
+    public void setnOperacion(Integer nOperacion) {
+        this.nOperacion = nOperacion;
     }
  
 }
