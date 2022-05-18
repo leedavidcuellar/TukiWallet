@@ -132,4 +132,5 @@ public class Cuenta {
         return "Cuenta{" + "id=" + id + ", alias=" + alias + ", saldo=" + saldo + ", cvu=" + cvu + ", alta=" + alta + ", actividad=" + actividad + '}';
 
 }
+
 }

@@ -7,6 +7,8 @@ package com.proyectofinal.tukiwallet.Repositorios;
 
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +18,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
+    @Query("SELECT u FROM Usuario u WHERE u.id = :id")
+    public Actividad buscarPorId(@Param("id") String id);
+    
 }
