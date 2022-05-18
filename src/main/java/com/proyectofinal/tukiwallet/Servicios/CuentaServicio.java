@@ -5,6 +5,7 @@
  */
 package com.proyectofinal.tukiwallet.Servicios;
 
+import com.proyectofinal.tukiwallet.Entidades.Actividad;
 import com.proyectofinal.tukiwallet.Entidades.Cuenta;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaRepositorio;
@@ -35,7 +36,7 @@ public class CuentaServicio {
         Cuenta cuenta = new Cuenta();
         cuenta.setAlias(alias);
         cuenta.setSaldo(0f);
-        cuenta.setCvu(dni);
+        cuenta.setCvu(crearCvu(dni));
         cuenta.setAlta(true);
         
         cuentaRepositorio.save(cuenta);
@@ -54,6 +55,7 @@ public class CuentaServicio {
         }
     }
     
+    //AGREGAR ACTIVIDAD
     @Transactional(propagation = Propagation.NESTED)
     public void depositar(Float deposito, String id) throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
@@ -66,6 +68,7 @@ public class CuentaServicio {
         }
     }
     
+    //AGREGAR ACTIVIDAD
     @Transactional(propagation = Propagation.NESTED)
     public void transferir(Float transferencia, String id) throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
@@ -82,9 +85,9 @@ public class CuentaServicio {
     public void baja(String id)throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            Cuenta editorial = respuesta.get();
-            editorial.setAlta(false);
-            cuentaRepositorio.save(editorial);
+            Cuenta cuenta = respuesta.get();
+            cuenta.setAlta(false);
+            cuentaRepositorio.save(cuenta);
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
@@ -94,9 +97,9 @@ public class CuentaServicio {
     public void alta(String id)throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            Cuenta editorial = respuesta.get();
-            editorial.setAlta(true);
-            cuentaRepositorio.save(editorial);
+            Cuenta cuenta = respuesta.get();
+            cuenta.setAlta(true);
+            cuentaRepositorio.save(cuenta);
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
@@ -148,4 +151,30 @@ public class CuentaServicio {
     public List<Cuenta> mostrarBaja(){
         return cuentaRepositorio.mostrarCuentaBaja();
     }
+    
+    public String crearCvu (String dni){
+        String cvu = dni;
+        Integer cant = dni.length();
+        cant = 20-cant;
+        Integer temp = 0;
+        for (int i = 0; i < cant; i++) {
+            temp = (int)(Math.random()*10);
+            cvu = cvu + temp.toString();
+        }
+        return cvu;
+    }
+    
+    public void agregarActividad(Actividad actividad, String id) throws ErrorServicio{
+        Optional<Cuenta> optional = cuentaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            Cuenta cuenta = optional.get();
+            List<Actividad> actividades = cuenta.getActividad();
+            actividades.add(actividad);
+            cuentaRepositorio.save(cuenta);
+        }else{
+            throw new ErrorServicio("No se encontró el id");
+        }
+    }
+    
+    
 }
