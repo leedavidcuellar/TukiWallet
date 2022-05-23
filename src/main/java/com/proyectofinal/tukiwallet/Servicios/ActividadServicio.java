@@ -6,11 +6,11 @@
 
 package com.proyectofinal.tukiwallet.Servicios;
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
+import com.proyectofinal.tukiwallet.Entidades.Cuenta;
+import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Repositorios.ActividadRepositorio;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import java.util.Date;
-import java.util.Optional;
-import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +31,15 @@ public class ActividadServicio {
         actividad.setMonto(monto);
         actividad.setMotivo(motivo);
         actividad.setFecha(new Date());
-        actividad.setAlta(Boolean.TRUE);
+        actividad.setMovimiento(Boolean.TRUE);
+        generarNumDeOperacion();
         
+    }
+            
+    public void generarNumDeOperacion(){
+       long n = 0;
+       
+       n = (long) (Math.random()* 100000);
     }
     
   /*  public void darDeBaja(String id) throws ErrorServicio{
@@ -57,8 +64,13 @@ public class ActividadServicio {
        }
    } */
 
+    public void tipoMovimiento(Cuenta cuenta, CuentaComun cuentaComun){
+        if(cuenta.getSaldo() < cuenta.getSaldo() || cuentaComun.getSaldo() < cuentaComun.getSaldo()){
+            
+        }
+    }
     public void validar(String motivo, Float monto) throws ErrorServicio{
-        if(motivo == null){
+        if(motivo == null || monto.toString().length() > 3){
             throw new ErrorServicio("Debe registrar un motivo o registro valido");
         }//preguntar si se puede hacer que tenga un maximo de caracteres. y si da, como rayos se hace
         if(monto == null){
