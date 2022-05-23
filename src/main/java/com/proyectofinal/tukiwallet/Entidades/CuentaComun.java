@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Entidades;
 
 import java.util.List;
@@ -13,10 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author leedavidcuellar
- */
+
 @Entity
 public class CuentaComun {
     @Id
@@ -28,9 +21,11 @@ public class CuentaComun {
     
     private Boolean alta;
     
+
     private Integer saldo;
     
     private String cvu;
+
 
     @OneToMany
     private List<Usuario> usuarios;
@@ -135,7 +130,12 @@ public class CuentaComun {
 
     @Override
     public String toString() {
-        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
+        return "CuentaComun{" + "id=" + getId() + ", nombre=" + getNombre() + ", alta=" + getAlta() + ", usuarios=" + getUsuarios() + ", actividad=" + getActividad() + '}';
     }
+
+    /**
+     * @return the cvu
+     */
+
     
 }
