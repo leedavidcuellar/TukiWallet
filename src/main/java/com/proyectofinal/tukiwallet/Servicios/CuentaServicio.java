@@ -36,6 +36,7 @@ public class CuentaServicio {
     @Transactional(propagation = Propagation.NESTED)
     public void registrar(String dni) throws ErrorServicio{
         String alias = dni+".TUKI";
+        comprobarAlias(alias);
         Cuenta cuenta = new Cuenta();
         cuenta.setAlias(alias);
         cuenta.setSaldo(0f);
@@ -176,10 +177,25 @@ public class CuentaServicio {
     
     @Transactional(readOnly = true)
     public void comprobarCvu (String cvu, String dni){
-        Cuenta optional = cuentaRepositorio.buscarCuentaPorAlias(cvu);
+        Cuenta optional = cuentaRepositorio.buscarCuentaPorCvu(cvu);
         if (optional==null) {
             crearCvu(dni);
         }
+    }
+    
+    @Transactional(readOnly = true)
+    public String comprobarAlias (String alias){
+        Cuenta optional = cuentaRepositorio.buscarCuentaPorAlias(alias);
+        if (optional==null) {
+            return alias;
+        }else{
+            Integer temp;
+            for (int i = 0; i < 5; i++) {
+            temp = (int)(Math.random()*10);
+            alias = temp.toString() + alias;
+            }
+            return alias;
+        }        
     }
     
     @Transactional(propagation = Propagation.NESTED)
