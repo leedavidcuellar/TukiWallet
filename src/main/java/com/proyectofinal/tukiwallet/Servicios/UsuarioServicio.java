@@ -210,7 +210,7 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("El mail del usuario no puede ser nulo");
         }
 
-        if (clave1 == null || clave1.isEmpty() || clave1.length() < 6) {
+        if (clave1 == null || clave1.trim().isEmpty() || clave1.length() < 6) {
             throw new ErrorServicio("El mail del usuario no puede ser nulo y no puede ser menor de 6 caracteres");
         }
         
