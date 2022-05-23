@@ -31,7 +31,7 @@ public class ActividadServicio {
         actividad.setMonto(monto);
         actividad.setMotivo(motivo);
         actividad.setFecha(new Date());
-        actividad.setMovimiento(Boolean.TRUE);
+        actividad.setAlta(Boolean.TRUE);
         generarNumDeOperacion();
         
     }
