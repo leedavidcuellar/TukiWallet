@@ -18,10 +18,9 @@ public class CuentaComun {
     private String id;
     
     private String nombre;
-    
     private Boolean alta;
-    
     private String cvu;
+    private String movimiento;
     
     @OneToMany
     private List<Usuario> usuarios;
@@ -125,6 +124,20 @@ public class CuentaComun {
      */
     public void setCvu(String cvu) {
         this.cvu = cvu;
+    }
+
+    /**
+     * @return the movimiento
+     */
+    public String getMovimiento() {
+        return movimiento;
+    }
+
+    /**
+     * @param movimiento the movimiento to set
+     */
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
     }
     
 }
