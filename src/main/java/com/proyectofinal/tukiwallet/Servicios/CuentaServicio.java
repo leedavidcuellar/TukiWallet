@@ -30,6 +30,9 @@ public class CuentaServicio {
     @Autowired 
     private UsuarioRepositorio usuarioRepositorio;
     
+    @Autowired
+    private ActividadServicio actividadServicio;
+    
     @Transactional(propagation = Propagation.NESTED)
     public void registrar(String dni) throws ErrorServicio{
         String alias = dni+".TUKI";
@@ -55,30 +58,35 @@ public class CuentaServicio {
         }
     }
     
-    //AGREGAR ACTIVIDAD
     @Transactional(propagation = Propagation.NESTED)
-    public void depositar(Float deposito, String id) throws ErrorServicio{
+    public void depositar(Float deposito, String id, String motivo) throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
             cuenta.setSaldo(cuenta.getSaldo()+deposito);
             cuentaRepositorio.save(cuenta);
+            actividadServicio.registrar(motivo,deposito);
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
     }
     
-    //AGREGAR ACTIVIDAD
     @Transactional(propagation = Propagation.NESTED)
-    public void transferir(Float transferencia, String id) throws ErrorServicio{
+    public void transferir(Float transferencia, String id, String motivo) throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
             cuenta.setSaldo(cuenta.getSaldo()-transferencia);
             cuentaRepositorio.save(cuenta);
+            actividadServicio.registrar(motivo,transferencia);
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
+    }
+    
+    public void transferencia(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
+        transferir(cantidad, idtransfiere, motivo);
+        depositar(cantidad, iddeposita, motivo);
     }
 
     @Transactional(propagation = Propagation.NESTED)
@@ -153,17 +161,28 @@ public class CuentaServicio {
     }
     
     public String crearCvu (String dni){
-        String cvu = dni;
+        String cvu = "00001" + dni;
         Integer cant = dni.length();
+        cant = cant + 5; //Para agregar 00001 al principio
         cant = 20-cant;
         Integer temp = 0;
         for (int i = 0; i < cant; i++) {
             temp = (int)(Math.random()*10);
             cvu = cvu + temp.toString();
         }
+        comprobarCvu(cvu, dni);
         return cvu;
     }
     
+    @Transactional(readOnly = true)
+    public void comprobarCvu (String cvu, String dni){
+        Cuenta optional = cuentaRepositorio.buscarCuentaPorAlias(cvu);
+        if (optional==null) {
+            crearCvu(dni);
+        }
+    }
+    
+    @Transactional(propagation = Propagation.NESTED)
     public void agregarActividad(Actividad actividad, String id) throws ErrorServicio{
         Optional<Cuenta> optional = cuentaRepositorio.findById(id);
         if (optional.isPresent()) {
