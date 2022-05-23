@@ -28,6 +28,10 @@ public class CuentaComun {
     
     private Boolean alta;
     
+    private Integer saldo;
+    
+    private String cvu;
+
     @OneToMany
     private List<Usuario> usuarios;
     
@@ -111,6 +115,22 @@ public class CuentaComun {
      */
     public void setAlta(Boolean alta) {
         this.alta = alta;
+    }
+
+    public Integer getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Integer saldo) {
+        this.saldo = saldo;
+    }
+
+    public String getCvu() {
+        return cvu;
+    }
+
+    public void setCvu(String cvu) {
+        this.cvu = cvu;
     }
 
     @Override
