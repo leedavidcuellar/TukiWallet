@@ -22,6 +22,7 @@ public class CuentaComun {
     private String cvuCC;
     private String movimiento;
     private Float saldo;
+    private String aliasCC;
 
     @OneToMany
     private List<Usuario> usuarios;
