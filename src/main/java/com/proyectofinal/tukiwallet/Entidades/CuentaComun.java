@@ -19,8 +19,10 @@ public class CuentaComun {
     
     private String nombre;
     private Boolean alta;
-    private String cvu;
+    private String cvuCC;
     private String movimiento;
+    private Float saldo;
+    private String aliasCC;
     
     @OneToMany
     private List<Usuario> usuarios;
@@ -66,6 +68,63 @@ public class CuentaComun {
     }
 
     /**
+     * @return the alta
+     */
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    /**
+     * @param alta the alta to set
+     */
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
+
+    /**
+     * @return the cvuCC
+     */
+    public String getCvuCC() {
+        return cvuCC;
+    }
+
+    /**
+     * @param cvuCC the cvuCC to set
+     */
+    public void setCvuCC(String cvuCC) {
+        this.cvuCC = cvuCC;
+    }
+
+    /**
+     * @return the movimiento
+     */
+    public String getMovimiento() {
+        return movimiento;
+    }
+
+    /**
+     * @param movimiento the movimiento to set
+     */
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
+    }
+
+    /**
+     * @return the saldo
+     */
+    public Float getSaldo() {
+        return saldo;
+    }
+
+    /**
+     * @param saldo the saldo to set
+     */
+    public void setSaldo(Float saldo) {
+        this.saldo = saldo;
+    }
+
+   
+    /**
      * @return the usuarios
      */
     public List<Usuario> getUsuarios() {
@@ -94,50 +153,24 @@ public class CuentaComun {
     }
 
     /**
-     * @return the alta
+     * @return the aliasCC
      */
-    public Boolean getAlta() {
-        return alta;
+    public String getAliasCC() {
+        return aliasCC;
     }
 
     /**
-     * @param alta the alta to set
+     * @param aliasCC the aliasCC to set
      */
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setAliasCC(String aliasCC) {
+        this.aliasCC = aliasCC;
     }
 
     @Override
     public String toString() {
-        return "CuentaComun{" + "id=" + getId() + ", nombre=" + getNombre() + ", alta=" + getAlta() + ", usuarios=" + getUsuarios() + ", actividad=" + getActividad() + '}';
+        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", cvuCC=" + cvuCC + ", movimiento=" + movimiento + ", saldo=" + saldo + ", aliasCC=" + aliasCC + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
     }
 
-    /**
-     * @return the cvu
-     */
-    public String getCvu() {
-        return cvu;
-    }
-
-    /**
-     * @param cvu the cvu to set
-     */
-    public void setCvu(String cvu) {
-        this.cvu = cvu;
-    }
-
-    /**
-     * @return the movimiento
-     */
-    public String getMovimiento() {
-        return movimiento;
-    }
-
-    /**
-     * @param movimiento the movimiento to set
-     */
-    public void setMovimiento(String movimiento) {
-        this.movimiento = movimiento;
-    }
-    
+  
+  
 }
