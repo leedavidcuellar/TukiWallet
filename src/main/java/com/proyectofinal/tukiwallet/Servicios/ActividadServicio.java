@@ -25,13 +25,15 @@ public class ActividadServicio {
     @Autowired
     private ActividadRepositorio actividadRepositorio;
     
-    public void registrar(String motivo, Float monto) throws ErrorServicio{
+    public void registrar(String motivo, Float monto, Boolean movimiento, String cvu, String cvu2) throws ErrorServicio{
         validar(motivo, monto);
         Actividad actividad = new Actividad();
         actividad.setMonto(monto);
         actividad.setMotivo(motivo);
         actividad.setFecha(new Date());
-        actividad.setAlta(Boolean.TRUE);
+        actividad.setMovimiento(movimiento);
+        actividad.setCvu(cvu);
+        actividad.setCvu2(cvu2);
         generarNumDeOperacion();
         
     }
@@ -65,7 +67,7 @@ public class ActividadServicio {
    } */
 
     public void tipoMovimiento(Cuenta cuenta, CuentaComun cuentaComun){
-        if(cuenta.getSaldo() < cuenta.getSaldo() || cuentaComun.getSaldo() < cuentaComun.getSaldo()){
+        if(cuenta.getSaldo() < cuenta.getSaldo()){ 
             
         }
     }
