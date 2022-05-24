@@ -60,34 +60,34 @@ public class CuentaServicio {
     }
     
     @Transactional(propagation = Propagation.NESTED)
-    public void depositar(Float deposito, String id, String motivo) throws ErrorServicio{
-        Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
+    public void depositar(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
+        Optional<Cuenta> respuesta = cuentaRepositorio.findById(iddeposita);
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
-            cuenta.setSaldo(cuenta.getSaldo()+deposito);
+            cuenta.setSaldo(cuenta.getSaldo()+cantidad);
             cuentaRepositorio.save(cuenta);
-            actividadServicio.registrar(motivo,deposito);
+            actividadServicio.registrar(motivo,cantidad,false,idtransfiere,iddeposita);
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
     }
     
     @Transactional(propagation = Propagation.NESTED)
-    public void transferir(Float transferencia, String id, String motivo) throws ErrorServicio{
-        Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
+    public void transferir(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
+        Optional<Cuenta> respuesta = cuentaRepositorio.findById(idtransfiere);
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
-            cuenta.setSaldo(cuenta.getSaldo()-transferencia);
+            cuenta.setSaldo(cuenta.getSaldo()-cantidad);
             cuentaRepositorio.save(cuenta);
-            actividadServicio.registrar(motivo,transferencia);
+            actividadServicio.registrar(motivo,cantidad,true,idtransfiere,iddeposita);
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
     }
     
     public void transferencia(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
-        transferir(cantidad, idtransfiere, motivo);
-        depositar(cantidad, iddeposita, motivo);
+        transferir(cantidad, iddeposita, idtransfiere, motivo);
+        depositar(cantidad, iddeposita, idtransfiere, motivo);
     }
 
     @Transactional(propagation = Propagation.NESTED)
