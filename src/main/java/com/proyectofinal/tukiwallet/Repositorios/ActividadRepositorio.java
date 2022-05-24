@@ -21,4 +21,7 @@ public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
     @Query("SELECT a FROM Actividad a WHERE a.id = :id")
     public Actividad buscarPorId(@Param("id") String id);
     
+    @Query("SELECT a FROM Actividad a ORDER BY a.nOperacion ASC")
+    public Actividad buscarNumOperacionMayor();
+    
 }
