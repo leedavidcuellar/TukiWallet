@@ -186,10 +186,10 @@ public class UsuarioServicio implements UserDetailsService{
         return usuarioRepositorio.buscarPorCuentaId(idCuenta);
     }
     
-    @Transactional(readOnly = true)
-    public Usuario buscarPorCuentaComunId(String idCuentaComun){
-        return usuarioRepositorio.buscarPorCuentaComunId(idCuentaComun);
-    }  
+//    @Transactional(readOnly = true)
+//    public Usuario buscarPorCuentaComunId(String idCuentaComun){
+//        return usuarioRepositorio.buscarPorCuentaComunId(idCuentaComun);
+//    }  
     
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios(){
