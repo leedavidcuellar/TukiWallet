@@ -18,8 +18,10 @@ public class Actividad {
     private Float monto;
     private String motivo;
     private Date fecha;
-    private Boolean alta;
-
+    private Boolean movimiento;
+    private String cvu;
+    private String cvu2;
+    
     public Actividad() {
     }
 
@@ -88,20 +90,20 @@ public class Actividad {
     /**
      * @return the alta
      */
-    public Boolean getAlta() {
-        return alta;
+    public Boolean getMovimiento() {
+        return movimiento;
     }
 
     /**
      * @param alta the alta to set
      */
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setMovimiento(Boolean alta) {
+        this.movimiento = alta;
     }
 
     @Override
     public String toString() {
-        return "Actividad{" + "id=" + getId() + ", monto=" + getMonto() + ", motivo=" + getMotivo() + ", fecha=" + getFecha() + ", alta=" + alta + '}';
+        return "Actividad{" + "id=" + getId() + ", monto=" + getMonto() + ", motivo=" + getMotivo() + ", fecha=" + getFecha() + ", alta=" + getMovimiento() + '}';
     }
 
     /**
@@ -116,6 +118,34 @@ public class Actividad {
      */
     public void setnOperacion(Integer nOperacion) {
         this.nOperacion = nOperacion;
+    }
+
+    /**
+     * @return the cvu
+     */
+    public String getCvu() {
+        return cvu;
+    }
+
+    /**
+     * @param cvu the cvu to set
+     */
+    public void setCvu(String cvu) {
+        this.cvu = cvu;
+    }
+
+    /**
+     * @return the cvu2
+     */
+    public String getCvu2() {
+        return cvu2;
+    }
+
+    /**
+     * @param cvu2 the cvu2 to set
+     */
+    public void setCvu2(String cvu2) {
+        this.cvu2 = cvu2;
     }
  
 }
