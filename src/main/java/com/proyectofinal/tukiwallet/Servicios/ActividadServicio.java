@@ -6,13 +6,13 @@
 
 package com.proyectofinal.tukiwallet.Servicios;
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
-import com.proyectofinal.tukiwallet.Entidades.Cuenta;
-import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Repositorios.ActividadRepositorio;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -25,6 +25,7 @@ public class ActividadServicio {
     @Autowired
     private ActividadRepositorio actividadRepositorio;
     
+    @Transactional(propagation = Propagation.NESTED)
     public void registrar(String motivo, Float monto, Boolean movimiento, String cvu, String cvu2) throws ErrorServicio{
         validar(motivo, monto);
         Actividad actividad = new Actividad();
@@ -34,47 +35,34 @@ public class ActividadServicio {
         actividad.setMovimiento(movimiento);
         actividad.setCvu(cvu);
         actividad.setCvu2(cvu2);
-        generarNumDeOperacion();
+        actividad.setnOperacion(generarNumDeOperacion());
         
+        actividadRepositorio.save(actividad);
+    
     }
-            
-    public void generarNumDeOperacion(){
-       long n = 0;
-       
-       n = (long) (Math.random()* 100000);
+    @Transactional(readOnly = true)      
+    public String generarNumDeOperacion(){
+       String n;
+       return n = actividadRepositorio.buscarNumOperacionMayor() + 1;
     }
     
-  /*  public void darDeBaja(String id) throws ErrorServicio{
-       Optional<Actividad> resp = actividadRepositorio.findById(id);
-       if(resp.isPresent()){
-           Actividad actividad = resp.get();
-           actividad.setAlta(Boolean.FALSE);
-           actividadRepositorio.save(actividad);
-       }else{
-           throw new ErrorServicio("La operacion solicitada no se encuentra registrada");
-       }
-   } 
-   
-      public void darDeAlta(String id) throws ErrorServicio{
-       Optional<Actividad> resp = actividadRepositorio.findById(id);
-       if(resp.isPresent()){
-           Actividad actividad = resp.get();
-           actividad.setAlta(Boolean.TRUE);
-           actividadRepositorio.save(actividad);
-       }else{
-           throw new ErrorServicio("La operacion solicitada no se encuentra registrada");
-       }
-   } */
 
-    public void tipoMovimiento(Cuenta cuenta, CuentaComun cuentaComun){
-        if(cuenta.getSaldo() < cuenta.getSaldo()){ 
-            
+
+   /* public String tipoMovimiento(Boolean movimiento){
+        if(movimiento.TRUE){
+            return "Transferencia realizada";
+        }else{
+            return "Dinero recibido";
         }
+            
     }
+    */
+    
+    
     public void validar(String motivo, Float monto) throws ErrorServicio{
         if(motivo == null || monto.toString().length() > 3){
             throw new ErrorServicio("Debe registrar un motivo o registro valido");
-        }//preguntar si se puede hacer que tenga un maximo de caracteres. y si da, como rayos se hace
+        }
         if(monto == null){
             throw new ErrorServicio("El monto no puede ser nulo");
         }
