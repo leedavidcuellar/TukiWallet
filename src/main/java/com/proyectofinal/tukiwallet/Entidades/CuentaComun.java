@@ -22,8 +22,7 @@ public class CuentaComun {
     private String cvuCC;
     private String movimiento;
     private Float saldo;
-    private String aliasCC;
-    
+
     @OneToMany
     private List<Usuario> usuarios;
     
@@ -33,7 +32,7 @@ public class CuentaComun {
     public CuentaComun() {
     }
 
-    public CuentaComun(String nombre, List<Usuario> usuarios) {
+public CuentaComun(String nombre, List<Usuario> usuarios) {
         this.nombre = nombre;
         this.usuarios = usuarios;
         this.alta = Boolean.TRUE;
@@ -171,6 +170,4 @@ public class CuentaComun {
         return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", cvuCC=" + cvuCC + ", movimiento=" + movimiento + ", saldo=" + saldo + ", aliasCC=" + aliasCC + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
     }
 
-  
-  
 }
