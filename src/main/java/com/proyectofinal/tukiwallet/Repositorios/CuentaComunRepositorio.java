@@ -27,12 +27,12 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     public CuentaComun mostrarPorNombre (@Param("nombre") String nombre);  
 
     
-@Query("SELECT a FROM CuentaComun a WHERE a.cvu = :cvu")
+@Query("SELECT a FROM CuentaComun a WHERE a.cvuCC = :cvu")
     public CuentaComun buscarCuentaPorCvuCC (@Param("cvu") String cvu);
     
     
-@Query("SELECT a FROM CuentaComun a WHERE a.AliasCC = :AliasCC")
-    public CuentaComun buscarCuentaPorAliasCC (@Param("alias") String alias);    
+@Query("SELECT a FROM CuentaComun a WHERE a.aliasCC = :aliasCC")
+    public CuentaComun buscarCuentaPorAliasCC (@Param("aliasCC") String alias);    
 }
 
 
