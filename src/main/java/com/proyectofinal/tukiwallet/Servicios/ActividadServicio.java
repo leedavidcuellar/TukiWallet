@@ -43,7 +43,7 @@ public class ActividadServicio {
     @Transactional(readOnly = true)      
     public String generarNumDeOperacion(){
        String n;
-       return n = actividadRepositorio.buscarNumOperacionMayor() + 1;
+       return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
     }
     
 

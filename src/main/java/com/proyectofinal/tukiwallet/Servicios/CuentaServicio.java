@@ -86,8 +86,21 @@ public class CuentaServicio {
     }
     
     public void transferencia(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
+        validarTransferencia(cantidad,idtransfiere);
         transferir(cantidad, iddeposita, idtransfiere, motivo);
         depositar(cantidad, iddeposita, idtransfiere, motivo);
+    }
+    
+    public void validarTransferencia(Float cantidad, String idtransfiere) throws ErrorServicio{
+        Optional<Cuenta> respuesta = cuentaRepositorio.findById(idtransfiere);
+        if (respuesta.isPresent()) {
+            Cuenta cuenta = respuesta.get();
+            if (cuenta.getSaldo()<cantidad) {
+                throw new ErrorServicio("No tiene esa cantidad en su cuenta");
+            }
+        }else{
+            throw new ErrorServicio("No se ha encontrado el id");
+        }
     }
 
     @Transactional(propagation = Propagation.NESTED)

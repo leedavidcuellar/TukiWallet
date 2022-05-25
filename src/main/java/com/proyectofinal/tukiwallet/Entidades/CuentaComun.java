@@ -27,7 +27,7 @@ public class CuentaComun {
     @OneToMany
     private List<Usuario> usuarios;
     
-    @OneToOne
+    @OneToMany
     private List<Actividad> actividad;
 
     public CuentaComun() {

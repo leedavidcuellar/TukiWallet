@@ -164,7 +164,6 @@ public class CuentaComunServicio {
     // agrgar un numero despues de nombre//        
            
         }  
-        
         return optional;
     }
 
