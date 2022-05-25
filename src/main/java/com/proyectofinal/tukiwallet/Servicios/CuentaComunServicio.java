@@ -16,6 +16,10 @@ public class CuentaComunServicio {
 
     @Autowired
     private CuentaComunRepositorio cuentaComunRepositorio;
+    
+    @Autowired
+    private ActividadServicio actividadServicio;
+    
 
     @Transactional(propagation = Propagation.NESTED)
     public void crearCuentaComun(String nombre, List<Usuario> usuarios) throws ErrorServicio {
@@ -54,9 +58,39 @@ public class CuentaComunServicio {
     }
 
     @Transactional
-    public void depositarDinero(String nombre, List<Usuario> usuarios) throws ErrorServicio {
-
+    public void divisionJusta(String idCuentaComun) throws ErrorServicio {
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
+        
+           for (Usuario usuario : cuentaComun.getUsuarios()) {
+            
+            }
+        
+        
+        // depositos, usuario
+        
+        
+        
+        
     }
+    
+    @Transactional(propagation = Propagation.NESTED)
+    public void transferirCC(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
+        Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(idtransfiere);
+        if (respuesta.isPresent()) {
+            CuentaComun cuentaComun = respuesta.get();
+            cuentaComun.setSaldo(cuentaComun.getSaldo()-cantidad);
+            cuentaComunRepositorio.save(cuentaComun);
+            actividadServicio.registrar(motivo,cantidad,true,idtransfiere,iddeposita);
+        }else{
+            throw new ErrorServicio("No se ha encontrado el id");
+        }
+    }
+    
+    public void transferenciaCC(Float cantidad, String idtransfiere, String iddeposita, String motivo) throws ErrorServicio{
+        transferir(cantidad, iddeposita, idtransfiere, motivo);
+        depositar(cantidad, iddeposita, idtransfiere, motivo);
+    }
+    
 
     @Transactional(propagation = Propagation.NESTED)
     public void deshabilitar(String id) throws ErrorServicio {
@@ -130,6 +164,8 @@ public class CuentaComunServicio {
     // agrgar un numero despues de nombre//        
            
         }  
+        
+        return optional;
     }
 
     
