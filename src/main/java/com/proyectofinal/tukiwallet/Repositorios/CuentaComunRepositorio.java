@@ -33,6 +33,7 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     
 @Query("SELECT a FROM CuentaComun a WHERE a.aliasCC = :aliasCC")
     public CuentaComun buscarCuentaPorAliasCC (@Param("aliasCC") String alias);    
+
 }
 
 
