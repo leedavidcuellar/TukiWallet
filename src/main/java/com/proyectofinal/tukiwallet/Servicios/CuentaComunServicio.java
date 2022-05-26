@@ -90,7 +90,7 @@ public class CuentaComunServicio {
         }
         
         String cvu1 = cuentaComun.getCvuCC();
-        if(flag=Boolean.TRUE){
+        if(flag==Boolean.TRUE){
             for (int j = 0; j < cantidadUsuarios; j++) {
                 Optional<Usuario> usuario = usuarioRepositorio.findById(aux [j][0]);
                 if (usuario.isPresent()) {
@@ -121,7 +121,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
             actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado la Cuenta Comun");
         }
     }
     
@@ -134,7 +134,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
             actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado la Cuenta Comun");
         }
     }
     
@@ -225,4 +225,13 @@ public class CuentaComunServicio {
         return optional;
     }
 
+    @Transactional(readOnly = true)
+    public CuentaComun buscarCuentaPorAlias(String alias){
+        CuentaComun autor = cuentaComunRepositorio.buscarCuentaPorAliasCC(alias);
+        if (autor!=null) {
+           return cuentaComunRepositorio.buscarCuentaPorAliasCC(alias); 
+        }else{
+            return null;
+        }      
+    }
 }

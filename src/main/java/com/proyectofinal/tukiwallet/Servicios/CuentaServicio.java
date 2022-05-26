@@ -68,7 +68,7 @@ public class CuentaServicio {
             cuentaRepositorio.save(cuenta);
             actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el Cuenta");
         }
     }
     
@@ -81,7 +81,7 @@ public class CuentaServicio {
             cuentaRepositorio.save(cuenta);
             actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el Cuenta");
         }
     }
     
