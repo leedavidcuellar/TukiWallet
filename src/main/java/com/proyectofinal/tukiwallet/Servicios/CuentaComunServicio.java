@@ -226,7 +226,7 @@ public class CuentaComunServicio {
     }
 
     @Transactional(readOnly = true)
-    public CuentaComun buscarCuentaPorAlias(String alias){
+    public CuentaComun buscarCuentaPorAliasCC(String alias){
         CuentaComun autor = cuentaComunRepositorio.buscarCuentaPorAliasCC(alias);
         if (autor!=null) {
            return cuentaComunRepositorio.buscarCuentaPorAliasCC(alias); 
