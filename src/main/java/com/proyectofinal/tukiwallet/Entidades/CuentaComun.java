@@ -29,6 +29,9 @@ public class CuentaComun {
     
     @OneToMany
     private List<Actividad> actividad;
+    
+    @OneToMany
+    private List<EfectivoCC> efectivoCC;
 
     public CuentaComun() {
     }
@@ -167,7 +170,21 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
 
     @Override
     public String toString() {
-        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", cvuCC=" + cvuCC + ", movimientoCC=" + movimientoCC + ", saldoCC=" + saldoCC + ", aliasCC=" + aliasCC + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
+        return "CuentaComun{" + "id=" + getId() + ", nombre=" + getNombre() + ", alta=" + getAlta() + ", cvuCC=" + getCvuCC() + ", movimientoCC=" + getMovimientoCC() + ", saldoCC=" + getSaldoCC() + ", aliasCC=" + getAliasCC() + ", usuarios=" + getUsuarios() + ", actividad=" + getActividad() + '}';
+    }
+
+    /**
+     * @return the efectivoCC
+     */
+    public List<EfectivoCC> getEfectivoCC() {
+        return efectivoCC;
+    }
+
+    /**
+     * @param efectivoCC the efectivoCC to set
+     */
+    public void setEfectivoCC(List<EfectivoCC> efectivoCC) {
+        this.efectivoCC = efectivoCC;
     }
 
    
