@@ -73,7 +73,11 @@ public class CuentaComunServicio {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
         for (EfectivoCC efectivo : cuentaComun.getEfectivoCC()) {
            
-    //    Optional<CuentaComun> resp = cuentaComunRepositorio.FindById(efectivo.getId()); 
+            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId()); 
+            
+            if(usuarioExtra == null){
+                cuentaComun.getUsuarios().add(usuarioExtra);
+            }
         
         }
         Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
