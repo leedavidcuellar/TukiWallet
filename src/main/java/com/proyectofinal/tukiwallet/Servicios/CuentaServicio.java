@@ -34,7 +34,7 @@ public class CuentaServicio {
     private ActividadServicio actividadServicio;
     
     @Transactional(propagation = Propagation.NESTED)
-    public void registrar(String dni) throws ErrorServicio{
+    public Cuenta registrar(String dni) throws ErrorServicio{
         String alias = dni+".TUKI";
         comprobarAlias(alias);
         Cuenta cuenta = new Cuenta();
@@ -44,19 +44,23 @@ public class CuentaServicio {
         cuenta.setAlta(true);
         
         cuentaRepositorio.save(cuenta);
+        return cuenta;
     }
     
     @Transactional(propagation = Propagation.NESTED)
-    public void modificarAlias(String alias, String id) throws ErrorServicio{
+    public Cuenta modificarAlias(String alias, String id) throws ErrorServicio{
         validarAlias(alias);
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
             cuenta.setAlias(alias);
             cuentaRepositorio.save(cuenta);
+            return cuenta;
+            
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
+        
     }
     
     //ingresa
