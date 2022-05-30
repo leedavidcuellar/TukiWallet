@@ -18,7 +18,7 @@ public class Actividad {
     private Float monto;
     private String motivo;
     private Date fecha;
-    private Boolean movimiento;//True Salida y False Egreso
+    private Boolean movimiento;//True Salida y False Ingreso
     private String cvu;
     private String cvu2;
     
