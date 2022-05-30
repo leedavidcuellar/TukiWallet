@@ -45,6 +45,9 @@ public class UsuarioServicio implements UserDetailsService{
     
     @Autowired
     private NotificacionServicio notificacionServicio;
+
+    @Autowired
+    private CuentaServicio cuentaServicio;
     
     @Autowired
     private CuentaRepositorio cuentaRepositorio;
@@ -56,13 +59,12 @@ public class UsuarioServicio implements UserDetailsService{
     private FotoServicio fotoServicio;
     
      @Transactional(propagation = Propagation.REQUIRED)
-     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String dni, String mail, String clave1, String clave2, String idCuenta, String idCuentaComun) throws ErrorServicio{
-         List<CuentaComun>listaCuentaComun = new ArrayList<CuentaComun>();
-         Cuenta cuenta = cuentaRepositorio.getById(idCuenta);
-         CuentaComun cuentaComun = cuentaComunRepositorio.getById(idCuentaComun);
+     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+         Cuenta cuenta = cuentaServicio.registrar(dni);
          
-         validar(nombre, apellido, dni, mail, clave1, clave2, cuenta, cuentaComun);
-         listaCuentaComun.add(cuentaComun);
+         
+         validar(nombre, apellido, dni, mail, clave1, clave2, cuenta);
+        
          
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
@@ -77,7 +79,7 @@ public class UsuarioServicio implements UserDetailsService{
         usuario.setFoto(foto);
         
         usuario.setCuenta(cuenta);
-        usuario.setCuentaComun(listaCuentaComun);
+      
         
         usuarioRepositorio.save(usuario);
         
@@ -91,7 +93,7 @@ public class UsuarioServicio implements UserDetailsService{
         Cuenta cuenta = cuentaRepositorio.getById(idCuenta);
         CuentaComun cuentaComun = cuentaComunRepositorio.getById(idCuentaComun);
         
-        validar(nombre, apellido, dni, mail, clave1, clave2, cuenta, cuentaComun);
+        validar(nombre, apellido, dni, mail, clave1, clave2, cuenta);
         listaCuentaComun.add(cuentaComun);
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
@@ -197,7 +199,7 @@ public class UsuarioServicio implements UserDetailsService{
     }
     
     
-    private void validar(String nombre, String apellido, String dni, String mail, String clave1, String clave2, Cuenta cuenta, CuentaComun cuentaComun) throws ErrorServicio{
+    private void validar(String nombre, String apellido, String dni, String mail, String clave1, String clave2, Cuenta cuenta) throws ErrorServicio{
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -222,9 +224,9 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("No se encontro la cuenta solicitada");
         }
         
-        if(cuentaComun == null){
-            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
-        }
+//        if(cuentaComun == null){
+//            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
+//        }
      }
     
     @Override
