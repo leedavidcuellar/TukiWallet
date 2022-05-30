@@ -6,7 +6,7 @@
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Cuenta;
-import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
+
 import com.proyectofinal.tukiwallet.Entidades.Foto;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
@@ -14,7 +14,7 @@ import com.proyectofinal.tukiwallet.Repositorios.CuentaComunRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -62,7 +62,6 @@ public class UsuarioServicio implements UserDetailsService{
      public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
          Cuenta cuenta = cuentaServicio.registrar(dni);
          
-         
          validar(nombre, apellido, dni, mail, clave1, clave2, cuenta);
         
          
@@ -88,13 +87,10 @@ public class UsuarioServicio implements UserDetailsService{
      }
      
     @Transactional(propagation = Propagation.NESTED) 
-    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, String clave1, String clave2, String idCuenta, String idCuentaComun) throws ErrorServicio{
-        List<CuentaComun>listaCuentaComun = new ArrayList<CuentaComun>();
-        Cuenta cuenta = cuentaRepositorio.getById(idCuenta);
-        CuentaComun cuentaComun = cuentaComunRepositorio.getById(idCuentaComun);
-        
-        validar(nombre, apellido, dni, mail, clave1, clave2, cuenta);
-        listaCuentaComun.add(cuentaComun);
+    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+
+        validar2(nombre, apellido, dni, mail, clave1, clave2);
+       
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
          if (respuesta.isPresent()) {
@@ -113,9 +109,7 @@ public class UsuarioServicio implements UserDetailsService{
             
             Foto foto = fotoServicio.actualizar(idFoto, archivo);
             usuario.setFoto(foto);
-            
-            usuario.setCuenta(cuenta);
-            usuario.setCuentaComun(listaCuentaComun);
+
             
             usuarioRepositorio.save(usuario);
             
@@ -224,10 +218,38 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("No se encontro la cuenta solicitada");
         }
         
+        
+        
 //        if(cuentaComun == null){
 //            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
 //        }
      }
+    
+    private void validar2(String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+        if (nombre == null || nombre.isEmpty()) {
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo");
+        }
+
+        if (apellido == null || apellido.isEmpty()) {
+            throw new ErrorServicio("El apellido del usuario no puede ser nulo");
+        }
+
+        if (mail == null || mail.isEmpty()) {
+            throw new ErrorServicio("El mail del usuario no puede ser nulo");
+        }
+
+        if (clave1 == null || clave1.trim().isEmpty() || clave1.length() < 6) {
+            throw new ErrorServicio("El mail del usuario no puede ser nulo y no puede ser menor de 6 caracteres");
+        }
+        
+        if (!clave1.equals(clave2)) {
+            throw new ErrorServicio("Las claves tiene que ser iguales");
+        }
+        
+//        if(cuenta == null){
+//            throw new ErrorServicio("No se encontro la cuenta solicitada");
+//        }
+    }
     
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
