@@ -33,7 +33,7 @@ public class CuentaServicio {
     @Autowired
     private ActividadServicio actividadServicio;
     
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public Cuenta registrar(String dni) throws ErrorServicio{
         String alias = dni+".TUKI";
         comprobarAlias(alias);
@@ -182,7 +182,7 @@ public class CuentaServicio {
             temp = (int)(Math.random()*10);
             cvu = cvu + temp.toString();
         }
-        comprobarCvu(cvu, dni);
+        //comprobarCvu(cvu, dni);
         return cvu;
     }
     

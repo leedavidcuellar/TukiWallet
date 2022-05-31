@@ -27,7 +27,7 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
     <div class="container px-5">
-      <a class="navbar-brand fw-bold" href="#page-top">TukiWallet</a>
+      <a class="navbar-brand fw-bold" href="/">TukiWallet</a>
       <!--Agregar icono de TUKI WALLET-->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,8 +279,7 @@
       id="feedbackModal"
       tabindex="-1"
       aria-labelledby="feedbackModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-gradient-primary-to-secondary p-4">
@@ -343,35 +342,31 @@
               <!---->
               <!-- This is what your users will see when the form-->
               <!-- has successfully submitted-->
-              <div class="d-none" id="submitSuccessMessage">
+              <!-- <div class="d-none" id="submitSuccessMessage">
                 <div class="text-center mb-3">
-                  <div class="fw-bolder">Form submission successful!</div>
-                  To activate this form, sign up at
-                  <br />
-                  <a href="https://startbootstrap.com/solution/contact-forms"
-                    >https://startbootstrap.com/solution/contact-forms</a
-                  >
+                  <div class="fw-bolder"> Lo redireccionamos a Inicio!</div>
                 </div>
-              </div>
+              </div>-->
               <!-- Submit error message-->
               <!---->
               <!-- This is what your users will see when there is-->
               <!-- an error submitting the form-->
-              <div class="d-none" id="submitErrorMessage">
+              <!--<div class="d-none" id="submitErrorMessage">
                 <div class="text-center text-danger mb-3">
                   Error sending message!
                 </div>
-              </div>
+              </div>-->
               <!-- Submit Button-->
               <div class="d-grid">
                 <button
-                  class="btn btn-primary rounded-pill btn-lg disabled"
-                  id="submitButton"
+                  class="btn btn-primary rounded-pill btn-lg"
+                  
                   type="submit"
+                  formaction="/"
                 >
                   Enviar
                 </button>
-                <a href="" class="RegistrarseB">Registrarse</a>
+                <a href="/registrarse" class="RegistrarseB">Registrarse</a>
               </div>
             </form>
           </div>
