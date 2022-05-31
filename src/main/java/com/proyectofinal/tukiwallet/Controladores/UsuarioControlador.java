@@ -61,7 +61,7 @@ public class UsuarioControlador {
         } catch (ErrorServicio e) {
             model.put("mensaje", e.getMessage());
             //ver bien el Return
-            return "/registrarse";
+            return "/index";
         }   
     }
     
