@@ -69,7 +69,7 @@ public class UsuarioServicio implements UserDetailsService{
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-         
+        usuario.setDni(dni);
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         usuario.setClave(encriptada);
         usuario.setAlta(Boolean.TRUE);
@@ -217,7 +217,13 @@ public class UsuarioServicio implements UserDetailsService{
         if(cuenta == null){
             throw new ErrorServicio("No se encontro la cuenta solicitada");
         }
-        
+                
+        if(dni.isEmpty() || dni == null){
+            throw new ErrorServicio("El DNI no puede ser nulo");
+        }
+        if(usuarioRepositorio.buscarPorDni(dni) != null){
+            throw new ErrorServicio("El DNI ingresado ya tiene una cuenta vinculada!");
+        }
         
         
 //        if(cuentaComun == null){
@@ -245,6 +251,14 @@ public class UsuarioServicio implements UserDetailsService{
         if (!clave1.equals(clave2)) {
             throw new ErrorServicio("Las claves tiene que ser iguales");
         }
+        
+        if(dni.isEmpty() || dni == null){
+            throw new ErrorServicio("El DNI no puede ser nulo");
+        }
+        if(usuarioRepositorio.buscarPorDni(dni) != null){
+            throw new ErrorServicio("El DNI ingresado ya existe!");
+        }
+       
         
 //        if(cuenta == null){
 //            throw new ErrorServicio("No se encontro la cuenta solicitada");
