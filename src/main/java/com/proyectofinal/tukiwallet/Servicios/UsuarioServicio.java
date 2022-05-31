@@ -58,7 +58,7 @@ public class UsuarioServicio implements UserDetailsService{
     @Autowired
     private FotoServicio fotoServicio;
     
-     @Transactional(propagation = Propagation.REQUIRED)
+     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
      public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
          Cuenta cuenta = cuentaServicio.registrar(dni);
          
