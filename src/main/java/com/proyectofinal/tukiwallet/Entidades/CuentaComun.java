@@ -20,8 +20,8 @@ public class CuentaComun {
     private String nombre;
     private Boolean alta;
     private String cvuCC;
-    private String movimiento;
-    private Float saldo;
+    private String movimientoCC;
+    private Float saldoCC;
     private String aliasCC;
 
     @OneToMany
@@ -29,6 +29,9 @@ public class CuentaComun {
     
     @OneToMany
     private List<Actividad> actividad;
+    
+    @OneToMany
+    private List<EfectivoCC> efectivoCC;
 
     public CuentaComun() {
     }
@@ -96,34 +99,47 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
     }
 
     /**
-     * @return the movimiento
+     * @return the movimientoCC
      */
-    public String getMovimiento() {
-        return movimiento;
+    public String getMovimientoCC() {
+        return movimientoCC;
     }
 
     /**
-     * @param movimiento the movimiento to set
+     * @param movimientoCC the movimientoCC to set
      */
-    public void setMovimiento(String movimiento) {
-        this.movimiento = movimiento;
+    public void setMovimientoCC(String movimientoCC) {
+        this.movimientoCC = movimientoCC;
     }
 
     /**
-     * @return the saldo
+     * @return the saldoCC
      */
-    public Float getSaldo() {
-        return saldo;
+    public Float getSaldoCC() {
+        return saldoCC;
     }
 
     /**
-     * @param saldo the saldo to set
+     * @param saldoCC the saldoCC to set
      */
-    public void setSaldo(Float saldo) {
-        this.saldo = saldo;
+    public void setSaldoCC(Float saldoCC) {
+        this.saldoCC = saldoCC;
     }
 
-   
+    /**
+     * @return the aliasCC
+     */
+    public String getAliasCC() {
+        return aliasCC;
+    }
+
+    /**
+     * @param aliasCC the aliasCC to set
+     */
+    public void setAliasCC(String aliasCC) {
+        this.aliasCC = aliasCC;
+    }
+
     /**
      * @return the usuarios
      */
@@ -152,23 +168,24 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
         this.actividad = actividad;
     }
 
-    /**
-     * @return the aliasCC
-     */
-    public String getAliasCC() {
-        return aliasCC;
-    }
-
-    /**
-     * @param aliasCC the aliasCC to set
-     */
-    public void setAliasCC(String aliasCC) {
-        this.aliasCC = aliasCC;
-    }
-
     @Override
     public String toString() {
-        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", cvuCC=" + cvuCC + ", movimiento=" + movimiento + ", saldo=" + saldo + ", aliasCC=" + aliasCC + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
+        return "CuentaComun{" + "id=" + getId() + ", nombre=" + getNombre() + ", alta=" + getAlta() + ", cvuCC=" + getCvuCC() + ", movimientoCC=" + getMovimientoCC() + ", saldoCC=" + getSaldoCC() + ", aliasCC=" + getAliasCC() + ", usuarios=" + getUsuarios() + ", actividad=" + getActividad() + '}';
     }
 
+    /**
+     * @return the efectivoCC
+     */
+    public List<EfectivoCC> getEfectivoCC() {
+        return efectivoCC;
+    }
+
+    /**
+     * @param efectivoCC the efectivoCC to set
+     */
+    public void setEfectivoCC(List<EfectivoCC> efectivoCC) {
+        this.efectivoCC = efectivoCC;
+    }
+
+   
 }
