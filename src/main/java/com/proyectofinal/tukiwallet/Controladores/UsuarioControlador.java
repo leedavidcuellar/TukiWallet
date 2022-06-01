@@ -13,23 +13,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/usuario")
 public class UsuarioControlador {
     
     @Autowired
     UsuarioServicio usuarioServicio;
     
-    @PostMapping("/registrarse")
-    public String registrarse() throws ErrorServicio{
-        return "/registrarse";
-    }
     
     @PostMapping("/registrarUsuario")
     public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
         try {
             
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, dni, mail, clave1, clave2);
-            return "/inicio";
+            return "index.html";
 
         } catch (ErrorServicio e) {
             model.put("mensaje", e.getMessage());

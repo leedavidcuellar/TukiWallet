@@ -12,7 +12,7 @@
     <link
 
 
-      href="/static/css/registro.css"
+      href="/css/registro.css"
 
 
       rel="stylesheet"
@@ -33,32 +33,55 @@
       <h1>Registrarse</h1>
       <div class="main-agileinfo">
         <div class="agileits-top">
-          <form action="#" method="post">
+          <form action="/usuario/registrarUsuario" method="post" enctype="multipart/form-data">
             <input
               class="text"
               type="text"
-              name="Username"
-              placeholder="Usuario / Nombre y apellido"
+              name="nombre"
+              placeholder="Nombre"
               required=""
             />
+            <br>
+            <input
+            class="text"
+            type="text"
+            name="apellido"
+            placeholder="Apellido"
+            required=""
+          />
+
+          <br>
+          <input
+          class="number"
+          type="number"
+          name="dni"
+          placeholder="DNI"
+          required=""
+        />
+
+        <br>
+
+          <label class="text">Foto</label>
+          <input type="file" name="archivo" placeholder="Agregue su foto"/>
+
             <input
               class="text email"
               type="email"
-              name="email"
+              name="mail"
               placeholder="Email"
               required=""
             />
             <input
               class="text"
               type="password"
-              name="password"
+              name="clave1"
               placeholder="Contraseña"
               required=""
             />
             <input
               class="text w3lpass"
               type="password"
-              name="password"
+              name="clave2"
               placeholder="Confirme su contraseña"
               required=""
             />

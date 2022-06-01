@@ -14,6 +14,7 @@ import com.proyectofinal.tukiwallet.Repositorios.CuentaComunRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
+import java.util.Date;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,21 +59,22 @@ public class UsuarioServicio implements UserDetailsService{
     @Autowired
     private FotoServicio fotoServicio;
     
-     @Transactional(propagation = Propagation.REQUIRED)
-     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
          Cuenta cuenta = cuentaServicio.registrar(dni);
          
-         validar(nombre, apellido, dni, mail, clave1, clave2, cuenta);
+         validar(nombre, apellido, dni, mail, fechaNacimiento, clave1, clave2, cuenta);
         
          
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-         
+        usuario.setDni(dni);
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         usuario.setClave(encriptada);
         usuario.setAlta(Boolean.TRUE);
+        usuario.setFechaNacimiento(fechaNacimiento);
 
         Foto foto = fotoServicio.guardar(archivo);
         usuario.setFoto(foto);
@@ -87,9 +89,9 @@ public class UsuarioServicio implements UserDetailsService{
      }
      
     @Transactional(propagation = Propagation.NESTED) 
-    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
 
-        validar2(nombre, apellido, dni, mail, clave1, clave2);
+        validar2(nombre, apellido, dni, mail,fechaNacimiento ,clave1, clave2);
        
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
@@ -193,7 +195,7 @@ public class UsuarioServicio implements UserDetailsService{
     }
     
     
-    private void validar(String nombre, String apellido, String dni, String mail, String clave1, String clave2, Cuenta cuenta) throws ErrorServicio{
+    private void validar(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2, Cuenta cuenta) throws ErrorServicio{
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -217,15 +219,24 @@ public class UsuarioServicio implements UserDetailsService{
         if(cuenta == null){
             throw new ErrorServicio("No se encontro la cuenta solicitada");
         }
+                
+        if(dni.isEmpty() || dni == null){
+            throw new ErrorServicio("El DNI no puede ser nulo");
+        }
+        if(usuarioRepositorio.buscarPorDni(dni) != null){
+            throw new ErrorServicio("El DNI ingresado ya tiene una cuenta vinculada!");
+        }
         
-        
+        if(fechaNacimiento == null){
+            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
+        }
         
 //        if(cuentaComun == null){
 //            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
 //        }
      }
     
-    private void validar2(String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+    private void validar2(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -246,6 +257,16 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("Las claves tiene que ser iguales");
         }
         
+        if(dni.isEmpty() || dni == null){
+            throw new ErrorServicio("El DNI no puede ser nulo");
+        }
+        if(usuarioRepositorio.buscarPorDni(dni) != null){
+            throw new ErrorServicio("El DNI ingresado ya existe!");
+        }
+       
+        if(fechaNacimiento == null){
+            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
+        }
 //        if(cuenta == null){
 //            throw new ErrorServicio("No se encontro la cuenta solicitada");
 //        }

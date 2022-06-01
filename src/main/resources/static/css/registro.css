@@ -227,14 +227,16 @@ h1 {
     width: 35%;
     margin: 3em auto;
     background: rgba(255, 255, 255);
+   
     background-size: cover;
     border-radius: 20px;
+    
 }
 
 .agileits-top {
     padding: 3em;
 }
-
+input[type="number"],
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -499,7 +501,7 @@ input.checkbox:checked:after {
 
 /*-- responsive-design --*/
 @media(max-width:1440px) {
-
+    input[type="number"],
     input[type="text"],
     input[type="email"],
     input[type="password"] {
@@ -557,7 +559,7 @@ input.checkbox:checked:after {
     .main-agileinfo {
         width: 58%;
     }
-
+    input[type="number"],
     input[type="text"],
     input[type="email"],
     input[type="password"] {
@@ -623,6 +625,7 @@ input.checkbox:checked:after {
         padding: 1.8em;
     }
 
+    input[type="number"],
     input[type="text"],
     input[type="email"],
     input[type="password"] {
@@ -703,6 +706,7 @@ input.checkbox:checked:after {
         margin: 0 0 1em;
     }
 
+    input[type="number"],
     input[type="text"],
     input[type="email"],
     input[type="password"] {

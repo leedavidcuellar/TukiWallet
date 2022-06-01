@@ -34,7 +34,7 @@ public class Usuario {
     private Boolean alta;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date nacimiento;
+    private Date fechaNacimiento;
     
     @OneToOne
     private Foto foto;
@@ -54,7 +54,7 @@ public class Usuario {
         this.dni = dni;
         this.mail = mail;
         this.clave = clave;
-        this.nacimiento = nacimiento;
+        this.fechaNacimiento = nacimiento;
         this.foto = foto;
         this.cuenta = cuenta;
         this.cuentaComun = cuentaComun;
@@ -146,17 +146,17 @@ public class Usuario {
     }
 
     /**
-     * @return the nacimiento
+     * @return the fechaNacimiento
      */
-    public Date getNacimiento() {
-        return nacimiento;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
     /**
-     * @param nacimiento the nacimiento to set
+     * @param fechaNacimiento the fechaNacimiento to set
      */
-    public void setNacimiento(Date nacimiento) {
-        this.nacimiento = nacimiento;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     /**
@@ -217,7 +217,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", mail=" + mail + ", clave=" + clave + ", alta=" + alta + ", nacimiento=" + nacimiento + ", foto=" + foto + ", cuenta=" + cuenta + ", cuentaComun=" + cuentaComun + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", mail=" + mail + ", clave=" + clave + ", alta=" + alta + ", nacimiento=" + fechaNacimiento + ", foto=" + foto + ", cuenta=" + cuenta + ", cuentaComun=" + cuentaComun + '}';
     }
 
     
