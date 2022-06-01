@@ -48,6 +48,7 @@ public class PortalControlador {
     return "registrarse.html";
     }
     
+    
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")    
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {
