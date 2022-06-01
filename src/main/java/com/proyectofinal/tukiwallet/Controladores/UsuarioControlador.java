@@ -2,6 +2,7 @@ package com.proyectofinal.tukiwallet.Controladores;
 
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,10 +22,10 @@ public class UsuarioControlador {
     
     
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
+    public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam Date fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
         try {
             
-            usuarioServicio.registrarUsuario(archivo, nombre, apellido, dni, mail, clave1, clave2);
+            usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimiento, dni, mail, clave1, clave2);
             return "index.html";
 
         } catch (ErrorServicio e) {
@@ -34,10 +35,10 @@ public class UsuarioControlador {
     }
     
     @PostMapping("/editarUsuario")
-    public String editarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
+    public String editarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam Date fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
         try {
             
-            usuarioServicio.registrarUsuario(archivo, nombre, apellido, dni, mail, clave1, clave2);
+            usuarioServicio.registrarUsuario(archivo, nombre, apellido,  fechaNacimiento, dni, mail, clave1, clave2);
             return "/inicio";
 
         } catch (ErrorServicio e) {
