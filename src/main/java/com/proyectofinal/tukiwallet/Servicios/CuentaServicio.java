@@ -182,14 +182,14 @@ public class CuentaServicio {
             temp = (int)(Math.random()*10);
             cvu = cvu + temp.toString();
         }
-        //comprobarCvu(cvu, dni);
+        comprobarCvu(cvu, dni);
         return cvu;
     }
     
     @Transactional(readOnly = true)
     public void comprobarCvu (String cvu, String dni){
         Cuenta optional = cuentaRepositorio.buscarCuentaPorCvu(cvu);
-        if (optional==null) {
+        if (optional!=null) {
             crearCvu(dni);
         }
     }
