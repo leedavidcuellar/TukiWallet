@@ -89,9 +89,9 @@ public class UsuarioServicio implements UserDetailsService{
      }
      
     @Transactional(propagation = Propagation.NESTED) 
-    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
 
-        validar2(nombre, apellido, dni, mail, clave1, clave2);
+        validar2(nombre, apellido, dni, mail,fechaNacimiento ,clave1, clave2);
        
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
