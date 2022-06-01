@@ -5,6 +5,13 @@
  */
 package com.proyectofinal.tukiwallet.Controladores;
 
+import com.proyectofinal.tukiwallet.Entidades.Usuario;
+import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,5 +46,22 @@ public class PortalControlador {
     @GetMapping("/registrarse")
     public String registrarse(){
     return "registrarse.html";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")    
+    @GetMapping("/inicio")
+    public String inicio(HttpSession session, ModelMap model) {
+        Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
+        if(login == null){
+            return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
+        }
+//        try {
+////            List<Mascota> listaMascotaPropia = mascotaServicio.buscarPorIdUsuario(login.getId());
+////            model.addAttribute("listaMascotasPropia",listaMascotaPropia);
+//        } catch (ErrorServicio ex) {
+//            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+            
+        return "inicio.html";
     }
 }

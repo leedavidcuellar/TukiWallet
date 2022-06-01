@@ -37,13 +37,14 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
           <!--Ajustar-->
-          <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal"
-          data-bs-target="#feedbackModal">
-          <span class="d-flex align-items-center">
-            <span class="small">Login</span>
+          <a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" href="/login">
+            <span class="small">Login</span></a>
+            
+            <a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" href="/registrarse">
+              <span class="small">Registrarse</span></a>
+            
             <!--Cambiar icono-->
-          </span>
-        </button>
+      
 
           <li class="nav-item">
             <a class="nav-link me-lg-3" href="#features">Ayuda</a>
@@ -273,7 +274,7 @@
     </div>
   </footer>
 
-    <!-- Feedback Modal-->
+    <!-- Feedback Modal
     <div
       class="modal fade"
       id="feedbackModal"
@@ -293,7 +294,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body border-0 p-4">
+          <div class="modal-body border-0 p-4">-->
             <!-- * * * * * * * * * * * * * * *-->
             <!-- * * SB Forms Contact Form * *-->
             <!-- * * * * * * * * * * * * * * *-->
@@ -301,10 +302,10 @@
             <!-- To make this form functional, sign up at-->
             <!-- https://startbootstrap.com/solution/contact-forms-->
             <!-- to get an API token!-->
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+            <!--<form id="contactForm" data-sb-form-api-token="API_TOKEN">-->
               <!-- Name input-->
 
-              <!-- Email address input-->
+              <!-- Email address input
               <div class="form-floating mb-3">
                 <input
                   class="form-control"
@@ -320,8 +321,8 @@
                 <div class="invalid-feedback" data-sb-feedback="email:email">
                   El email es invalido
                 </div>
-              </div>
-              <!-- contra number input-->
+              </div>-->
+              <!-- contra number input
               <div class="form-floating mb-3">
                 <input
                   class="form-control"
@@ -334,7 +335,7 @@
                 <div class="invalid-feedback" data-sb-feedback="phone:required">
                   Campo obligatorio
                 </div>
-              </div>
+              </div>-->
 
               <!-- Message input-->
 
@@ -362,7 +363,7 @@
                   class="btn btn-primary rounded-pill btn-lg"
                   
                   type="submit"
-                  formaction="/"
+                  formaction="/login"
                 >
                   Enviar
                 </button>
