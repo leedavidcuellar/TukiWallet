@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.monto{
+    font-size: 40px;
+    text-align: center;
+}
+body {
+    display: flex;
+    align-items: center ;
+    justify-content: space-around;
+    min-height: 100vh;
+    padding: 0 10px;
+    background: lightblue;
+    margin-top: 100px;
+    margin-left: 200px;
+}
+
+::selection {
+    color: #fff;
+    background: #675AFE;
+}
+
+.wrapper {
+    width: 600px;
+    padding: 50px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+}
+
+.wrapper header {
+    font-size: 28px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.wrapper form {
+    margin: 40px 0 20px 0;
+}
+
+form :where(input, select, button) {
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+}
+
+form p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+form input {
+    height: 50px;
+    font-size: 17px;
+    padding: 0 15px;
+    border: 1px solid #999;
+}
+
+form input:focus {
+    padding: 0 14px;
+    border: 2px solid #675AFE;
+}
+
+form .drop-list {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drop-list .select-box {
+    margin-top: 20px;
+    display: flex;
+    width: 200px;
+    height: 45px;
+    align-items: center;
+    border-radius: 5px;
+    justify-content: center;
+    border: 1px solid #999;
+}
+.drop-list .select-box1 {
+    margin-top: 20px;
+    display: flex;
+    width:500px;
+    height: 45px;
+    align-items: center;
+    border-radius: 5px;
+    justify-content: center;
+    border: 1px solid #999;
+}
+
+
+.select-box img {
+    max-width: 11px;
+}
+
+.select-box select {
+    width: auto;
+    font-size: 16px;
+    background: none;
+    margin: 0 -5px 0 5px;
+}
+
+
+form button {
+    margin-top: 60px;
+    height: 60px;
+    color: #fff;
+    font-size: 19px;
+    cursor: pointer;
+    background: #15b110;
+    transition: 0.3s ease;
+}
+
+form button:hover {
+    background: #04a033;
+}
