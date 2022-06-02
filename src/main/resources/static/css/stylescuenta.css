@@ -3,6 +3,13 @@ body{
   
 }
 
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+}
+
 
 .col{
 margin: 50px;
