@@ -32,13 +32,15 @@ public class CuentaControlador {
     
     @GetMapping("/micuenta")
     public String miCuenta(ModelMap modelo, HttpSession session, String id){
-//        Usuario login = (Usuario) session.getAttribute("usuariosession");
-//        if (login == null || !login.getId().equals(id)) {
-//            return "redirect:/inicio";
-//        }
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
     Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         modelo.addAttribute("micuenta", usuarioCuenta);
 
         return "cuenta.html";
     }
+    
+    
 }
