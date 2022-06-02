@@ -226,6 +226,10 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("El DNI ingresado ya tiene una cuenta vinculada!");
         }
         
+        if(usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
+        }
+        
         if(fechaNacimiento == null){
             throw new ErrorServicio("La fecha de nacimiento debe ser valida");
         }
@@ -262,7 +266,10 @@ public class UsuarioServicio implements UserDetailsService{
         if(usuarioRepositorio.buscarPorDni(dni) != null){
             throw new ErrorServicio("El DNI ingresado ya existe!");
         }
-       
+         if(usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
+        }
+        
         if(fechaNacimiento == null){
             throw new ErrorServicio("La fecha de nacimiento debe ser valida");
         }
