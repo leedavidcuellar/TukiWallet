@@ -2,6 +2,8 @@ package com.proyectofinal.tukiwallet.Controladores;
 
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +24,13 @@ public class UsuarioControlador {
     
     
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam Date fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
+    public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio, ParseException{
+        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
+            Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
+            
         try {
             
-            usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimiento, dni, mail, clave1, clave2);
+            usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
             return "index.html";
 
         } catch (ErrorServicio e) {
