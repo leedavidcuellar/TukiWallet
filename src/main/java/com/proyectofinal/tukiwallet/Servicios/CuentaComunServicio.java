@@ -149,15 +149,20 @@ public class CuentaComunServicio {
         }
     }
 
-    public void validarTransferenciaCuentaComun(Float cantidad, String idtransfiere) throws ErrorServicio {
-        Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(idtransfiere);
-        if (respuesta.isPresent()) {
-            CuentaComun CuentaComun = respuesta.get();
-            if (CuentaComun.getSaldoCC() < cantidad) {
+    public void validarTransferenciaCuentaComun(Float cantidad, String cvu1, String cvu2) throws ErrorServicio{
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaPorCvuCC(cvu1);
+        if (cuentaComun!=null) {
+            if (cuentaComun.getSaldoCC()<cantidad) {
                 throw new ErrorServicio("No tiene esa cantidad en su cuenta");
             }
-        } else {
-            throw new ErrorServicio("No se ha encontrado el id");
+            if (cantidad<0) {
+                throw new ErrorServicio("No puede transferir una cantidad negativa");
+            }
+            if (cvu2.equals(cvu1)) {
+            throw new ErrorServicio("No se puede transferir al mismo cvu");
+            }
+        }else{
+            throw new ErrorServicio("No se ha encontrado el cvu");
         }
     }
 
@@ -238,9 +243,19 @@ public class CuentaComunServicio {
 
     @Transactional(readOnly = true)
     public CuentaComun buscarCuentaPorAliasCC(String alias) {
-        CuentaComun autor = cuentaComunRepositorio.buscarCuentaPorAliasCC(alias);
-        if (autor != null) {
-            return cuentaComunRepositorio.buscarCuentaPorAliasCC(alias);
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaPorAliasCC(alias);
+        if (cuentaComun != null) {
+            return cuentaComun;
+        } else {
+            return null;
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public CuentaComun buscarCuentaPorIdCC(String id) {
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(id);
+        if (cuentaComun != null) {
+            return cuentaComun;
         } else {
             return null;
         }
