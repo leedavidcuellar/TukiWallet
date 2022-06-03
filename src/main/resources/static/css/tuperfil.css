@@ -37,6 +37,23 @@ svg {
     width: 64px;
     margin-top: 20px;
 }
+.textarea {
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+    text-align: center;
+    font-size: 70%;
+  }
+
+  .textarea2 {
+    background-color: transparent;
+    resize: none;
+    outline: none;
+    text-align: center;
+    font-size: 70%;
+  }
+
 .cvu{
     
     padding: 4px;

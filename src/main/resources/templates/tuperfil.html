@@ -13,12 +13,12 @@
       <div class="bloque">
         <!--En esta seccion va la foto del usuario y el nombre del usuario-->
         <section class="primera-parte">
-          <img
-            class="foto-usuario"
-            src="/assets/img/birrita.png"
-            alt="Foto de perfil del usuario"
-          />
-          <h3 class="nombre-usuario">Nombre y Apellido del usuario</h3>
+          <img th:if="${perfil.foto != null}" style="max-height: 200px; border-radius:100%" th:src="${'/foto/usuario/'+ perfil.id}" alt="">
+          <img th:if="${perfil.foto == null}" style="max-height: 200px; border-radius:100%" src="/assets/img/birrita.png" alt="">
+          <br>
+          <input class="textarea2" type="text" th:if="${session.usuariosession != null}"
+          th:value="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"/>
+        <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         </section>
         <!--En esta seccion van los datos-->
         <section class="segunda-parte">
@@ -33,8 +33,10 @@
               />
             </svg>
             <p class="pgrande">Mi cvu</p>
-            <p>CVU del usuario</p>
+            <br>
+            <input class="textarea" type="text" name="cvu" style="width:60%;" th:value="${perfil.cuenta.cvu}" readonly="readonly"/>
           </div>
+          
           <div class="mail">
             <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
               <path
@@ -42,7 +44,7 @@
               />
             </svg>
             <p class="pgrande">Email</p>
-            <p>Email usuario</p>
+            <input class="textarea2" type="text" name="mail" style="width:60%;" th:value="${perfil.mail}"/>
           </div>
           <div class="contrasena">
             <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
@@ -50,9 +52,14 @@
                 d="M12.451 17.337l-2.451 2.663h-2v2h-2v2h-6v-5l6.865-6.949c1.08 2.424 3.095 4.336 5.586 5.286zm11.549-9.337c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-3-3c0-1.104-.896-2-2-2s-2 .896-2 2 .896 2 2 2 2-.896 2-2z"
               />
             </svg>
-            <p class="pgrande">Contraseña</p>
+            <p class="pgrande">Clave</p>
             <!--Hay que charlar esto-->
-            <p>Contraseña usuario ****</p>
+            <input class="textarea2" type="password" name="clave1" style="width:60%;" th:value="${clave1}"/>
+            <br>
+            <label>Repetir Clave</label>
+            <input type="password" class="textarea2" name="clave2" style="width:60%;" th:value="${clave2}"/>
+            
+          
           </div>
           <div class="fecha-nacimiento">
             <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">

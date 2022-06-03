@@ -8,6 +8,7 @@ package com.proyectofinal.tukiwallet.Controladores;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -42,5 +44,6 @@ public class CuentaControlador {
         return "cuenta.html";
     }
     
+   
     
 }

@@ -55,7 +55,8 @@
         <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}"
         class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">¡Mi cuenta!</a>
         
-
+        <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}"
+          class="btn btn-primary btn-xl rounded-pill mt-5">¡Configura tu Perfil!</a>
 
 
 
@@ -67,8 +68,7 @@
 
 
         
-        <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}"
-          class="btn btn-primary btn-xl rounded-pill mt-5">¡Configura tu Perfil!</a>
+
         <a th:href="@{/mascota/editar-perfil}" class="btn btn-primary btn-xl rounded-pill mt-5">¡Agregar una
           Mascota!</a>
         <a th:href="@{/mascota/mis-mascotas}" class="btn btn-primary btn-xl rounded-pill mt-5">Listar Mascotas!</a>
