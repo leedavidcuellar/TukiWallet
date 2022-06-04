@@ -61,6 +61,6 @@ public class FotoServicio {
             System.err.println(e.getMessage());
         }   
       }   
-      return null;     
+      return fotoRepositorio.buscarFotoPorId(idFoto);     
     }
 }

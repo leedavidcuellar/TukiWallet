@@ -29,7 +29,7 @@ public class UsuarioControlador {
     
     @PostMapping("/registrarUsuario")
     public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio, ParseException{
-        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("dd-mm-yyyy");
             Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
             
         try {
@@ -45,15 +45,24 @@ public class UsuarioControlador {
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-perfil")
-    public String editarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam Date fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio{
+    public String editarUsuario(ModelMap model,  HttpSession session, MultipartFile archivo, @RequestParam String id,@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2) throws ErrorServicio, ParseException{
+        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
+        Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
+        System.out.println(fechaNacimientoAux +" "+fechaNacimiento);
+        Usuario usuario = null;     
         try {
-            
-            usuarioServicio.registrarUsuario(archivo, nombre, apellido,  fechaNacimiento, dni, mail, clave1, clave2);
-            return "/inicio";
+            usuario = usuarioServicio.buscarPorId(id);
+          
+            usuarioServicio.modificarUsuario(archivo, id,nombre, apellido,dni, mail,fechaNacimientoAux, clave1, clave2);
+           
+            session.setAttribute("usuariosession", usuario);
+            return "redirect:/inicio";
 
         } catch (ErrorServicio e) {
+            model.put("perfil", usuario);
+            model.put("error", e.getMessage());
             model.put("mensaje", e.getMessage());
-            return "/registrarse";
+            return "tuperfil.html";
         }   
     }
     

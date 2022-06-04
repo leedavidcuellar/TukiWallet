@@ -14,6 +14,7 @@ import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,7 @@ public class CuentaControlador {
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
 
+    @GetMapping("/micuenta")
     public String miCuenta(ModelMap modelo, HttpSession session, String id) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
@@ -50,11 +52,6 @@ public class CuentaControlador {
 
         return "cuenta.html";
     }
-<<<<<<< HEAD
-    
-   
-    
-=======
 
     @GetMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
@@ -93,12 +90,12 @@ public class CuentaControlador {
             } else {
                 cuentaComunServicio.ingresoCuentaComun(motivof, cvu2, cvu1, motivo);
             }
+            return "redirect:/micuenta";
         } catch (ErrorServicio e) {
             modelo.put("mensaje", e.getMessage());
             return "redirect:/micuenta";
         }
-        return "redirect:/micuenta";
+        
     }
 
->>>>>>> 7103f61122ceb26fb15546ddc9593255d169efef
 }
