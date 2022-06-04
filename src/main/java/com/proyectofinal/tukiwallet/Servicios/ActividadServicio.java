@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.proyectofinal.tukiwallet.Servicios;
+
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
 import com.proyectofinal.tukiwallet.Repositorios.ActividadRepositorio;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  *
@@ -21,12 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ActividadServicio {
-    
+
     @Autowired
     private ActividadRepositorio actividadRepositorio;
-    
+
     @Transactional(propagation = Propagation.NESTED)
-    public void registrar(String motivo, Float monto, Boolean movimiento, String cvu, String cvu2) throws ErrorServicio{
+    public void registrar(String motivo, Float monto, Boolean movimiento, String cvu, String cvu2) throws ErrorServicio {
         validar(motivo, monto);
         Actividad actividad = new Actividad();
         actividad.setMonto(monto);
@@ -36,19 +36,18 @@ public class ActividadServicio {
         actividad.setCvu(cvu);
         actividad.setCvu2(cvu2);
         actividad.setnOperacion(generarNumDeOperacion());
-        
+
         actividadRepositorio.save(actividad);
-    
-    }
-    @Transactional(readOnly = true)      
-    public String generarNumDeOperacion(){
-       String n;
-       return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
-    }
-    
 
+    }
 
-   /* public String tipoMovimiento(Boolean movimiento){
+    @Transactional(readOnly = true)
+    public String generarNumDeOperacion() {
+        String n;
+        return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
+    }
+
+    /* public String tipoMovimiento(Boolean movimiento){
         if(movimiento.TRUE){
             return "Transferencia realizada";
         }else{
@@ -56,19 +55,25 @@ public class ActividadServicio {
         }
             
     }
-    */
-    
-    
-    public void validar(String motivo, Float monto) throws ErrorServicio{
-        if(motivo == null || monto.toString().length() > 3){
+     */
+    public void validar(String motivo, Float monto) throws ErrorServicio {
+        if (motivo == null || monto.toString().length() > 3) {
             throw new ErrorServicio("Debe registrar un motivo o registro valido");
         }
-        if(monto == null){
+        if (monto == null) {
             throw new ErrorServicio("El monto no puede ser nulo");
         }
-        if(monto <=10){
+        if (monto <= 10) {
             throw new ErrorServicio("El monto a ingresar debe ser mayor a $10");
         }
 
+    }
+
+    public List<Actividad> listadoActividad() {
+        return (List<Actividad>) actividadRepositorio.findAll();
+    }
+
+    public List<Actividad> listadoActividadCC() {
+        return (List<Actividad>) actividadRepositorio.findAll();
     }
 }
