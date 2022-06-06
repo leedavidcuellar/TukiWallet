@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
 .monto{
     font-size: 40px;
@@ -18,6 +19,7 @@ body {
     margin-top: 100px;
     margin-left: 200px;
 }
+
 
 ::selection {
     color: #fff;
