@@ -7,13 +7,17 @@ import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -78,4 +82,57 @@ public class CuentaComunControlador {
     }
 
     
+    @PostMapping("/nuevaCuentaComun")
+    public String crearCC(ModelMap modelo, @RequestParam String nombre, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
+
+        try {
+            cuentaComunServicio.crearCuentaComun(nombre, usuarios);
+        } catch (ErrorServicio error) {
+            model.put("error", error.getMessage());
+            return "crearCuentaComun.html"; //check 
+        }
+        return "misCuentasComunes.html"; //check   
+    }
+
+    
+    @PostMapping("/deshabilitarCC")
+    public String deshabilitarCC(ModelMap modelo, @PathVariable("id") String id) throws ErrorServicio {
+
+        try {
+            cuentaComunServicio.deshabilitar(id);
+        } catch (ErrorServicio error) {
+            model.put("error", error.getMessage());
+            return "misCuentasComunes.html"; //check 
+        }
+        return "miCuenta.html"; //check   
+    }
+
+    
+    @PostMapping("/habilitarCC")
+    public String habilitarCC(ModelMap modelo, @PathVariable("id") String id) throws ErrorServicio {
+
+        try {
+            cuentaComunServicio.habilitar(id);
+        } catch (ErrorServicio error) {
+            model.put("error", error.getMessage());
+            return "misCuentasComunes.html"; //check 
+        }
+        return "miCuenta.html"; //check   
+    }
+
+
+    @PostMapping("/editarCuentaComun")
+    public String editarCC(ModelMap modelo, @RequestParam String nombre, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
+
+        try {
+            cuentaComunServicio.modificarCuentaComun(nombre, nombre, usuarios);
+        } catch (ErrorServicio error) {
+            model.put("error", error.getMessage());
+            model.put("nombre", nombre);
+            model.put("usuarios", usuarios);
+            return "editarCuentaComun.html"; //check 
+        }
+        return "misCuentasComunes.html"; //check   
+    }
+
 }
