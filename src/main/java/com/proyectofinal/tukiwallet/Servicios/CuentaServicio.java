@@ -30,9 +30,13 @@ public class CuentaServicio {
     @Autowired 
     private UsuarioRepositorio usuarioRepositorio;
     
-    @Transactional(propagation = Propagation.NESTED)
-    public void registrar(String dni) throws ErrorServicio{
+    @Autowired
+    private ActividadServicio actividadServicio;
+    
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public Cuenta registrar(String dni) throws ErrorServicio{
         String alias = dni+".TUKI";
+        comprobarAlias(alias);
         Cuenta cuenta = new Cuenta();
         cuenta.setAlias(alias);
         cuenta.setSaldo(0f);
@@ -40,44 +44,65 @@ public class CuentaServicio {
         cuenta.setAlta(true);
         
         cuentaRepositorio.save(cuenta);
+        return cuenta;
     }
     
     @Transactional(propagation = Propagation.NESTED)
-    public void modificarAlias(String alias, String id) throws ErrorServicio{
+    public Cuenta modificarAlias(String alias, String id) throws ErrorServicio{
         validarAlias(alias);
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
             cuenta.setAlias(alias);
             cuentaRepositorio.save(cuenta);
+            return cuenta;
+            
         }else{
             throw new ErrorServicio("No se ha encontrado el id");
         }
+        
     }
     
-    //AGREGAR ACTIVIDAD
+    //ingresa
     @Transactional(propagation = Propagation.NESTED)
-    public void depositar(Float deposito, String id) throws ErrorServicio{
-        Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
-        if (respuesta.isPresent()) {
-            Cuenta cuenta = respuesta.get();
-            cuenta.setSaldo(cuenta.getSaldo()+deposito);
+    public void ingresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuIngresa);
+        if (cuenta != null) {
+            cuenta.setSaldo(cuenta.getSaldo() + cantidad);
             cuentaRepositorio.save(cuenta);
-        }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+        } else {
+            throw new ErrorServicio("No se ha encontrado el Cuenta");
         }
     }
     
-    //AGREGAR ACTIVIDAD
+    //egresa
     @Transactional(propagation = Propagation.NESTED)
-    public void transferir(Float transferencia, String id) throws ErrorServicio{
-        Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
-        if (respuesta.isPresent()) {
-            Cuenta cuenta = respuesta.get();
-            cuenta.setSaldo(cuenta.getSaldo()-transferencia);
+    public void egresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuEgresa);
+        if (cuenta != null) {
+            cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             cuentaRepositorio.save(cuenta);
+            actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+        } else {
+            throw new ErrorServicio("No se ha encontrado el Cuenta");
+        }
+    }
+    
+    public void validarTransferenciaCuenta(Float cantidad, String cvu1, String cvu2) throws ErrorServicio{
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvu1);
+        if (cuenta!=null) {
+            if (cuenta.getSaldo()<cantidad) {
+                throw new ErrorServicio("No tiene esa cantidad en su cuenta");
+            }
+            if (cantidad<0) {
+                throw new ErrorServicio("No puede transferir una cantidad negativa");
+            }
+            if (cvu2.equals(cvu1)) {
+            throw new ErrorServicio("No se puede transferir al mismo cvu");
+            }
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el cvu");
         }
     }
 
@@ -129,9 +154,19 @@ public class CuentaServicio {
     
     @Transactional(readOnly = true)
     public Cuenta buscarCuentaPorAlias(String alias){
-        Cuenta autor = cuentaRepositorio.buscarCuentaPorAlias(alias);
-        if (autor!=null) {
-           return cuentaRepositorio.buscarCuentaPorAlias(alias); 
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorAlias(alias);
+        if (cuenta!=null) {
+           return cuenta; 
+        }else{
+            return null;
+        }      
+    }
+    
+    @Transactional(readOnly = true)
+    public Cuenta buscarCuentaPorid(String id){
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorId(id);
+        if (cuenta!=null) {
+           return cuenta; 
         }else{
             return null;
         }      
@@ -153,17 +188,43 @@ public class CuentaServicio {
     }
     
     public String crearCvu (String dni){
-        String cvu = dni;
+        String cvu = "00001" + dni;
         Integer cant = dni.length();
+        cant = cant + 5; //Para agregar 00001 al principio
         cant = 20-cant;
         Integer temp = 0;
         for (int i = 0; i < cant; i++) {
             temp = (int)(Math.random()*10);
             cvu = cvu + temp.toString();
         }
+        comprobarCvu(cvu, dni);
         return cvu;
     }
     
+    @Transactional(readOnly = true)
+    public void comprobarCvu (String cvu, String dni){
+        Cuenta optional = cuentaRepositorio.buscarCuentaPorCvu(cvu);
+        if (optional!=null) {
+            crearCvu(dni);
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public String comprobarAlias (String alias){
+        Cuenta optional = cuentaRepositorio.buscarCuentaPorAlias(alias);
+        if (optional==null) {
+            return alias;
+        }else{
+            Integer temp;
+            for (int i = 0; i < 5; i++) {
+            temp = (int)(Math.random()*10);
+            alias = temp.toString() + alias;
+            }
+            return alias;
+        }        
+    }
+    
+    @Transactional(propagation = Propagation.NESTED)
     public void agregarActividad(Actividad actividad, String id) throws ErrorServicio{
         Optional<Cuenta> optional = cuentaRepositorio.findById(id);
         if (optional.isPresent()) {

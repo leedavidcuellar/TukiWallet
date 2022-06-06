@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Entidades;
 
 import java.util.List;
@@ -13,10 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author leedavidcuellar
- */
+
 @Entity
 public class CuentaComun {
     @Id
@@ -25,19 +18,25 @@ public class CuentaComun {
     private String id;
     
     private String nombre;
-    
     private Boolean alta;
-    
+    private String cvuCC;
+    private String movimientoCC;
+    private Float saldoCC;
+    private String aliasCC;
+
     @OneToMany
     private List<Usuario> usuarios;
     
-    @OneToOne
+    @OneToMany
     private List<Actividad> actividad;
+    
+    @OneToMany
+    private List<EfectivoCC> efectivoCC;
 
     public CuentaComun() {
     }
 
-    public CuentaComun(String nombre, List<Usuario> usuarios) {
+public CuentaComun(String nombre, List<Usuario> usuarios) {
         this.nombre = nombre;
         this.usuarios = usuarios;
         this.alta = Boolean.TRUE;
@@ -72,6 +71,76 @@ public class CuentaComun {
     }
 
     /**
+     * @return the alta
+     */
+    public Boolean getAlta() {
+        return alta;
+    }
+
+    /**
+     * @param alta the alta to set
+     */
+    public void setAlta(Boolean alta) {
+        this.alta = alta;
+    }
+
+    /**
+     * @return the cvuCC
+     */
+    public String getCvuCC() {
+        return cvuCC;
+    }
+
+    /**
+     * @param cvuCC the cvuCC to set
+     */
+    public void setCvuCC(String cvuCC) {
+        this.cvuCC = cvuCC;
+    }
+
+    /**
+     * @return the movimientoCC
+     */
+    public String getMovimientoCC() {
+        return movimientoCC;
+    }
+
+    /**
+     * @param movimientoCC the movimientoCC to set
+     */
+    public void setMovimientoCC(String movimientoCC) {
+        this.movimientoCC = movimientoCC;
+    }
+
+    /**
+     * @return the saldoCC
+     */
+    public Float getSaldoCC() {
+        return saldoCC;
+    }
+
+    /**
+     * @param saldoCC the saldoCC to set
+     */
+    public void setSaldoCC(Float saldoCC) {
+        this.saldoCC = saldoCC;
+    }
+
+    /**
+     * @return the aliasCC
+     */
+    public String getAliasCC() {
+        return aliasCC;
+    }
+
+    /**
+     * @param aliasCC the aliasCC to set
+     */
+    public void setAliasCC(String aliasCC) {
+        this.aliasCC = aliasCC;
+    }
+
+    /**
      * @return the usuarios
      */
     public List<Usuario> getUsuarios() {
@@ -99,23 +168,24 @@ public class CuentaComun {
         this.actividad = actividad;
     }
 
-    /**
-     * @return the alta
-     */
-    public Boolean getAlta() {
-        return alta;
-    }
-
-    /**
-     * @param alta the alta to set
-     */
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
-    }
-
     @Override
     public String toString() {
-        return "CuentaComun{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + ", usuarios=" + usuarios + ", actividad=" + actividad + '}';
+        return "CuentaComun{" + "id=" + getId() + ", nombre=" + getNombre() + ", alta=" + getAlta() + ", cvuCC=" + getCvuCC() + ", movimientoCC=" + getMovimientoCC() + ", saldoCC=" + getSaldoCC() + ", aliasCC=" + getAliasCC() + ", usuarios=" + getUsuarios() + ", actividad=" + getActividad() + '}';
     }
-    
+
+    /**
+     * @return the efectivoCC
+     */
+    public List<EfectivoCC> getEfectivoCC() {
+        return efectivoCC;
+    }
+
+    /**
+     * @param efectivoCC the efectivoCC to set
+     */
+    public void setEfectivoCC(List<EfectivoCC> efectivoCC) {
+        this.efectivoCC = efectivoCC;
+    }
+
+   
 }

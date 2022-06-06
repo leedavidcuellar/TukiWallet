@@ -6,7 +6,7 @@
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Cuenta;
-import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
+
 import com.proyectofinal.tukiwallet.Entidades.Foto;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
@@ -45,6 +45,9 @@ public class UsuarioServicio implements UserDetailsService{
     
     @Autowired
     private NotificacionServicio notificacionServicio;
+
+    @Autowired
+    private CuentaServicio cuentaServicio;
     
     @Autowired
     private CuentaRepositorio cuentaRepositorio;
@@ -55,29 +58,28 @@ public class UsuarioServicio implements UserDetailsService{
     @Autowired
     private FotoServicio fotoServicio;
     
-     @Transactional(propagation = Propagation.REQUIRED)
-     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, String dni, String mail, String clave1, String clave2, String idCuenta, String idCuentaComun) throws ErrorServicio{
-         List<CuentaComun>listaCuentaComun = new ArrayList<CuentaComun>();
-         Cuenta cuenta = cuentaRepositorio.getById(idCuenta);
-         CuentaComun cuentaComun = cuentaComunRepositorio.getById(idCuentaComun);
+     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+         Cuenta cuenta = cuentaServicio.registrar(dni);
          
-         validar(nombre, apellido, dni, mail, clave1, clave2, cuenta, cuentaComun);
-         listaCuentaComun.add(cuentaComun);
+         validar(nombre, apellido, dni, mail, fechaNacimiento, clave1, clave2, cuenta);
+        
          
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-         
+        usuario.setDni(dni);
         String encriptada = new BCryptPasswordEncoder().encode(clave1);
         usuario.setClave(encriptada);
         usuario.setAlta(Boolean.TRUE);
+        usuario.setFechaNacimiento(fechaNacimiento);
 
         Foto foto = fotoServicio.guardar(archivo);
         usuario.setFoto(foto);
         
         usuario.setCuenta(cuenta);
-        usuario.setCuentaComun(listaCuentaComun);
+      
         
         usuarioRepositorio.save(usuario);
         
@@ -85,14 +87,11 @@ public class UsuarioServicio implements UserDetailsService{
         
      }
      
-    @Transactional(propagation = Propagation.NESTED) 
-    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, String clave1, String clave2, String idCuenta, String idCuentaComun) throws ErrorServicio{
-        List<CuentaComun>listaCuentaComun = new ArrayList<CuentaComun>();
-        Cuenta cuenta = cuentaRepositorio.getById(idCuenta);
-        CuentaComun cuentaComun = cuentaComunRepositorio.getById(idCuentaComun);
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class}) 
+    public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
         
-        validar(nombre, apellido, dni, mail, clave1, clave2, cuenta, cuentaComun);
-        listaCuentaComun.add(cuentaComun);
+        //validar2(nombre, apellido, dni, mail,fechaNacimiento,clave1, clave2);
+       
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
          if (respuesta.isPresent()) {
@@ -100,20 +99,31 @@ public class UsuarioServicio implements UserDetailsService{
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
             usuario.setMail(mail);
+            usuario.setDni(dni);
+            if(fechaNacimiento != null){
+            usuario.setFechaNacimiento(fechaNacimiento);
+            }
+                
             
+            
+            if(clave1 == null){
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(encriptada);
-
-            String idFoto = null;
-            if(usuario.getFoto()!= null){
-                idFoto = usuario.getFoto().getId();
             }
             
-            Foto foto = fotoServicio.actualizar(idFoto, archivo);
-            usuario.setFoto(foto);
-            
-            usuario.setCuenta(cuenta);
-            usuario.setCuentaComun(listaCuentaComun);
+            String idFoto = null;
+            if(usuario.getFoto() == null){
+                
+                 Foto foto = fotoServicio.guardar(archivo);
+                usuario.setFoto(foto);
+            }else{
+                idFoto = usuario.getFoto().getId();
+                Foto foto = fotoServicio.actualizar(idFoto,archivo);
+                usuario.setFoto(foto);
+            }
+           
+           
+
             
             usuarioRepositorio.save(usuario);
             
@@ -197,7 +207,7 @@ public class UsuarioServicio implements UserDetailsService{
     }
     
     
-    private void validar(String nombre, String apellido, String dni, String mail, String clave1, String clave2, Cuenta cuenta, CuentaComun cuentaComun) throws ErrorServicio{
+    private void validar(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2, Cuenta cuenta) throws ErrorServicio{
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -221,11 +231,65 @@ public class UsuarioServicio implements UserDetailsService{
         if(cuenta == null){
             throw new ErrorServicio("No se encontro la cuenta solicitada");
         }
-        
-        if(cuentaComun == null){
-            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
+                
+        if(dni.isEmpty() || dni == null){
+            throw new ErrorServicio("El DNI no puede ser nulo");
         }
+        if(usuarioRepositorio.buscarPorDni(dni) != null){
+            throw new ErrorServicio("El DNI ingresado ya tiene una cuenta vinculada!");
+        }
+        
+        if(usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
+        }
+        
+        if(fechaNacimiento == null){
+            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
+        }
+        
+//        if(cuentaComun == null){
+//            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
+//        }
      }
+    
+    private void validar2(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
+        if (nombre.isEmpty()) {
+            throw new ErrorServicio("No puede ser espacio en nombre");
+        }
+
+        if (apellido.isEmpty()) {
+            throw new ErrorServicio("No puede ser espacio en apellido");
+        }
+
+        if (mail.isEmpty()) {
+            throw new ErrorServicio("No puede ser espacio en mail");
+        }
+
+        if (clave1.trim().isEmpty() || clave1.length() < 6) {
+            throw new ErrorServicio("No puede ser espacio en clave");
+        }
+        
+        if (!clave1.equals(clave2)) {
+            throw new ErrorServicio("Las claves tiene que ser iguales");
+        }
+        
+        if(dni.isEmpty()){
+            throw new ErrorServicio("No puede ser espacio en dni");
+        }
+        if(usuarioRepositorio.buscarPorDni(dni) != null){
+            throw new ErrorServicio("El DNI ingresado ya existe!");
+        }
+         if(usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
+        }
+        
+//        if(fechaNacimiento == null){
+//            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
+//        }
+//        if(cuenta == null){
+//            throw new ErrorServicio("No se encontro la cuenta solicitada");
+//        }
+    }
     
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {

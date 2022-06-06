@@ -18,7 +18,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
-    @Query("SELECT u FROM Usuario u WHERE u.id = :id")
+    @Query("SELECT a FROM Actividad a WHERE a.id = :id")
     public Actividad buscarPorId(@Param("id") String id);
+    
+    @Query("SELECT a FROM Actividad a ORDER BY a.nOperacion ASC")
+    public Actividad buscarNumOperacionMayor();
     
 }

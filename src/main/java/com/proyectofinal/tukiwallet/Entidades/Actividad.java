@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Entidades;
 
 import java.util.Date;
@@ -11,22 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author leedavidcuellar
- */
+
 @Entity
 public class Actividad {
-        @Id
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private Integer nOperacion;
+    private String nOperacion;
     private Float monto;
     private String motivo;
     private Date fecha;
-    private Boolean alta;
-
+    private Boolean movimiento;//True Salida y False Ingreso
+    private String cvu;
+    private String cvu2;
+    
     public Actividad() {
     }
 
@@ -95,34 +90,62 @@ public class Actividad {
     /**
      * @return the alta
      */
-    public Boolean getAlta() {
-        return alta;
+    public Boolean getMovimiento() {
+        return movimiento;
     }
 
     /**
      * @param alta the alta to set
      */
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setMovimiento(Boolean alta) {
+        this.movimiento = alta;
     }
 
     @Override
     public String toString() {
-        return "Actividad{" + "id=" + getId() + ", monto=" + getMonto() + ", motivo=" + getMotivo() + ", fecha=" + getFecha() + ", alta=" + alta + '}';
+        return "Actividad{" + "id=" + getId() + ", monto=" + getMonto() + ", motivo=" + getMotivo() + ", fecha=" + getFecha() + ", alta=" + getMovimiento() + '}';
     }
 
     /**
      * @return the nOperacion
      */
-    public Integer getnOperacion() {
+    public String getnOperacion() {
         return nOperacion;
     }
 
     /**
      * @param nOperacion the nOperacion to set
      */
-    public void setnOperacion(Integer nOperacion) {
+    public void setnOperacion(String nOperacion) {
         this.nOperacion = nOperacion;
+    }
+
+    /**
+     * @return the cvu
+     */
+    public String getCvu() {
+        return cvu;
+    }
+
+    /**
+     * @param cvu the cvu to set
+     */
+    public void setCvu(String cvu) {
+        this.cvu = cvu;
+    }
+
+    /**
+     * @return the cvu2
+     */
+    public String getCvu2() {
+        return cvu2;
+    }
+
+    /**
+     * @param cvu2 the cvu2 to set
+     */
+    public void setCvu2(String cvu2) {
+        this.cvu2 = cvu2;
     }
  
 }

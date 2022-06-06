@@ -1,0 +1,21 @@
+body{
+  margin: 0px;
+  
+}
+
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+}
+
+
+.col{
+margin: 50px;
+text-align: center;
+margin-top: 150px;
+
+}
+

@@ -1,0 +1,80 @@
+.bloque{
+    margin: 400px;
+}
+.primera-parte{
+    text-align: center;
+    align-items: center;
+    display: block;
+    padding: 15px;
+    font-size: 30px;
+    border-style: solid;
+        border-width: 5px;
+        border-color: rgb(79, 0, 205);
+        border-radius: 10px;
+        padding: 5px;
+}
+.nombre-usuario{
+    padding-top: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+.foto-usuario{
+    width: 120px;
+}
+.segunda-parte{ 
+    text-align: center;
+    align-items: center;
+    display: block;
+    padding: 15px;
+    font-size: 30px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(79, 0, 205);
+    border-radius: 10px;
+    padding: 5px;
+}
+svg {
+    width: 64px;
+    margin-top: 20px;
+}
+.textarea {
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+    text-align: center;
+    font-size: 70%;
+  }
+
+  .textarea2 {
+    background-color: transparent;
+    resize: none;
+    outline: none;
+    text-align: center;
+    font-size: 70%;
+  }
+
+.cvu{
+    
+    padding: 4px;
+}
+.mail{
+    padding: 4px;
+}
+.constrasena{
+    padding: 4px;
+}
+.terminos{
+    padding: 8px;
+}
+.faqs{
+    padding: 8px;
+}
+.pgrande{
+    font-size: 40px;
+    display: inline-block;
+    vertical-align: top;
+}
+a{
+    margin-top: 20px;
+}
