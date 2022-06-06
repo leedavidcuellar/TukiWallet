@@ -16,19 +16,20 @@ body {
   padding: 0 10px;
   background: rgb(216, 216, 216);
   margin-top: 100px;
-  margin-left: 200px;
+
   font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;;
 }
-.col{
-  text-align: center;
-}
+
+
+
+
 ::selection {
-  color: #fff;
+  color: rgb(241, 241, 241);
   background: #675AFE;
 }
 
 .wrapper{
-  background-color: #fff;
+  background-color: rgb(241, 241, 241);
   border-radius: 10px;
   margin-top: 20px;
 }
@@ -43,7 +44,7 @@ header{
   width: 600px;
   padding: 0px;
   border-radius: 10px;
-  background: #fff;
+  background: rgb(241, 241, 241);
   box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -73,7 +74,7 @@ form input {
   height: 50px;
   font-size: 17px;
   padding: 0 15px;
-  border: 1px solid #999;
+  border: 1px solid rgb(241, 241, 241);
 }
 
 form input:focus {
@@ -124,10 +125,10 @@ form .drop-list {
 
 
 form button {
-  margin-top: 10px;
-  height: 50px;
+  margin-top: 30px;
+  height: 40px;
   width: 130px;
-  color: #fff;
+  color: rgb(241, 241, 241);
   font-size: 19px;
   cursor: pointer;
   background: #3719bb;
