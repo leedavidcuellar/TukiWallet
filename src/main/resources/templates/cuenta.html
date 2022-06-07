@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- CSS only -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -11,6 +12,7 @@
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
     />
+
      <!-- Google fonts // Si quieren las cambian-->
    <link rel="preconnect" href="https://fonts.gstatic.com" />
    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
@@ -34,6 +36,48 @@
      
       </form>
     </div>
+
+
+    
+    <link href="/css/stylescuenta.css" rel="stylesheet" />
+    <title>Tu Cuenta TukiWallet</title>
+  </head>
+  <body>
+    <div class="container px-4">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="p-3 border bg-light">
+            <h4 name="nombre" th:value="${micuenta.nombre}"
+            th:if="${session.usuariosession != null}"
+            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
+            <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+
+
+            <h5>Tu Dinero Disponible</h5>
+            <h4>
+              <input class= "textarea" type="number" name="saldo" th:value="${micuenta.cuenta.saldo}" readonly="readonly"/>
+              <input class= "textarea" type="number" name="saldo" th:value="${#numbers.formatDecimal(micuenta.cuenta.saldo,1,'POINT',1,'COMMA')}" readonly="readonly"/>
+              
+            </h4>
+
+            <button type="button" class="btn btn-primary btn-sm">
+              Transferir dinero
+            </button>
+
+           <!-- llamar ModalMostarDatos-->
+            
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#misDatos">
+              Ingresar Dinero
+            </button>
+          
+            <!-- fin llamado ModalMostrarDatos-->
+
+          </div>
+        </div>
+
+
+        <div class="col">
+
           <div class="p-3 border bg-light">
             <header>Movimiento de tu actividad</header>
             <table class="table table-hover">
@@ -51,6 +95,45 @@
         
       </div>
     </div>
+
+          <!-- Modal ModalMostrarDatos -->
+          <div id="misDatos" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+        
+              <!-- Modal content ModalMostrarDatos-->
+              <div class="modal-content">
+                <div class="modal-header" style="margin:10px;">
+                  <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
+                  <h4 class="modal-title">Datos para que Ingresen Dinero</h4>
+                </div>
+                <div class="col-md-9" style="margin:70px;">
+                  <label class="text">Nombre y Apellido:</label>
+                  <input class= "textarea" type="text" name="nombre-usuario" th:value="${micuenta.nombre + ' ' + micuenta.apellido}" readonly="readonly"/>
+                  <br>
+                  <label class="text">DNI:</label>
+                  <input class= "textarea" type="text" name="dni-usuario" th:value="${micuenta.dni}" readonly="readonly"/>
+                  <br>
+                  <label class="text">Cvu:</label>
+                  <input class= "textarea" style="width:60%;" type="text" name="cvu-cuenta-usuario" th:value="${micuenta.cuenta.cvu}" readonly="readonly"/>
+                  <br>
+                  <label class="text">Alias:</label>
+                  <input class= "textarea" type="text" name="alias-cuenta-usuario" th:value="${micuenta.cuenta.alias}" readonly="readonly"/>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Final ModalMostrarDatos -->
+
+          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+          crossorigin="anonymous"></script>
+          
   </body>
 </html>
 

@@ -15,7 +15,6 @@ import com.proyectofinal.tukiwallet.Repositorios.CuentaRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -88,10 +87,10 @@ public class UsuarioServicio implements UserDetailsService{
         
      }
      
-    @Transactional(propagation = Propagation.NESTED) 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class}) 
     public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
-
-        validar2(nombre, apellido, dni, mail,fechaNacimiento ,clave1, clave2);
+        
+        //validar2(nombre, apellido, dni, mail,fechaNacimiento,clave1, clave2);
        
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
@@ -100,17 +99,30 @@ public class UsuarioServicio implements UserDetailsService{
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
             usuario.setMail(mail);
+            usuario.setDni(dni);
+            if(fechaNacimiento != null){
+            usuario.setFechaNacimiento(fechaNacimiento);
+            }
+                
             
+            
+            if(clave1 == null){
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(encriptada);
-
-            String idFoto = null;
-            if(usuario.getFoto()!= null){
-                idFoto = usuario.getFoto().getId();
             }
             
-            Foto foto = fotoServicio.actualizar(idFoto, archivo);
-            usuario.setFoto(foto);
+            String idFoto = null;
+            if(usuario.getFoto() == null){
+                
+                 Foto foto = fotoServicio.guardar(archivo);
+                usuario.setFoto(foto);
+            }else{
+                idFoto = usuario.getFoto().getId();
+                Foto foto = fotoServicio.actualizar(idFoto,archivo);
+                usuario.setFoto(foto);
+            }
+           
+           
 
             
             usuarioRepositorio.save(usuario);
@@ -227,6 +239,10 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("El DNI ingresado ya tiene una cuenta vinculada!");
         }
         
+        if(usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
+        }
+        
         if(fechaNacimiento == null){
             throw new ErrorServicio("La fecha de nacimiento debe ser valida");
         }
@@ -237,36 +253,39 @@ public class UsuarioServicio implements UserDetailsService{
      }
     
     private void validar2(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
-        if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre del usuario no puede ser nulo");
+        if (nombre.isEmpty()) {
+            throw new ErrorServicio("No puede ser espacio en nombre");
         }
 
-        if (apellido == null || apellido.isEmpty()) {
-            throw new ErrorServicio("El apellido del usuario no puede ser nulo");
+        if (apellido.isEmpty()) {
+            throw new ErrorServicio("No puede ser espacio en apellido");
         }
 
-        if (mail == null || mail.isEmpty()) {
-            throw new ErrorServicio("El mail del usuario no puede ser nulo");
+        if (mail.isEmpty()) {
+            throw new ErrorServicio("No puede ser espacio en mail");
         }
 
-        if (clave1 == null || clave1.trim().isEmpty() || clave1.length() < 6) {
-            throw new ErrorServicio("El mail del usuario no puede ser nulo y no puede ser menor de 6 caracteres");
+        if (clave1.trim().isEmpty() || clave1.length() < 6) {
+            throw new ErrorServicio("No puede ser espacio en clave");
         }
         
         if (!clave1.equals(clave2)) {
             throw new ErrorServicio("Las claves tiene que ser iguales");
         }
         
-        if(dni.isEmpty() || dni == null){
-            throw new ErrorServicio("El DNI no puede ser nulo");
+        if(dni.isEmpty()){
+            throw new ErrorServicio("No puede ser espacio en dni");
         }
         if(usuarioRepositorio.buscarPorDni(dni) != null){
             throw new ErrorServicio("El DNI ingresado ya existe!");
         }
-       
-        if(fechaNacimiento == null){
-            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
+         if(usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
         }
+        
+//        if(fechaNacimiento == null){
+//            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
+//        }
 //        if(cuenta == null){
 //            throw new ErrorServicio("No se encontro la cuenta solicitada");
 //        }

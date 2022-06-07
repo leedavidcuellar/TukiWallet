@@ -33,7 +33,7 @@ public class Usuario {
     private String clave;
     private Boolean alta;
     
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     
     @OneToOne

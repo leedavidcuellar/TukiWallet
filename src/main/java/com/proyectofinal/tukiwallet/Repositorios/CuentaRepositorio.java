@@ -20,6 +20,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CuentaRepositorio extends JpaRepository<Cuenta, String>{
     
+    @Query("SELECT a FROM Cuenta a WHERE a.id = :id")
+    public Cuenta buscarCuentaPorId (@Param("id") String id);
+    
     @Query("SELECT a FROM Cuenta a WHERE a.alias = :alias")
     public Cuenta buscarCuentaPorAlias (@Param("alias") String alias);
     

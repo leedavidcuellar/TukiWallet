@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,5 +136,159 @@
    <h1 >TukiWallet</h1>
 
 </header>
+
+=======
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+    <title>FinalTuki</title>
+    <link rel="stylesheet" href="/css/estilosFinal.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+   
+</head>
+
+
+<body>
+    
+    <div th:fragment="navbar">
+
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img th:if="${session.usuariosession.foto != null}" style="max-height: 200px; border-radius:100%"
+                    th:src="${'/foto/usuario/'+ session.usuariosession.id}" alt="">
+                  <img th:if="${session.usuariosession.foto == null}" style="max-height: 200px; border-radius:100%" src="/assets/img/birrita.png"
+                    alt="">
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">¡Hola!</span>
+                    <span class="profession" th:if="${session.usuariosession != null}"
+                    th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+                    <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+                   
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+
+        <div th:fragment="navbar"> 
+
+        <div class="menu-bar">
+            <div class="menu">
+
+
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="/inicio">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Inicio</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
+                            <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                            <span class="text nav-text">Tu perfil</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-wallet icon'></i>
+                            <span class="text nav-text">Cuenta</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <span class="text nav-text">Cuenta comun</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-heart icon' ></i>
+                            <span class="text nav-text">Transferir</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-wallet icon' ></i>
+                            <span class="text nav-text">Wallets</span>
+                        </a>
+                    </li>
+
+                    <!-- <li class="search-box">
+                        <!--     <i class='bx bx-search icon'></i>
+                             <input type="text" placeholder="" >   -->
+                         </li>
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="salir">
+                    <a href="#">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Salir</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Modo noche</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
+        </div>
+
+    </nav>
+    <section class="home">
+        <header class="head1">
+            <div class="textTuki">TukiWallet</div>
+            <div class="text">Inicio</div>
+         </header>
+        
+    </section>
+</div>
+   <!-- <div class="footer">
+        <footer>
+        footer>
+        </footer>
+
+    </div>-->
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
+
+ <!--
+     <header>
+   <h1 >TukiWallet</h1>
+
+</header>
+
 
 -->
