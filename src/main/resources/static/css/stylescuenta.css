@@ -36,6 +36,7 @@ body {
 
 header{
   margin-top: 20px;
+  padding: 10px;
 }
 
 .wrapper2 {
@@ -44,6 +45,7 @@ header{
   width: 600px;
   padding: 0px;
   border-radius: 10px;
+  padding-bottom: 40px;
   background: rgb(241, 241, 241);
   box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
 }
