@@ -63,6 +63,6 @@ public class PortalControlador {
 //            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
 //        }
             
-        return "inicio.html";
+        return "principalFinal.html";
     }
 }
