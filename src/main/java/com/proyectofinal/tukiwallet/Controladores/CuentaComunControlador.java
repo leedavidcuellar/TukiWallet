@@ -88,7 +88,7 @@ public class CuentaComunControlador {
         try {
             cuentaComunServicio.crearCuentaComun(nombre, usuarios);
         } catch (ErrorServicio error) {
-            model.put("error", error.getMessage());
+            modelo.put("error", error.getMessage());
             return "crearCuentaComun.html"; //check 
         }
         return "misCuentasComunes.html"; //check   
@@ -101,7 +101,7 @@ public class CuentaComunControlador {
         try {
             cuentaComunServicio.deshabilitar(id);
         } catch (ErrorServicio error) {
-            model.put("error", error.getMessage());
+            modelo.put("error", error.getMessage());
             return "misCuentasComunes.html"; //check 
         }
         return "miCuenta.html"; //check   
@@ -114,7 +114,7 @@ public class CuentaComunControlador {
         try {
             cuentaComunServicio.habilitar(id);
         } catch (ErrorServicio error) {
-            model.put("error", error.getMessage());
+            modelo.put("error", error.getMessage());
             return "misCuentasComunes.html"; //check 
         }
         return "miCuenta.html"; //check   
@@ -127,9 +127,9 @@ public class CuentaComunControlador {
         try {
             cuentaComunServicio.modificarCuentaComun(nombre, nombre, usuarios);
         } catch (ErrorServicio error) {
-            model.put("error", error.getMessage());
-            model.put("nombre", nombre);
-            model.put("usuarios", usuarios);
+            modelo.put("error", error.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("usuarios", usuarios);
             return "editarCuentaComun.html"; //check 
         }
         return "misCuentasComunes.html"; //check   
