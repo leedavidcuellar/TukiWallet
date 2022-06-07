@@ -157,6 +157,10 @@ form .drop-list {
   margin: 0 -5px 0 5px;
 }
 
+.p-3{
+  border-radius: 10px;
+}
+
 .largoB{
   width: 240px;
 }
