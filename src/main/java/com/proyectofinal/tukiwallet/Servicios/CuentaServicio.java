@@ -140,6 +140,16 @@ public class CuentaServicio {
         }
     } 
     
+    @Transactional(propagation = Propagation.NESTED)
+    public Cuenta buscarPorId (String id) throws ErrorServicio{
+        Optional<Cuenta> optional = cuentaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }else{
+            throw new ErrorServicio("No se encontró el Id");
+        }
+    } 
+    
     public void validarSaldo(Float saldo) throws ErrorServicio{
         if (saldo == null || saldo.toString().trim().isEmpty()) {
             throw new ErrorServicio("El saldo no puede ser nulo"); 

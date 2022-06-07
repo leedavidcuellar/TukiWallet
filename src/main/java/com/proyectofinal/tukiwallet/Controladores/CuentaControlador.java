@@ -12,6 +12,7 @@ import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
+import java.text.ParseException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
@@ -20,6 +21,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,7 +55,72 @@ public class CuentaControlador {
 
         return "cuenta.html";
     }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PostMapping("/editar-cuenta")
+    public String editarCuenta(ModelMap model,  HttpSession session, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException{
+        Cuenta cuenta = null;     
+        try {
+            cuenta = cuentaServicio.buscarPorId(id);
+          
+            cuentaServicio.modificarAlias(alias, id);
+           
+            session.setAttribute("usuariosession", cuenta);
+            //VER BIEN EL REDIRECT
+            return "redirect:/inicio";
 
+        } catch (ErrorServicio e) {
+            model.put("perfil", cuenta);
+            model.put("mensaje", e.getMessage());
+            //VER BIEN EL REDIRECT
+            return "tuperfil.html";
+        }   
+    }
+    
+    @PostMapping("/altaCuenta/{id}")
+    public String altaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio{
+        try {
+            
+            cuentaServicio.alta(id);
+            //ver bien el Return
+            return "/inicio";
+
+        } catch (ErrorServicio e) {
+            model.put("mensaje", e.getMessage());
+            //ver bien el Return
+            return "/index";
+        }   
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PostMapping("/bajaCuenta/{id}")
+    public String bajaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio{
+        try {
+            
+            cuentaServicio.baja(id);
+            //ver bien el Return
+            return "/index";
+
+        } catch (ErrorServicio e) {
+            model.put("mensaje", e.getMessage());
+            //ver bien el Return
+            return "/inicio";
+        }   
+    }
+    
+    @GetMapping("/eliminarCuenta/{id}")
+    public String eliminarCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio{
+        try {
+           cuentaServicio.borrarPorId(id);
+           //ver bien el Return
+           return "redirect:/";
+        } catch (ErrorServicio e) {
+            //ver bien el Return
+            return "redirect:/"; 
+        }
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
         try {
@@ -94,8 +162,7 @@ public class CuentaControlador {
         } catch (ErrorServicio e) {
             modelo.put("mensaje", e.getMessage());
             return "redirect:/micuenta";
-        }
-        
+        }    
     }
 
 }
