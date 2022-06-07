@@ -38,7 +38,9 @@ header{
   margin-top: 20px;
   padding: 10px;
 }
-
+.p-3{
+  border-radius: 10px;
+}
 .wrapper2 {
   display: flex;
   justify-content: space-evenly;
