@@ -28,16 +28,16 @@ public class UsuarioControlador {
     
     
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap model, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio, ParseException{
+    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio, ParseException{
         SimpleDateFormat formatoDateFecha = new SimpleDateFormat("dd-mm-yyyy");
-            Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
+        Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
             
         try {
             
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
-            
+            Usuario usuario = usuarioServicio.buscarPorMail(mail);
+            session.setAttribute("usuariosession", usuario);
             return "redirect:/inicio";
-
         } catch (ErrorServicio e) {
             model.put("mensaje", e.getMessage());
             return "/registrarse";
