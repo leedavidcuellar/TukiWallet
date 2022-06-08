@@ -29,6 +29,8 @@ body {
 }
 
 .wrapper{
+  margin: 200px;
+  display: inline-block;
   background-color: rgb(241, 241, 241);
   border-radius: 10px;
   margin-top: 20px;
