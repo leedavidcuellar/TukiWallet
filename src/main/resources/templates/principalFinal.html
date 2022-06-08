@@ -17,6 +17,15 @@
 
 
 <body>
+    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+    th:text="${mensaje}"
+    class="alert" data-dismiss="alert" aria-label="close">&times;
+  </div>
+
+  <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
+    th:text="${mensaje1}"
+    class="alert" data-dismiss="alert" aria-label="close">&times;
+  </div>
     
     <div th:fragment="navbar">
 

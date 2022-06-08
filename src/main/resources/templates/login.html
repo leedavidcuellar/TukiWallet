@@ -32,6 +32,8 @@
         <div class="agileits-top">
 
           <form action="/logincheck" method="post">
+            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+            <p th:if="${logout != null}" th:text="${logout}" style="color:green"></p>
             <input
               class="text email"
               type="email"

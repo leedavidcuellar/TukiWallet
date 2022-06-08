@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -28,7 +29,7 @@ public class UsuarioControlador {
     
     
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio, ParseException{
+    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo, RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException{
         SimpleDateFormat formatoDateFecha = new SimpleDateFormat("dd-mm-yyyy");
         Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
             
@@ -37,16 +38,26 @@ public class UsuarioControlador {
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
             Usuario usuario = usuarioServicio.buscarPorMail(mail);
             session.setAttribute("usuariosession", usuario);
+            redirectAttrs
+            .addFlashAttribute("mensaje", "Usuario agregado correctamente")
+            .addFlashAttribute("clase", "success");
+            
             return "redirect:/inicio";
         } catch (ErrorServicio e) {
-            model.put("mensaje", e.getMessage());
+            model.put("mensaje1","Error al cargar Usuario "+e.getMessage());
+            model.put("clase1", "danger");
+            model.put("nombre",nombre);
+            model.put("apellido",apellido);
+            model.put("dni",dni);
+            model.put("mail",mail);
+            model.put("fechaNacimiento",fechaNacimiento);
             return "/registrarse";
         }   
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-perfil")
-    public String editarUsuario(ModelMap model,  HttpSession session, MultipartFile archivo, @RequestParam String id,@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2) throws ErrorServicio, ParseException{
+    public String editarUsuario(ModelMap model,  HttpSession session, MultipartFile archivo, @RequestParam String id,@RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2,RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException{
         SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
         Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
         System.out.println(fechaNacimientoAux +" "+fechaNacimiento);
@@ -57,12 +68,24 @@ public class UsuarioControlador {
             usuarioServicio.modificarUsuario(archivo, id,nombre, apellido,dni, mail,fechaNacimientoAux, clave1, clave2);
            
             session.setAttribute("usuariosession", usuario);
+            redirectAttrs
+            .addFlashAttribute("mensaje", "Usuario Editado correctamente")
+            .addFlashAttribute("clase", "success");
             return "redirect:/inicio";
 
         } catch (ErrorServicio e) {
+            e.printStackTrace();
+            model.put("mensaje1","Error al editar Usuario "+e.getMessage());
+            model.put("clase1", "danger");
             model.put("perfil", usuario);
             model.put("error", e.getMessage());
-            model.put("mensaje", e.getMessage());
+
+            model.put("clase1", "danger");
+            model.put("nombre",nombre);
+            model.put("apellido",apellido);
+            model.put("dni",dni);
+            model.put("mail",mail);
+            model.put("fechaNacimiento",fechaNacimiento);
             return "tuperfil.html";
         }   
     }
