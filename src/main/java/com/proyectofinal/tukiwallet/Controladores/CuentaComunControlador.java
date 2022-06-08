@@ -34,6 +34,19 @@ public class CuentaComunControlador {
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
     
+    @GetMapping("/micuentaC")
+    public String miCuenta(ModelMap modelo, HttpSession session, String id) {
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+        }
+        Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
+        modelo.addAttribute("micuentaC", usuarioCuentaC);
+
+        return "cuentaComun.html";
+    }
+    
+    
     @GetMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvu1, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
         //cvu1 = cvu de la cuenta comun
@@ -75,7 +88,7 @@ public class CuentaComunControlador {
         } catch (ErrorServicio e) {
             modelo.put("mensaje", e.getMessage());
             //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
-            return "redirect:/micuenta";
+            return "redirect:/cuentaComun";
         }
         //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
         return "redirect:/micuenta";
