@@ -35,7 +35,8 @@ public class UsuarioControlador {
         try {
             
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
-            return "index.html";
+            
+            return "redirect:/inicio";
 
         } catch (ErrorServicio e) {
             model.put("mensaje", e.getMessage());
