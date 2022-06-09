@@ -25,18 +25,22 @@ public class ActividadServicio {
     @Autowired
     private ActividadRepositorio actividadRepositorio;
 
-    @Transactional(propagation = Propagation.NESTED)
-    public void registrar(String motivo, Float monto, Boolean movimiento, String cvu, String cvu2) throws ErrorServicio {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public void registrar(String motivo, Float monto, boolean movimiento, String cvu, String cvu2) throws ErrorServicio {
         validar(motivo, monto);
         Actividad actividad = new Actividad();
         actividad.setMonto(monto);
         actividad.setMotivo(motivo);
         actividad.setFecha(new Date());
-        actividad.setMovimiento(movimiento);
+        if (movimiento) {
+            actividad.setMovimiento(Boolean.TRUE);  
+        }else{
+            actividad.setMovimiento(Boolean.FALSE);  
+        }
         actividad.setCvu(cvu);
         actividad.setCvu2(cvu2);
         actividad.setnOperacion(generarNumDeOperacion());
-
+        
         actividadRepositorio.save(actividad);
 
     }
@@ -44,7 +48,11 @@ public class ActividadServicio {
     @Transactional(readOnly = true)
     public String generarNumDeOperacion() {
         String n;
-        return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
+        if (actividadRepositorio.buscarNumOperacionMayor()==null) {
+            return "1";
+        }else{
+            return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
+        }
     }
 
     /* public String tipoMovimiento(Boolean movimiento){
@@ -57,7 +65,7 @@ public class ActividadServicio {
     }
      */
     public void validar(String motivo, Float monto) throws ErrorServicio {
-        if (motivo == null || monto.toString().length() > 3) {
+        if (motivo == null || monto.toString().length() < 1) {
             throw new ErrorServicio("Debe registrar un motivo o registro valido");
         }
         if (monto == null) {

@@ -64,7 +64,7 @@ public class CuentaServicio {
     }
     
     //ingresa
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void ingresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuIngresa);
         if (cuenta != null) {
@@ -72,20 +72,21 @@ public class CuentaServicio {
             cuentaRepositorio.save(cuenta);
             actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el Cuenta");
+            throw new ErrorServicio("No se ha encontrado el Cuenta1");
         }
     }
     
     //egresa
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void egresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuEgresa);
         if (cuenta != null) {
             cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             cuentaRepositorio.save(cuenta);
+            //ERROR EN REGISTRAR 
             actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el Cuenta");
+            throw new ErrorServicio("No se ha encontrado el Cuenta2");
         }
     }
     

@@ -121,16 +121,18 @@ public class CuentaControlador {
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/transferir")
-    public String transferir(ModelMap modelo, HttpSession session, String id, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
+    @PostMapping("/transferir")
+    public String transferir(ModelMap modelo, HttpSession session, String id, String cvuCuenta, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
         try {
-            Usuario login = (Usuario) session.getAttribute("usuariosession");
-            if (login == null || !login.getId().equals(id)) {
-                return "redirect:/login";
-            }
-            Float motivof = Float.valueOf(motivo);
-            Usuario usuario = usuarioServicio.buscarPorId(id);
-            String cvu1 = usuario.getCuenta().getCvu();
+//            Usuario login = (Usuario) session.getAttribute("usuariosession");
+//            if (login == null || !login.getId().equals(id)) {
+//            return "redirect:/login";
+//            }
+//            Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+//            modelo.addAttribute("micuenta", usuarioCuenta);
+//            
+            Float montof = Float.valueOf(monto);
+            String cvu1 = cvuCuenta;
             String cvu2 = null;
             Boolean cocc = true;
             if (cvuoAlias.contains("C")) {
@@ -140,29 +142,46 @@ public class CuentaControlador {
             } else if (cvuoAlias.contains("T")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorAlias(cvuoAlias);
                 cvu2 = cuenta2.getCvu();
-            } else if (cvuoAlias.substring(4).equals("1")) {
+            } else if (cvuoAlias.substring(4,5).equals("1")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorid(cvuoAlias);
-                cvu2 = cuenta2.getCvu();
-            } else if (cvuoAlias.substring(4).equals("2")) {
+                cvu2 = cvuoAlias;
+            } else if (cvuoAlias.substring(4,5).equals("2")) {
                 CuentaComun cuenta2 = cuentaComunServicio.buscarCuentaPorIdCC(cvuoAlias);
-                cvu2 = cuenta2.getCvuCC();
+                cvu2 = cvuoAlias;
                 cocc = false;
             }
+            System.out.println("1");
             if (cvu2 == null) {
-                cuentaServicio.ingresoCuenta(motivof, cvu1, cvu2, motivo);
+                cuentaServicio.ingresoCuenta(montof, cvu1, cvu2, motivo);
             }
-            cuentaServicio.validarTransferenciaCuenta(motivof, cvu1, cvu2);
-            cuentaServicio.egresoCuenta(motivof, cvu1, cvu2, motivo);
+            System.out.println("2");
+            cuentaServicio.validarTransferenciaCuenta(montof, cvu1, cvu2);
+            System.out.println("3");
+            cuentaServicio.egresoCuenta(montof, cvu1, cvu2, motivo);
+            System.out.println("4");
             if (cocc) {
-                cuentaServicio.ingresoCuenta(motivof, cvu1, cvu2, motivo);
+                cuentaServicio.ingresoCuenta(montof, cvu1, cvu2, motivo);
             } else {
-                cuentaComunServicio.ingresoCuentaComun(motivof, cvu2, cvu1, motivo);
+                System.out.println("5");
+                cuentaComunServicio.ingresoCuentaComun(montof, cvu2, cvu1, motivo);
             }
-            return "redirect:/micuenta";
+            return "/inicio";
         } catch (ErrorServicio e) {
-            modelo.put("mensaje", e.getMessage());
-            return "redirect:/micuenta";
+            modelo.put("Error", e.getMessage());
+            System.out.println(e.getMessage());
+            return "/inicio";
         }    
+    }
+    
+    @GetMapping("/transferirlink")
+    public String transferirlink(ModelMap model, HttpSession session, String id) throws ErrorServicio{
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+        }
+        Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        model.addAttribute("micuenta", usuarioCuenta);
+        return "transferir.html";
     }
 
 }

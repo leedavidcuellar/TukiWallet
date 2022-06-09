@@ -82,7 +82,7 @@
           </li>
 
           <li class="nav-link">
-            <a href="#">
+            <a>
               <i class='bx bx-heart icon'></i>
               <span class="text nav-text">Transferir</span>
             </a>
@@ -144,9 +144,10 @@
               readonly="readonly" /></h4>
         </div>
         <div class="wrapper2">
-          <button>Transferir</button>
-          <button type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
-
+            <a class="button" th:href="@{/cuenta/transferirlink(id=${session.usuariosession.id})}">
+                Transferir
+            </a>
+            <a class="button" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </a>
       </form>
     </div>
     <div class="p-3 border bg-light">
