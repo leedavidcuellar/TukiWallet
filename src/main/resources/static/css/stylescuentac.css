@@ -35,6 +35,14 @@ body {
   width: 500px
 }
 
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+}
+
 header{
   margin-top: 20px;
 }

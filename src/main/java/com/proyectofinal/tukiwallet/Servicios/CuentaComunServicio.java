@@ -261,4 +261,15 @@ public class CuentaComunServicio {
             return null;
         }
     }
+    
+        @Transactional(readOnly = true)
+    public CuentaComun buscarCuentaComunPorIdUsuario(String id) {
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorIdUsuario(id);
+        if (cuentaComun != null) {
+            
+            return cuentaComun;
+        } else {
+            return null;
+        }
+    }
 }

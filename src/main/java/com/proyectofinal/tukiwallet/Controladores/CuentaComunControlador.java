@@ -41,8 +41,11 @@ public class CuentaComunControlador {
             return "redirect:/login";
         }
         Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
+        CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+        List<Usuario> listaUsuarios =cuentaComunServicio.enlistar(cuentaComun.getId());
         modelo.addAttribute("micuentaC", usuarioCuentaC);
-
+        modelo.addAttribute("cuentaComun", cuentaComun);
+        modelo.addAttribute("listaUsuarios", listaUsuarios);
         return "cuentaComun.html";
     }
     
