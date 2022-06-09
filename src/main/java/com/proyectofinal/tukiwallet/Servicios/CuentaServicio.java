@@ -89,15 +89,20 @@ public class CuentaServicio {
         }
     }
     
-    public void validarTransferenciaCuenta(Float cantidad, String idtransfiere) throws ErrorServicio{
-        Optional<Cuenta> respuesta = cuentaRepositorio.findById(idtransfiere);
-        if (respuesta.isPresent()) {
-            Cuenta cuenta = respuesta.get();
+    public void validarTransferenciaCuenta(Float cantidad, String cvu1, String cvu2) throws ErrorServicio{
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvu1);
+        if (cuenta!=null) {
             if (cuenta.getSaldo()<cantidad) {
                 throw new ErrorServicio("No tiene esa cantidad en su cuenta");
             }
+            if (cantidad<0) {
+                throw new ErrorServicio("No puede transferir una cantidad negativa");
+            }
+            if (cvu2.equals(cvu1)) {
+            throw new ErrorServicio("No se puede transferir al mismo cvu");
+            }
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el cvu");
         }
     }
 
@@ -135,6 +140,16 @@ public class CuentaServicio {
         }
     } 
     
+    @Transactional(propagation = Propagation.NESTED)
+    public Cuenta buscarPorId (String id) throws ErrorServicio{
+        Optional<Cuenta> optional = cuentaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }else{
+            throw new ErrorServicio("No se encontró el Id");
+        }
+    } 
+    
     public void validarSaldo(Float saldo) throws ErrorServicio{
         if (saldo == null || saldo.toString().trim().isEmpty()) {
             throw new ErrorServicio("El saldo no puede ser nulo"); 
@@ -149,9 +164,19 @@ public class CuentaServicio {
     
     @Transactional(readOnly = true)
     public Cuenta buscarCuentaPorAlias(String alias){
-        Cuenta autor = cuentaRepositorio.buscarCuentaPorAlias(alias);
-        if (autor!=null) {
-           return cuentaRepositorio.buscarCuentaPorAlias(alias); 
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorAlias(alias);
+        if (cuenta!=null) {
+           return cuenta; 
+        }else{
+            return null;
+        }      
+    }
+    
+    @Transactional(readOnly = true)
+    public Cuenta buscarCuentaPorid(String id){
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorId(id);
+        if (cuenta!=null) {
+           return cuenta; 
         }else{
             return null;
         }      
@@ -182,14 +207,14 @@ public class CuentaServicio {
             temp = (int)(Math.random()*10);
             cvu = cvu + temp.toString();
         }
-        //comprobarCvu(cvu, dni);
+        comprobarCvu(cvu, dni);
         return cvu;
     }
     
     @Transactional(readOnly = true)
     public void comprobarCvu (String cvu, String dni){
         Cuenta optional = cuentaRepositorio.buscarCuentaPorCvu(cvu);
-        if (optional==null) {
+        if (optional!=null) {
             crearCvu(dni);
         }
     }

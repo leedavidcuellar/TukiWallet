@@ -48,6 +48,7 @@ public class PortalControlador {
     return "registrarse.html";
     }
     
+    
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")    
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {
@@ -62,6 +63,6 @@ public class PortalControlador {
 //            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
 //        }
             
-        return "inicio.html";
+        return "principalFinal.html";
     }
 }
