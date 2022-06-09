@@ -18,15 +18,6 @@
 
 <body>
   <!-- main -->
-  <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-    th:text="${mensaje}"
-    class="alert" data-dismiss="alert" aria-label="close">&times;
-  </div>
-
-  <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
-    th:text="${mensaje1}"
-    class="alert" data-dismiss="alert" aria-label="close">&times;
-  </div>
 
   <div class="main-w3layouts wrapper">
     <h1>Registrarse</h1>
@@ -35,23 +26,23 @@
         <form action="/usuario/registrarUsuario" method="post" enctype="multipart/form-data">
           <p th:if="${Error != null}" th:text="${Error}" style=color:red;></p>
 
-          <input class="text" type="text" name="nombre" placeholder="Nombre" required="" />
+          <input class="text" type="text" name="nombre" placeholder="Nombre" th:value="${nombre}" required="" />
           <br>
-          <input class="text" type="text" name="apellido" placeholder="Apellido" required="" />
+          <input class="text" type="text" name="apellido" placeholder="Apellido" th:value="${apellido}" required="" />
 
           <br>
-          <input class="number" type="number" name="dni" placeholder="DNI" required="" />
+          <input class="number" type="number" name="dni" placeholder="DNI" th:value="${dni}" required="" />
 
           <br>
 
           <label class="text">Foto</label>
-          <input type="file" name="archivo" placeholder="Agregue su foto" />
+          <input type="file" name="archivo" placeholder="Agregue su foto"/>
 
-          <input class="text email" type="email" name="mail" placeholder="Email" required="" />
+          <input class="text email" type="email" name="mail" placeholder="Email" th:value="${mail}" required="" />
           <input class="text" type="password" name="clave1" placeholder="Contraseña" required="" />
           <input class="text w3lpass" type="password" name="clave2" placeholder="Confirme su contraseña" required="" />
           <label class="text">Fecha Nacimeinto</label>
-          <input class="text w3lpass" type="date" name="fechaNacimiento" placeholder="DD/MM/AA" required=""><br>
+          <input class="text w3lpass" type="date" name="fechaNacimiento" placeholder="DD/MM/AA" th:value="${fechaNacimiento}" required=""><br>
 
           <div class="wthree-text">
             <label class="anim">

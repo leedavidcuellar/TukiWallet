@@ -32,8 +32,8 @@ public class CuentaComunServicio {
     @Autowired
     private EfectivoCCRepositorio efectivoCCRepositorio;
 
-    @Transactional(propagation = Propagation.NESTED)
-    public void crearCuentaComun(String nombre, List<Usuario> usuarios) throws ErrorServicio {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public CuentaComun crearCuentaComun(String nombre, List<Usuario> usuarios) throws ErrorServicio {
 
         validar(nombre, usuarios);
 
@@ -47,6 +47,7 @@ public class CuentaComunServicio {
         cuentaComun.setCvuCC(crearCvuCC());
 
         cuentaComunRepositorio.save(cuentaComun);
+        return cuentaComun;
     }
 
     @Transactional(propagation = Propagation.NESTED)
@@ -225,7 +226,7 @@ public class CuentaComunServicio {
     @Transactional(readOnly = true)
     public void comprobarCvuCC(String cvu) {
         CuentaComun optional = cuentaComunRepositorio.buscarCuentaPorCvuCC(cvu);
-        if (optional == null) {
+        if (optional != null) {
             crearCvuCC();
         }
     }

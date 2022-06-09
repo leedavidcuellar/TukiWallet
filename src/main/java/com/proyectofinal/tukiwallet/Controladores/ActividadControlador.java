@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 public class ActividadControlador {
     
-
-
     @Autowired
     ActividadServicio actividadServicio;
     

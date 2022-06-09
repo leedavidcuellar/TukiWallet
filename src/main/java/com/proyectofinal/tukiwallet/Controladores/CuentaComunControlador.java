@@ -35,7 +35,7 @@ public class CuentaComunControlador {
     private CuentaComunServicio cuentaComunServicio;
     
     @GetMapping("/micuentaC")
-    public String miCuenta(ModelMap modelo, HttpSession session, String id) {
+    public String miCuentaC(ModelMap modelo, HttpSession session, String id) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";

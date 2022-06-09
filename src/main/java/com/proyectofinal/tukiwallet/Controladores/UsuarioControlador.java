@@ -29,7 +29,7 @@ public class UsuarioControlador {
     
     
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo, RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException{
+    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo) throws ErrorServicio, ParseException{
         SimpleDateFormat formatoDateFecha = new SimpleDateFormat("dd-mm-yyyy");
         Date fechaNacimientoAux=formatoDateFecha.parse(fechaNacimiento);
             
@@ -38,20 +38,20 @@ public class UsuarioControlador {
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
             Usuario usuario = usuarioServicio.buscarPorMail(mail);
             session.setAttribute("usuariosession", usuario);
-            redirectAttrs
-            .addFlashAttribute("mensaje", "Usuario agregado correctamente")
-            .addFlashAttribute("clase", "success");
-            
+            System.out.println("llegue!");
+//            redirectAttrs
+//            .addFlashAttribute("mensaje", "Usuario agregado correctamente")
+//            .addFlashAttribute("clase", "success");
+           
             return "redirect:/inicio";
         } catch (ErrorServicio e) {
-            model.put("mensaje1","Error al cargar Usuario "+e.getMessage());
-            model.put("clase1", "danger");
+            model.put("Error","Error al cargar Usuario "+e.getMessage());
             model.put("nombre",nombre);
             model.put("apellido",apellido);
             model.put("dni",dni);
             model.put("mail",mail);
             model.put("fechaNacimiento",fechaNacimiento);
-            return "/registrarse";
+            return "registrarse.html";
         }   
     }
     

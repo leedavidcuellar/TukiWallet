@@ -6,6 +6,7 @@
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Cuenta;
+import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 
 import com.proyectofinal.tukiwallet.Entidades.Foto;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
@@ -50,6 +51,9 @@ public class UsuarioServicio implements UserDetailsService{
     private CuentaServicio cuentaServicio;
     
     @Autowired
+    private CuentaComunServicio cuentaComunServicio;
+    
+    @Autowired
     private CuentaRepositorio cuentaRepositorio;
     
     @Autowired
@@ -60,8 +64,11 @@ public class UsuarioServicio implements UserDetailsService{
     
      @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
      public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
-         Cuenta cuenta = cuentaServicio.registrar(dni);
+           List<Usuario> listaUsuario =new ArrayList<Usuario>();
+            List<CuentaComun> listaCuentaComun = new ArrayList<CuentaComun>();
          
+         Cuenta cuenta = cuentaServicio.registrar(dni);
+            
          validar(nombre, apellido, dni, mail, fechaNacimiento, clave1, clave2, cuenta);
         
          
@@ -80,6 +87,12 @@ public class UsuarioServicio implements UserDetailsService{
         
         usuario.setCuenta(cuenta);
       
+        listaUsuario.add(usuario);
+        CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun("PrimeraCuentaComun", listaUsuario);
+       
+        listaCuentaComun.add(cuentaComun);
+        
+        usuario.setCuentaComun(listaCuentaComun);
         
         usuarioRepositorio.save(usuario);
         

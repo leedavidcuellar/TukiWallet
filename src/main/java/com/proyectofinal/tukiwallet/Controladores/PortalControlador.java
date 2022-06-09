@@ -54,15 +54,10 @@ public class PortalControlador {
     public String inicio(HttpSession session, ModelMap model) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
         if(login == null){
+            System.out.println("llegue2");
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
-//        try {
-////            List<Mascota> listaMascotaPropia = mascotaServicio.buscarPorIdUsuario(login.getId());
-////            model.addAttribute("listaMascotasPropia",listaMascotaPropia);
-//        } catch (ErrorServicio ex) {
-//            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-            
+        System.out.println("Llegue3");
         return "principalFinal.html";
     }
 }
