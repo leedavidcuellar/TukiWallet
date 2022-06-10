@@ -52,7 +52,7 @@ public class CuentaComunServicio {
         return cuentaComun;
     }
 
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void modificarCuentaComun(String id, String nombre, List<Usuario> usuarios) throws ErrorServicio {
 
         validar(nombre, usuarios);
@@ -70,7 +70,7 @@ public class CuentaComunServicio {
         }
     }
     
-        @Transactional(propagation = Propagation.NESTED)
+     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void agregarUsuarioCuentaComun(String id, List<Usuario> usuarios) throws ErrorServicio {
 
 
