@@ -151,26 +151,24 @@ public class CuentaControlador {
                 cvu2 = cvuoAlias;
                 cocc = false;
             }
-            System.out.println("1");
             if (cvu2 == null) {
                 cuentaServicio.ingresoCuenta(montof, cvu1, cvu2, motivo);
             }
-            System.out.println("2");
             cuentaServicio.validarTransferenciaCuenta(montof, cvu1, cvu2);
-            System.out.println("3");
             cuentaServicio.egresoCuenta(montof, cvu1, cvu2, motivo);
-            System.out.println("4");
             if (cocc) {
                 cuentaServicio.ingresoCuenta(montof, cvu1, cvu2, motivo);
             } else {
-                System.out.println("5");
                 cuentaComunServicio.ingresoCuentaComun(montof, cvu2, cvu1, motivo);
             }
+
             modelo.put("exito", "Se transfirio correctamente");
             return "redirect:/micuenta";
+
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             System.out.println(e.getMessage());
+
             return "redirect:/micuenta";
         }
     }
@@ -182,7 +180,7 @@ public class CuentaControlador {
             return "redirect:/login";
         }
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
-        model.addAttribute("micuenta", usuarioCuenta);
+        model.addAttribute("transferirlink", usuarioCuenta);
         return "transferir.html";
     }
 

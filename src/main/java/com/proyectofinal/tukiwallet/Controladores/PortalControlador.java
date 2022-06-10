@@ -61,11 +61,12 @@ public class PortalControlador {
     public String inicio(HttpSession session, ModelMap model) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
         if(login == null){
+
             
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
         model.addAttribute("listaCC",listaCC);
                 return "principalFinal.html";
-    }
+
 }
