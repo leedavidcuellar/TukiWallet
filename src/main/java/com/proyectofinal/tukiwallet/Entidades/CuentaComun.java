@@ -24,7 +24,7 @@ public class CuentaComun {
     private Float saldoCC;
     private String aliasCC;
 
-    @OneToMany
+    @OneToMany ( targetEntity=Usuario.class )
     private List<Usuario> usuarios;
     
     @OneToMany
@@ -151,7 +151,7 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
      * @param usuarios the usuarios to set
      */
     public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios.addAll(usuarios);
+        this.usuarios=usuarios;
     }
 
     /**

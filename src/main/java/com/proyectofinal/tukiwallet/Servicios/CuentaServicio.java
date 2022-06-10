@@ -174,6 +174,16 @@ public class CuentaServicio {
     }
     
     @Transactional(readOnly = true)
+    public Cuenta buscarCuentaPorCbu(String cbu){
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorAlias(cbu);
+        if (cuenta!=null) {
+           return cuenta; 
+        }else{
+            return null;
+        }      
+    }
+    
+    @Transactional(readOnly = true)
     public Cuenta buscarCuentaPorid(String id){
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorId(id);
         if (cuenta!=null) {

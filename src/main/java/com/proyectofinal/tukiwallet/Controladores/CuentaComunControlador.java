@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 @RequestMapping("/cuentaComun")
 @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 public class CuentaComunControlador {
-    
+
     @Autowired
     private CuentaServicio cuentaServicio;
 
@@ -34,33 +33,34 @@ public class CuentaComunControlador {
 
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
-    
+
     @GetMapping("/micuentaC")
-    public String miCuentaC(ModelMap modelo, HttpSession session, String id) {
+    public String miCuentaC(ModelMap modelo, HttpSession session, String idUsuario, String idCC) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
-        if (login == null || !login.getId().equals(id)) {
+        if (login == null || !login.getId().equals(idUsuario)) {
             return "redirect:/login";
         }
         List<Float> saldosUsuarios = new ArrayList<Float>();
-        Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
-        CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
-        List<Usuario> listaUsuarios =cuentaComunServicio.enlistar(cuentaComun.getId());
+        Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+        CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
+        List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
         for (Usuario usuarioAux : listaUsuarios) {
             saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
         }
+        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+        modelo.addAttribute("listaCC",listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
         modelo.addAttribute("cuentaComun", cuentaComun);
         modelo.addAttribute("listaUsuarios", listaUsuarios);
-         modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+        modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
         return "cuentaComun.html";
     }
-    
-    
+
     @GetMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvu1, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
         //cvu1 = cvu de la cuenta comun
         //cvuoAlias = cvu/alias al que transfiere
-        
+
         try {
             Usuario login = (Usuario) session.getAttribute("usuariosession");
             if (login == null || !login.getId().equals(id)) {
@@ -94,16 +94,19 @@ public class CuentaComunControlador {
             } else {
                 cuentaComunServicio.ingresoCuentaComun(motivof, cvu2, cvu1, motivo);
             }
+            modelo.put("exito","Se realizo la transferencia con Exito ");
+            return "redirect:/micuentaC";
+            
         } catch (ErrorServicio e) {
             modelo.put("mensaje", e.getMessage());
+            modelo.put("error","Error al transferir "+e.getMessage());
             //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
-            return "redirect:/cuentaComun";
+            return "cuentaComun.html";
         }
         //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
-        return "redirect:/micuenta";
+        
     }
 
-    
     @PostMapping("/nuevaCuentaComun")
     public String crearCC(ModelMap modelo, @RequestParam String nombre, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
 
@@ -116,7 +119,6 @@ public class CuentaComunControlador {
         return "misCuentasComunes.html"; //check   
     }
 
-    
     @PostMapping("/deshabilitarCC")
     public String deshabilitarCC(ModelMap modelo, @PathVariable("id") String id) throws ErrorServicio {
 
@@ -129,7 +131,6 @@ public class CuentaComunControlador {
         return "miCuenta.html"; //check   
     }
 
-    
     @PostMapping("/habilitarCC")
     public String habilitarCC(ModelMap modelo, @PathVariable("id") String id) throws ErrorServicio {
 
@@ -141,7 +142,6 @@ public class CuentaComunControlador {
         }
         return "miCuenta.html"; //check   
     }
-
 
     @PostMapping("/editarCuentaComun")
     public String editarCC(ModelMap modelo, @RequestParam String nombre, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
@@ -155,6 +155,52 @@ public class CuentaComunControlador {
             return "editarCuentaComun.html"; //check 
         }
         return "misCuentasComunes.html"; //check   
+    }
+
+    @PostMapping("/agregarUsuarioCC")
+    public String agregarUsuarioCC(ModelMap modelo, HttpSession session, @RequestParam String idUsuario,@RequestParam String idCC, String cvuUsuario, String aliasCC) throws ErrorServicio {
+        List<Usuario> listaUsuario = new ArrayList<Usuario>();
+        try {
+
+            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(aliasCC);
+
+            if (cuenta == null) {
+
+                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuUsuario);
+            }
+
+            Usuario usuario = usuarioServicio.buscarPorCuentaId(cuenta.getId());
+            listaUsuario.add(usuario);
+            CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
+            listaUsuario.addAll(cuentaComun.getUsuarios());
+           
+
+            cuentaComunServicio.agregarUsuarioCuentaComun(cuentaComun.getId(), listaUsuario);
+
+           
+            List<Float> saldosUsuarios = new ArrayList<Float>();
+            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+            //CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+            for (Usuario usuarioAux : listaUsuarios) {
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            }
+          
+            modelo.addAttribute("micuentaC", usuarioCuentaC);
+            modelo.addAttribute("cuentaComun", cuentaComun);
+            modelo.addAttribute("listaUsuarios", listaUsuarios);
+            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+           
+            return "cuentaComun.html"; //check   
+        } catch (ErrorServicio e) {
+            e.printStackTrace();
+            modelo.put("error","Error al editar Usuario "+e.getMessage());
+            modelo.put("mensaje1","Error al editar Usuario "+e.getMessage());
+            modelo.put("clase1", "danger");
+//            modelo.put("nombre", nombre);
+//            modelo.put("usuarios", usuarios);
+            return "principalFinal.html"; //check 
+        }
     }
 
 }

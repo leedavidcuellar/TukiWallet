@@ -23,7 +23,7 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     public List<Usuario> mostrarUsuarios (@Param("id") String id);  
     
 @Query("SELECT cc FROM CuentaComun cc JOIN cc.usuarios u WHERE u.id = :id")
-    public CuentaComun buscarCuentaComunPorIdUsuario (@Param("id") String id);
+    public List<CuentaComun> buscarCuentaComunPorIdUsuario (@Param("id") String id);
     
     @Query("SELECT u FROM CuentaComun cc JOIN cc.usuarios u WHERE u.id = :id")
     public Usuario buscarUsuarioCC (@Param("id") String id);      

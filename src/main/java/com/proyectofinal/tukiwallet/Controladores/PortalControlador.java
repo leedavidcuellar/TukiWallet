@@ -5,12 +5,15 @@
  */
 package com.proyectofinal.tukiwallet.Controladores;
 
+import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
+import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
+    
+    @Autowired
+    private CuentaComunServicio cuentaComunServicio;
+    
     @GetMapping("/")
     public String index() {
         return "index.html";
@@ -54,8 +61,12 @@ public class PortalControlador {
     public String inicio(HttpSession session, ModelMap model) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
         if(login == null){
+
+            
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
-        return "principalFinal.html";
-    }
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
+        model.addAttribute("listaCC",listaCC);
+                return "principalFinal.html";
+
 }
