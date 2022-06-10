@@ -159,7 +159,7 @@ public class CuentaControlador {
             if (cocc) {
                 cuentaServicio.ingresoCuenta(montof, cvu1, cvu2, motivo);
             } else {
-                cuentaComunServicio.ingresoCuentaComun(montof, cvu2, cvu1, motivo);
+                cuentaComunServicio.ingresoCuentaComun(montof, cvu1, cvu2, motivo);
             }
 
             modelo.put("exito", "Se transfirio correctamente");
@@ -167,7 +167,7 @@ public class CuentaControlador {
         List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
         modelo.addAttribute("micuenta", usuarioCuenta);
         modelo.addAttribute("listaCC",listaCC);
-            return "/micuenta";
+            return "cuenta.html";
 
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());

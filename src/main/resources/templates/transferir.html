@@ -11,7 +11,7 @@
     <div class="wrapper">
       <header>Realizar transferencia</header>
       <form action="/cuenta/transferir" method="post">
-          <input type="" th:value="${session.usuariosession.id}" name="id"/>
+          <input type="hidden" th:value="${session.usuariosession.id}" name="id"/>
         <div class="amount">
           <p>Ingrese el monto</p>
           <input type="number" value="1" class="monto" name="monto"/>
@@ -21,7 +21,7 @@
             <p>Cuenta de :</p>
             <!--Nos deberia aparecer el nombre de nuestra cuenta automaticamente-->
             <div class="select-box">
-              <input type="text" th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta"/>
+              <input type="text" th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta" readonly="readonly"/>
             </div>
           </div>
           <div class="to">
