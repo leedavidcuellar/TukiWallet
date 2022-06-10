@@ -156,5 +156,35 @@ public class CuentaComunControlador {
         }
         return "misCuentasComunes.html"; //check   
     }
+    
+    
+    
+    
+    
+    @PostMapping("/agregarUsuarioCC")
+    public String agregarUsuarioCC(ModelMap modelo, HttpSession session, @RequestParam String id,String cvuUsuario, String aliasCC) throws ErrorServicio {
+        List<Usuario>listaUsuario = new ArrayList<Usuario>();
+        if(cvuUsuario == null||cvuUsuario.isEmpty()){
+            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(aliasCC);
+            Usuario usuario = usuarioServicio.buscarPorCuentaId(cuenta.getId());
+            listaUsuario.add(usuario);
+        }else{
+            Cuenta cuenta = cuentaServicio.buscarCuentaPorCbu(cvuUsuario);
+            Usuario usuario = usuarioServicio.buscarPorCuentaId(cuenta.getId());
+            listaUsuario.add(usuario);
+        }        
+        
+        try {
+            cuentaComunServicio.agregarUsuarioCuentaComun(id, listaUsuario);
+
+            modelo.put("id",id);
+            return "redirect/micuentaC"; //check   
+        } catch (ErrorServicio error) {
+            modelo.put("error", error.getMessage());
+//            modelo.put("nombre", nombre);
+//            modelo.put("usuarios", usuarios);
+            return "CuentaComun.html"; //check 
+        }
+    }
 
 }

@@ -27,28 +27,28 @@
 
 <body>
 
-<div th:replace="principalFinal::mensajes"></div>
+  <div th:replace="principalFinal::mensajes"></div>
 
-<div th:replace="principalFinal::navbar1"></div>
+  <div th:replace="principalFinal::navbar1"></div>
 
-    
 
- 
+
+
   <section class="home">
     <header class="head1">
       <div class="textTuki">TukiWallet</div>
       <div class="text">Inicio</div>
     </header>
-    <div class="wrapper"  Style="text-align:center">
+    <div class="wrapper" Style="text-align:center">
       <h4 name="nombre" th:value="${micuentaC.nombre}" th:if="${session.usuariosession != null}"
-      th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
-    <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
-    <input class="textarea" type="text" name="nombrecc" th:value="${cuentaComun.nombre}" />
-    <header>Dinero disponible</header>
+        th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
+      <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+      <input class="textarea" type="text" name="nombrecc" th:value="${cuentaComun.nombre}" />
+      <header>Dinero disponible</header>
       <form action="#">
         <div class="monto">
           <h4><input class="textarea" type="number" name="saldocc" th:value="${cuentaComun.saldoCC}"
-            readonly="readonly" /></h4>
+              readonly="readonly" /></h4>
         </div>
         <div class="wrapper2">
           <button>Transferir</button>
@@ -82,7 +82,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <td><Strong>#</Strong></td> 
+            <td><Strong>#</Strong></td>
             <td><Strong>Nombre</Strong></td>
             <td><Strong>Monto</Strong></td>
           </tr>
@@ -103,7 +103,9 @@
 
       <form action="#">
         <div class="wrapper4">
-          <button class="largoB">Agregar Persona Con Tuki</button>
+
+          <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuario">Agregar Persona Con Tuki</a>
+
           <button class="largoB">Agregar Persona Sin Tuki/Efectivo</button>
           <button class="largoB">Dividir</button>
 
@@ -113,36 +115,68 @@
     </div>
   </section>
 
-<!-- Modal ModalMostrarDatos -->
-<div id="misDatos" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
+  <!-- Modal ModalMostrarDatos -->
+  <div id="misDatos" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content ModalMostrarDatos-->
-    <div class="modal-content">
-      <div class="modal-header" style="margin:10px;">
-        <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
-        <h4 class="modal-title">Datos para que Ingresen Dinero Cuenta Comun</h4>
-      </div>
-      <div class="col-md-9" style="margin:70px;">
-        <label class="text">nombre:</label>
-        <input class="textarea" type="text" name="nombre-cc"
-          th:value="${cuentaComun.nombre}" readonly="readonly" />
-        <br>
-        <label class="text">Cvu:</label>
-        <input class="textarea" style="width:60%;" type="text" name="cvu-cc"
-          th:value="${cuentaComun.cvuCC}" readonly="readonly" />
-        <br>
-        <label class="text">Alias:</label>
-        <input class="textarea" type="text" name="alias-cc" th:value="${cuentaComun.aliasCC}"
-          readonly="readonly" />
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      <!-- Modal content ModalMostrarDatos-->
+      <div class="modal-content">
+        <div class="modal-header" style="margin:10px;">
+          <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title">Datos para que Ingresen Dinero Cuenta Comun</h4>
+        </div>
+        <div class="col-md-9" style="margin:70px;">
+          <label class="text">nombre:</label>
+          <input class="textarea" type="text" name="nombre-cc" th:value="${cuentaComun.nombre}" readonly="readonly" />
+          <br>
+          <label class="text">Cvu:</label>
+          <input class="textarea" style="width:60%;" type="text" name="cvu-cc" th:value="${cuentaComun.cvuCC}"
+            readonly="readonly" />
+          <br>
+          <label class="text">Alias:</label>
+          <input class="textarea" type="text" name="alias-cc" th:value="${cuentaComun.aliasCC}" readonly="readonly" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Final ModalMostrarDatos -->
+  <!-- Final ModalMostrarDatos -->
+
+
+  <!-- Modal ModalAgregarUsuario -->
+  <div id="agregarUsuario" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content ModalAgregarUsuario-->
+      <div class="modal-content">
+        <div class="modal-header" style="margin:10px;">
+          <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title">Ingresa Datos del Usuario</h4>
+        </div>
+        <form action="{cuentaComun/agregarUsuarioCC(id=${session.usuariosession.id})}" method="POST">
+          <div class="col-md-9" style="margin:70px;">
+            <input type="" name="id" th:value="${session.usuariosession.id}" />
+            <label class="text">Cvu:</label>
+            <input class="textarea" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
+            <br>
+            <label class="text">Alias:</label>
+            <input class="textarea" style="width:70%;" type="text" name="aliasCC" th:value="${aliasCC}" />
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+  <!-- Final ModalAgregarUsuario -->
+
+
+
 
 
   <script src="/js/script.js"></script>
