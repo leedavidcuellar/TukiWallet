@@ -6,6 +6,7 @@
 package com.proyectofinal.tukiwallet.Repositorios;
 
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +22,6 @@ public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
     @Query("SELECT a FROM Actividad a WHERE a.id = :id")
     public Actividad buscarPorId(@Param("id") String id);
     
-    @Query("SELECT a FROM Actividad a ORDER BY a.nOperacion ASC")
-    public Actividad buscarNumOperacionMayor();
-    
+    @Query("SELECT max(a.nOperacion) FROM Actividad a")
+    public Integer buscarNumOperacionMayor();
 }

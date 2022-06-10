@@ -31,27 +31,33 @@ public class ActividadServicio {
         Actividad actividad = new Actividad();
         actividad.setMonto(monto);
         actividad.setMotivo(motivo);
+        System.out.println("1");
         actividad.setFecha(new Date());
+        System.out.println("2");
         if (movimiento) {
             actividad.setMovimiento(Boolean.TRUE);  
         }else{
             actividad.setMovimiento(Boolean.FALSE);  
         }
+        System.out.println("3");
         actividad.setCvu(cvu);
         actividad.setCvu2(cvu2);
+        System.out.println("4");
         actividad.setnOperacion(generarNumDeOperacion());
+        System.out.println("5");
         
         actividadRepositorio.save(actividad);
 
     }
 
     @Transactional(readOnly = true)
-    public String generarNumDeOperacion() {
-        String n;
+    public Integer generarNumDeOperacion() {
+        Integer n = 1;
         if (actividadRepositorio.buscarNumOperacionMayor()==null) {
-            return "1";
+            return n;
         }else{
-            return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
+            n = actividadRepositorio.buscarNumOperacionMayor()+1;
+            return n;
         }
     }
 
