@@ -62,6 +62,8 @@ public class UsuarioServicio implements UserDetailsService{
     @Autowired
     private FotoServicio fotoServicio;
     
+    private Integer aux =0;
+    
      @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
      public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
            List<Usuario> listaUsuario =new ArrayList<Usuario>();
@@ -88,7 +90,9 @@ public class UsuarioServicio implements UserDetailsService{
         usuario.setCuenta(cuenta);
       
         listaUsuario.add(usuario);
-        CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun("PrimeraCuentaComun", listaUsuario);
+        aux=aux+1;
+        String auxnombreCC="MiPrimerCuentaComun"+aux;
+        CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(auxnombreCC, listaUsuario);
        
         listaCuentaComun.add(cuentaComun);
         

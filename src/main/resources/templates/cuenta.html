@@ -54,7 +54,7 @@
 
         <ul class="menu-links">
           <li class="nav-link">
-            <a href="/inicio">
+            <a th:href="@{/inicio(id=${session.usuariosession.id})}">
               <i class='bx bx-home-alt icon'></i>
               <span class="text nav-text">Inicio</span>
             </a>
@@ -75,10 +75,13 @@
           </li>
 
           <li class="nav-link">
-            <a th:href="@{/cuentaComun/micuentaC(id=${session.usuariosession.id})}">
-              <i class='bx bx-pie-chart-alt icon'></i>
-              <span class="text nav-text">Cuenta comun</span>
-            </a>
+            <!-- Llamado ModalElegirCuentaComun-->
+            <div>
+              <a data-toggle="modal" data-target="#myModal">
+                <i class='bx bx-pie-chart-alt icon'></i>
+                <span class="text nav-text">Cuenta comun</span>
+              </a>
+            </div><!-- fin llamado ModalElegirCuentaComun-->
           </li>
 
           <li class="nav-link">
@@ -132,6 +135,10 @@
       <div class="textTuki">TukiWallet</div>
       <div class="text">Inicio</div>
     </header>
+
+    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+    <p th:if="${exito != null}" th:text="${exito}" style="color:green"></p>
+
     <div class="wrapper" Style="text-align:center">
       <h4 name="nombre" th:value="${micuenta.nombre}" th:if="${session.usuariosession != null}"
         th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
@@ -204,6 +211,39 @@
     </div>
   </div>
   <!-- Final ModalMostrarDatos -->
+
+  <!-- ModalElegirCuentaComun -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content ModalElegirCuentaComun-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Elige tu Cuenta Comun</h4>
+      </div>
+      <div class="col-md-5">
+        <form>
+          <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+          <br>
+          <select class="form-control" name="idCC">
+            <option></option>
+            <option th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+              th:value="${listaCCAux.id}"></option>
+          </select>
+          <br>
+          <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+          <br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Final ModalElegirCuentaComun -->
 
   <script src="/js/script.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

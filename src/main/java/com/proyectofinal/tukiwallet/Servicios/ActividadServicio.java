@@ -46,12 +46,12 @@ public class ActividadServicio {
     }
 
     @Transactional(readOnly = true)
-    public String generarNumDeOperacion() {
-        String n;
+    public Integer generarNumDeOperacion() {
+        Integer n;
         if (actividadRepositorio.buscarNumOperacionMayor()==null) {
-            return "1";
+            return 1;
         }else{
-            return n = actividadRepositorio.buscarNumOperacionMayor().getnOperacion() + 1;
+            return n = (actividadRepositorio.buscarNumOperacionMayor().getnOperacion()) + 1;
         }
     }
 

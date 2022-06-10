@@ -29,7 +29,112 @@
 
   <div th:replace="principalFinal::mensajes"></div>
 
-  <div th:replace="principalFinal::navbar1"></div>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img th:if="${session.usuariosession.foto != null}" style="max-height: 200px; border-radius:100%"
+            th:src="${'/foto/usuario/'+ session.usuariosession.id}" alt="">
+          <img th:if="${session.usuariosession.foto == null}" style="max-height: 200px; border-radius:100%"
+            src="/assets/img/birrita.png" alt="">
+        </span>
+
+        <div class="text logo-text">
+          <span class="name">¡Hola!</span>
+          <span class="profession" th:if="${session.usuariosession != null}"
+            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+          <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+
+
+    <div class="menu-bar">
+      <div class="menu">
+
+
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a th:href="@{/inicio(id=${session.usuariosession.id})}">
+              <i class='bx bx-home-alt icon'></i>
+              <span class="text nav-text">Inicio</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
+              <i class='bx bx-bar-chart-alt-2 icon'></i>
+              <span class="text nav-text">Tu perfil</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
+              <i class='bx bx-wallet icon'></i>
+              <span class="text nav-text">Cuenta</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <!-- Llamado ModalElegirCuentaComun-->
+            <div>
+              <a data-toggle="modal" data-target="#myModal">
+                <i class='bx bx-pie-chart-alt icon'></i>
+                <span class="text nav-text">Cuenta comun</span>
+              </a>
+            </div><!-- fin llamado ModalElegirCuentaComun-->
+          </li>
+
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-heart icon'></i>
+              <span class="text nav-text">Transferir</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-wallet icon'></i>
+              <span class="text nav-text">Wallets</span>
+            </a>
+          </li>
+
+          <!-- <li class="search-box">
+                <!--     <i class='bx bx-search icon'></i>
+                     <input type="text" placeholder="" >   -->
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+        <li class="salir">
+          <a href="/logout">
+            <i class='bx bx-log-out icon'></i>
+            <span class="text nav-text">Salir</span>
+          </a>
+        </li>
+
+        <li class="mode">
+          <div class="sun-moon">
+            <i class='bx bx-moon icon moon'></i>
+            <i class='bx bx-sun icon sun'></i>
+          </div>
+          <span class="mode-text text">Modo noche</span>
+
+          <div class="toggle-switch">
+            <span class="switch"></span>
+          </div>
+        </li>
+
+      </div>
+    </div>
+    
+  </nav>
 
 
 
@@ -39,6 +144,10 @@
       <div class="textTuki">TukiWallet</div>
       <div class="text">Inicio</div>
     </header>
+
+    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+    <p th:if="${exito != null}" th:text="${exito}" style="color:green"></p>
+
     <div class="wrapper" Style="text-align:center">
       <h4 name="nombre" th:value="${micuentaC.nombre}" th:if="${session.usuariosession != null}"
         th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
@@ -134,7 +243,7 @@
             readonly="readonly" />
           <br>
           <label class="text">Alias:</label>
-          <input class="textarea" type="text" name="alias-cc" th:value="${cuentaComun.aliasCC}" readonly="readonly" />
+          <input class="textarea" style="width:70%;" type="text" name="alias-cc" th:value="${cuentaComun.aliasCC}" readonly="readonly" />
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
@@ -155,27 +264,61 @@
           <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
           <h4 class="modal-title">Ingresa Datos del Usuario</h4>
         </div>
-        <form action="{cuentaComun/agregarUsuarioCC(id=${session.usuariosession.id})}" method="POST">
-          <div class="col-md-9" style="margin:70px;">
-            <input type="" name="id" th:value="${session.usuariosession.id}" />
+        <div class="col-md-9" style="margin:70px;">
+          <form action="/cuentaComun/agregarUsuarioCC/" method="POST">
+
+            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
             <label class="text">Cvu:</label>
-            <input class="textarea" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
+            <input class="form-control" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
             <br>
             <label class="text">Alias:</label>
-            <input class="textarea" style="width:70%;" type="text" name="aliasCC" th:value="${aliasCC}" />
-          </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>  
-          <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-          </div>
-        
+            <input class="form-control" style="width:90%;" type="text" name="aliasCC" th:value="${aliasCC}" />
+
+            <button type="submit" class="btn btn-primary">Agregar</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+
       </div>
     </div>
   </div>
   <!-- Final ModalAgregarUsuario -->
 
+<!-- ModalElegirCuentaComun -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content ModalElegirCuentaComun-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Elige tu Cuenta Comun</h4>
+      </div>
+      <div class="col-md-5">
+        <form>
+          <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+          <br>
+          <select class="form-control" name="idCC">
+            <option></option>
+            <option th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+              th:value="${listaCCAux.id}"></option>
+          </select>
+          <br>
+          <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+          <br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Final ModalElegirCuentaComun -->
 
 
 

@@ -14,7 +14,7 @@ public class Actividad {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String nOperacion;
+    private Integer nOperacion;
     private Float monto;
     private String motivo;
     private Date fecha;
@@ -109,14 +109,14 @@ public class Actividad {
     /**
      * @return the nOperacion
      */
-    public String getnOperacion() {
+    public Integer getnOperacion() {
         return nOperacion;
     }
 
     /**
      * @param nOperacion the nOperacion to set
      */
-    public void setnOperacion(String nOperacion) {
+    public void setnOperacion(Integer nOperacion) {
         this.nOperacion = nOperacion;
     }
 

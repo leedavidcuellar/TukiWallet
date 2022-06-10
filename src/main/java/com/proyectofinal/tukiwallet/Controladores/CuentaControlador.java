@@ -51,20 +51,21 @@ public class CuentaControlador {
             return "redirect:/login";
         }
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
         modelo.addAttribute("micuenta", usuarioCuenta);
-
+        modelo.addAttribute("listaCC",listaCC);
         return "cuenta.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-cuenta")
-    public String editarCuenta(ModelMap model,  HttpSession session, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException{
-        Cuenta cuenta = null;     
+    public String editarCuenta(ModelMap model, HttpSession session, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException {
+        Cuenta cuenta = null;
         try {
             cuenta = cuentaServicio.buscarPorId(id);
-          
+
             cuentaServicio.modificarAlias(alias, id);
-           
+
             session.setAttribute("usuariosession", cuenta);
             //VER BIEN EL REDIRECT
             return "redirect:/inicio";
@@ -74,13 +75,13 @@ public class CuentaControlador {
             model.put("mensaje", e.getMessage());
             //VER BIEN EL REDIRECT
             return "tuperfil.html";
-        }   
+        }
     }
-    
+
     @PostMapping("/altaCuenta/{id}")
-    public String altaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio{
+    public String altaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio {
         try {
-            
+
             cuentaServicio.alta(id);
             //ver bien el Return
             return "/inicio";
@@ -89,14 +90,14 @@ public class CuentaControlador {
             model.put("mensaje", e.getMessage());
             //ver bien el Return
             return "/index";
-        }   
+        }
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/bajaCuenta/{id}")
-    public String bajaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio{
+    public String bajaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio {
         try {
-            
+
             cuentaServicio.baja(id);
             //ver bien el Return
             return "/index";
@@ -105,21 +106,21 @@ public class CuentaControlador {
             model.put("mensaje", e.getMessage());
             //ver bien el Return
             return "/inicio";
-        }   
-    }
-    
-    @GetMapping("/eliminarCuenta/{id}")
-    public String eliminarCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio{
-        try {
-           cuentaServicio.borrarPorId(id);
-           //ver bien el Return
-           return "redirect:/";
-        } catch (ErrorServicio e) {
-            //ver bien el Return
-            return "redirect:/"; 
         }
     }
-    
+
+    @GetMapping("/eliminarCuenta/{id}")
+    public String eliminarCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio {
+        try {
+            cuentaServicio.borrarPorId(id);
+            //ver bien el Return
+            return "redirect:/";
+        } catch (ErrorServicio e) {
+            //ver bien el Return
+            return "redirect:/";
+        }
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvuCuenta, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
@@ -142,10 +143,10 @@ public class CuentaControlador {
             } else if (cvuoAlias.contains("T")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorAlias(cvuoAlias);
                 cvu2 = cuenta2.getCvu();
-            } else if (cvuoAlias.substring(4,5).equals("1")) {
+            } else if (cvuoAlias.substring(4, 5).equals("1")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorid(cvuoAlias);
                 cvu2 = cvuoAlias;
-            } else if (cvuoAlias.substring(4,5).equals("2")) {
+            } else if (cvuoAlias.substring(4, 5).equals("2")) {
                 CuentaComun cuenta2 = cuentaComunServicio.buscarCuentaPorIdCC(cvuoAlias);
                 cvu2 = cvuoAlias;
                 cocc = false;
@@ -165,16 +166,17 @@ public class CuentaControlador {
                 System.out.println("5");
                 cuentaComunServicio.ingresoCuentaComun(montof, cvu2, cvu1, motivo);
             }
-            return "/inicio";
+            modelo.put("exito", "Se transfirio correctamente");
+            return "redirect:/micuenta";
         } catch (ErrorServicio e) {
-            modelo.put("Error", e.getMessage());
+            modelo.put("error", e.getMessage());
             System.out.println(e.getMessage());
-            return "/inicio";
-        }    
+            return "redirect:/micuenta";
+        }
     }
-    
+
     @GetMapping("/transferirlink")
-    public String transferirlink(ModelMap model, HttpSession session, String id) throws ErrorServicio{
+    public String transferirlink(ModelMap model, HttpSession session, String id) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";

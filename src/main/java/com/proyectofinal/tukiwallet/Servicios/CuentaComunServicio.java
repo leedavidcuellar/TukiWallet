@@ -70,13 +70,13 @@ public class CuentaComunServicio {
         }
     }
     
-     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+     @Transactional
     public void agregarUsuarioCuentaComun(String id, List<Usuario> usuarios) throws ErrorServicio {
 
 
-        Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
-        if (respuesta.isPresent()) {
-            CuentaComun cuentaComun = respuesta.get();
+        CuentaComun cuentaComun= cuentaComunRepositorio.buscarCuentaComunPorId(id);
+        if (cuentaComun != null) {
+            
             cuentaComun.setUsuarios(usuarios);
 
             cuentaComunRepositorio.save(cuentaComun);
@@ -281,8 +281,8 @@ public class CuentaComunServicio {
     }
     
     @Transactional(readOnly = true)
-    public CuentaComun buscarCuentaComunPorIdUsuario(String id) {
-        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorIdUsuario(id);
+    public List<CuentaComun> buscarCuentaComunPorIdUsuario(String id) {
+        List<CuentaComun> cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorIdUsuario(id);
         if (cuentaComun != null) {
             
             return cuentaComun;
