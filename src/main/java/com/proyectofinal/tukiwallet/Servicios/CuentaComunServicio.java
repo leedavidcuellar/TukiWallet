@@ -151,7 +151,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
             actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado la Cuenta Comun");
+            throw new ErrorServicio("No se pudo ingresar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
     }
 
@@ -164,7 +164,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
             actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado la Cuenta Comun");
+            throw new ErrorServicio("No se pudo sacar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
     }
 

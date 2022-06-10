@@ -124,14 +124,14 @@ public class CuentaControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvuCuenta, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
+       Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         try {
-//            Usuario login = (Usuario) session.getAttribute("usuariosession");
-//            if (login == null || !login.getId().equals(id)) {
-//            return "redirect:/login";
-//            }
-//            Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
-//            modelo.addAttribute("micuenta", usuarioCuenta);
-//            
+            Usuario login = (Usuario) session.getAttribute("usuariosession");
+            if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+            }
+           
+            
             Float montof = Float.valueOf(monto);
             String cvu1 = cvuCuenta;
             String cvu2 = null;
@@ -163,13 +163,20 @@ public class CuentaControlador {
             }
 
             modelo.put("exito", "Se transfirio correctamente");
-            return "redirect:/micuenta";
+                    
+        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        modelo.addAttribute("micuenta", usuarioCuenta);
+        modelo.addAttribute("listaCC",listaCC);
+            return "/micuenta";
 
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             System.out.println(e.getMessage());
-
-            return "redirect:/micuenta";
+        
+        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        modelo.addAttribute("micuenta", usuarioCuenta);
+        modelo.addAttribute("listaCC",listaCC);
+            return "cuenta.html";
         }
     }
 
