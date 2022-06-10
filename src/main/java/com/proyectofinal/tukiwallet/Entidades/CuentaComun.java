@@ -151,7 +151,7 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
      * @param usuarios the usuarios to set
      */
     public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+        this.usuarios.addAll(usuarios);
     }
 
     /**

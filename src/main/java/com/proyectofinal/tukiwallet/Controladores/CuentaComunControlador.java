@@ -7,6 +7,7 @@ import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,17 @@ public class CuentaComunControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
+        List<Float> saldosUsuarios = new ArrayList<Float>();
         Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
         CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
         List<Usuario> listaUsuarios =cuentaComunServicio.enlistar(cuentaComun.getId());
+        for (Usuario usuarioAux : listaUsuarios) {
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+        }
         modelo.addAttribute("micuentaC", usuarioCuentaC);
         modelo.addAttribute("cuentaComun", cuentaComun);
         modelo.addAttribute("listaUsuarios", listaUsuarios);
+         modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
         return "cuentaComun.html";
     }
     

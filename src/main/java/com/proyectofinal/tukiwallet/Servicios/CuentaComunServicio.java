@@ -1,5 +1,6 @@
 package com.proyectofinal.tukiwallet.Servicios;
 
+import com.proyectofinal.tukiwallet.Entidades.Cuenta;
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
@@ -25,6 +26,7 @@ public class CuentaComunServicio {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    
 
     @Autowired
     private CuentaServicio cuentaServicio;
@@ -65,6 +67,22 @@ public class CuentaComunServicio {
 
         } else {
             throw new ErrorServicio("NO se enceontró el usuario solicitado.");
+        }
+    }
+    
+        @Transactional(propagation = Propagation.NESTED)
+    public void agregarUsuarioCuentaComun(String id, List<Usuario> usuarios) throws ErrorServicio {
+
+
+        Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            CuentaComun cuentaComun = respuesta.get();
+            cuentaComun.setUsuarios(usuarios);
+
+            cuentaComunRepositorio.save(cuentaComun);
+
+        } else {
+            throw new ErrorServicio("NO se encontró la cuenta comun  solicitada.");
         }
     }
 
@@ -262,7 +280,7 @@ public class CuentaComunServicio {
         }
     }
     
-        @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public CuentaComun buscarCuentaComunPorIdUsuario(String id) {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorIdUsuario(id);
         if (cuentaComun != null) {
@@ -271,5 +289,12 @@ public class CuentaComunServicio {
         } else {
             return null;
         }
+    }
+    
+    @Transactional(readOnly = true)
+    public Float sumaSaldoPorUsuario(Usuario usuario) {
+        
+        Float saldoUsuario = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
+        return saldoUsuario;
     }
 }
