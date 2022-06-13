@@ -3,6 +3,7 @@ package com.proyectofinal.tukiwallet.Repositorios;
 
 
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
+import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,6 +23,9 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
 @Query("SELECT cc.usuarios FROM CuentaComun cc WHERE cc.id = :id")
     public List<Usuario> mostrarUsuarios (@Param("id") String id);  
     
+    @Query("SELECT cc.efectivoCC FROM CuentaComun cc WHERE cc.id = :id")
+    public List<EfectivoCC> mostrarUsuariosEfectivos (@Param("id") String id);  
+    
 @Query("SELECT cc FROM CuentaComun cc JOIN cc.usuarios u WHERE u.id = :id")
     public List<CuentaComun> buscarCuentaComunPorIdUsuario (@Param("id") String id);
     
@@ -39,6 +43,10 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     
 @Query("SELECT a FROM CuentaComun a WHERE a.aliasCC = :aliasCC")
     public CuentaComun buscarCuentaPorAliasCC (@Param("aliasCC") String alias); 
+    
+    
+ @Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario")
+    public Float sumaSaldoCCporUsuarioEfectivo (@Param("idUsuario") String idUsuario);     
     
  @Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.cvu = :idCvu")
     public Float sumaSaldoCCporCVU (@Param("idCvu") String idCvu);   //Engreso a CC, para saber usuario deposito
