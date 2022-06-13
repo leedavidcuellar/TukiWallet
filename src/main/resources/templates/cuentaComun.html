@@ -161,6 +161,7 @@
         </div>
         <div class="wrapper2">
           <button>Transferir</button>
+          
           <button type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
 
 
@@ -186,8 +187,39 @@
     </div>
     <div class="wrapper3">
       <div class="comun">
-        <h5>Usuarios de Cuenta Comun</h5>
+        <h5>Usuarios con Tuki</h5>
       </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td><Strong>#</Strong></td>
+            <td><Strong>Nombre</Strong></td>
+            <td><Strong>Monto</Strong></td>
+            <td><Strong th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Eliminar</Strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="listaUsuarios,numero:${listaUsuarios}">
+            <td th:text="${numero.index}+1"></td>
+            <td th:text="${listaUsuarios.nombre}"></td>
+            <td> 300</td>
+            <!--<td th:text="${listaSaldosUsuarios}"></td>-->
+            <td>
+              <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/eliminardeListaUsuariosTuki/" method="post">
+                <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
+                <input type="hidden" name="idE" th:value="${listaUsuarios.id}" />
+                <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
+                <button type="submit" class="btn btn-danger">Eliminar</i></button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="comun">
+        <h5>Usuarios Sin Tuki/Efectivo</h5>
+      </div>
+
       <table class="table table-hover">
         <thead>
           <tr>
@@ -197,11 +229,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="listaUsuarios,numero:${listaUsuarios}">
-            <td th:text="${numero.index}+1"></td>
-            <td th:text="${listaUsuarios.nombre}"></td>
+          <tr th:each="listaUsuariosEfectivo2,numeroE:${listaUsuariosEfectivo2}">
+            <td th:text="${numeroE.index}+1"></td>
+            <td th:text="${listaUsuariosEfectivo2.comentario}"></td>
             <td> 300</td>
             <!--<td th:text="${listaSaldosUsuarios}"></td>-->
+            <td>
+              <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/eliminardeListaUsuariosSinTuki/" method="post">
+                <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
+                <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
+                <input type="hidden" name="idE2" th:value="${listaUsuariosEfectivo2.id}" />
+                <button type="submit" class="btn btn-danger">Eliminar</i></button>
+              </form>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -213,10 +253,10 @@
       <form action="#">
         <div class="wrapper4">
 
-          <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuario">Agregar Persona Con Tuki</a>
-
-          <button class="largoB">Agregar Persona Sin Tuki/Efectivo</button>
-          <button class="largoB">Dividir</button>
+          <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuario" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Con Tuki</a>
+          <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuarioSinTukiEfectivo" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Sin Tuki/Efectivo</a>
+    
+          <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>
 
 
 
@@ -287,6 +327,60 @@
   </div>
   <!-- Final ModalAgregarUsuario -->
 
+  <!-- Modal ModalAgregarUsuarioSinTukiEfectivo -->
+  <div id="agregarUsuarioSinTukiEfectivo" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content ModalAgregarUsuarioSinTukiEfectivo-->
+      <div class="modal-content">
+        <div class="modal-header" style="margin:10px;">
+          <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title">Ingresa Datos del Usuario</h4>
+        </div>
+        <div class="col-md-9" style="margin:70px;">
+          <form action="/cuentaComun/agregarUsuarioCCTKEfectivo/" method="POST">
+            <label class="text">Persona que tiene Tuki pero aporto en Efectivo</label>
+            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
+            <label class="text">Cvu:</label>
+            <input class="form-control" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
+            <br>
+            <label class="text">Alias:</label>
+            <input class="form-control" style="width:90%;" type="text" name="aliasCC" th:value="${aliasCC}" />
+            <br>
+            <label class="text">Monto:</label>
+            <input class="form-control" type="number" name="montoEfectivoTk" th:value="${montoEfectivoTk}" />
+            <button type="submit" class="btn btn-primary">Agregar</button>
+          </form>
+        </div>
+        <div class="col-md-9" style="margin:70px;">
+          <form action="/cuentaComun/agregarUsuarioCCEfectivo/" method="POST">
+            <label class="text">Persona que NO tiene Tuki aporto en Efectivo</label>
+            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
+            <label class="text">Nombre:</label>
+            <input class="form-control" style="width:70%;" type="text" name="nombreEfectivo" th:value="${nombreEfectivo}" />
+            <br>
+            <label class="text">Monto:</label>
+            <input class="form-control" type="number" name="montoEfectivo" th:value="${montoEfectivo}" />
+
+            <button type="submit" class="btn btn-primary">Agregar</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Final ModalAgregarUsuarioSinTukiEfectivo -->
+
+
+
+
+
+
 <!-- ModalElegirCuentaComun -->
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
@@ -295,15 +389,31 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Elige tu Cuenta Comun</h4>
+        <h4 class="modal-title">Elige una Cuenta Comun</h4>
       </div>
       <div class="col-md-5">
         <form>
+          <label class="text">Mis Cuentas Comun</label>
           <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
           <br>
           <select class="form-control" name="idCC">
             <option></option>
-            <option th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+            <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+              th:value="${listaCCAux.id}"></option>
+          </select>
+          <br>
+          <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+          <br>
+        </form>
+      </div>
+      <div class="col-md-5">
+        <form>
+          <label class="text">Cuentas Comun Soy Parte</label>
+          <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+          <br>
+          <select class="form-control" name="idCC">
+            <option></option>
+            <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
               th:value="${listaCCAux.id}"></option>
           </select>
           <br>

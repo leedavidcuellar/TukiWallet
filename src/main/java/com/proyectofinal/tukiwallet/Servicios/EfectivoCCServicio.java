@@ -22,7 +22,7 @@ public class EfectivoCCServicio {
     @Autowired
     private EfectivoCCRepositorio efectivoCCRepositorio;
 
-    public void crear(String idUsuario, Float monto, String comentario) throws ErrorServicio {
+    public EfectivoCC crear(String idUsuario, Float monto, String comentario) throws ErrorServicio {
         validarMonto(monto);
         EfectivoCC efectivoCC = new EfectivoCC();
         efectivoCC.setIdUsuario(idUsuario);
@@ -30,6 +30,7 @@ public class EfectivoCCServicio {
         efectivoCC.setComentario(comentario);
 
         efectivoCCRepositorio.save(efectivoCC);
+        return efectivoCC;
     }
 
     public void modificar(String id, String idUsuario, Float monto, String comentario) throws ErrorServicio {

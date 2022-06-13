@@ -8,6 +8,7 @@ import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaComunRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.EfectivoCCRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ public class CuentaComunServicio {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
 
     @Autowired
     private CuentaServicio cuentaServicio;
@@ -35,7 +35,7 @@ public class CuentaComunServicio {
     private EfectivoCCRepositorio efectivoCCRepositorio;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public CuentaComun crearCuentaComun(String nombre, List<Usuario> usuarios) throws ErrorServicio {
+    public CuentaComun crearCuentaComun(String nombre, String idUsuario, List<Usuario> usuarios) throws ErrorServicio {
 
         validar(nombre, usuarios);
 
@@ -47,7 +47,8 @@ public class CuentaComunServicio {
         cuentaComun.setAlta(true);
         cuentaComun.setSaldoCC(0f);
         cuentaComun.setCvuCC(crearCvuCC());
-
+        cuentaComun.setPropietario(idUsuario);
+        
         cuentaComunRepositorio.save(cuentaComun);
         return cuentaComun;
     }
@@ -69,15 +70,29 @@ public class CuentaComunServicio {
             throw new ErrorServicio("NO se enceontró el usuario solicitado.");
         }
     }
-    
-     @Transactional
+
+    @Transactional
     public void agregarUsuarioCuentaComun(String id, List<Usuario> usuarios) throws ErrorServicio {
 
-
-        CuentaComun cuentaComun= cuentaComunRepositorio.buscarCuentaComunPorId(id);
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(id);
         if (cuentaComun != null) {
-            
+
             cuentaComun.setUsuarios(usuarios);
+
+            cuentaComunRepositorio.save(cuentaComun);
+
+        } else {
+            throw new ErrorServicio("NO se encontró la cuenta comun  solicitada.");
+        }
+    }
+
+    @Transactional
+    public void agregarPersonaEfectivo(String id, List<EfectivoCC> efectivoCCPersonas) throws ErrorServicio {
+
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(id);
+        if (cuentaComun != null) {
+
+            cuentaComun.setEfectivoCC(efectivoCCPersonas);
 
             cuentaComunRepositorio.save(cuentaComun);
 
@@ -91,13 +106,13 @@ public class CuentaComunServicio {
 
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
         for (EfectivoCC efectivo : cuentaComun.getEfectivoCC()) {
-           
-            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId()); 
-            
-            if(usuarioExtra == null){
+
+            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId());
+
+            if (usuarioExtra == null) {
                 cuentaComun.getUsuarios().add(usuarioExtra);
             }
-        
+
         }
         Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
         String[][] aux = new String[cantidadUsuarios][4];
@@ -168,19 +183,19 @@ public class CuentaComunServicio {
         }
     }
 
-    public void validarTransferenciaCuentaComun(Float cantidad, String cvu1, String cvu2) throws ErrorServicio{
+    public void validarTransferenciaCuentaComun(Float cantidad, String cvu1, String cvu2) throws ErrorServicio {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaPorCvuCC(cvu1);
-        if (cuentaComun!=null) {
-            if (cuentaComun.getSaldoCC()<cantidad) {
+        if (cuentaComun != null) {
+            if (cuentaComun.getSaldoCC() < cantidad) {
                 throw new ErrorServicio("No tiene esa cantidad en su cuenta");
             }
-            if (cantidad<0) {
+            if (cantidad < 0) {
                 throw new ErrorServicio("No puede transferir una cantidad negativa");
             }
             if (cvu2.equals(cvu1)) {
-            throw new ErrorServicio("No se puede transferir al mismo cvu");
+                throw new ErrorServicio("No se puede transferir al mismo cvu");
             }
-        }else{
+        } else {
             throw new ErrorServicio("No se ha encontrado el cvu");
         }
     }
@@ -228,6 +243,15 @@ public class CuentaComunServicio {
         return cuentaComunRepositorio.mostrarUsuarios(idCuentaComun);
     }
 
+    @Transactional(readOnly = true)
+    public List<EfectivoCC> enlistarEfectivos(String idCuentaComun) {
+        return cuentaComunRepositorio.mostrarUsuariosEfectivos(idCuentaComun);
+    }
+
+    public Usuario buscarUsuarioEspecificoCC(String idCuentaComun) {
+        return cuentaComunRepositorio.buscarUsuarioCC(idCuentaComun);
+    }
+
     public String crearCvuCC() {
         String cvu = "00002";
         Integer cant = 5; //Para agregar 00001 al principio
@@ -269,7 +293,7 @@ public class CuentaComunServicio {
             return null;
         }
     }
-    
+
     @Transactional(readOnly = true)
     public CuentaComun buscarCuentaPorIdCC(String id) {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(id);
@@ -279,22 +303,69 @@ public class CuentaComunServicio {
             return null;
         }
     }
-    
+
     @Transactional(readOnly = true)
     public List<CuentaComun> buscarCuentaComunPorIdUsuario(String id) {
         List<CuentaComun> cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorIdUsuario(id);
         if (cuentaComun != null) {
-            
+
             return cuentaComun;
         } else {
             return null;
         }
     }
-    
+
     @Transactional(readOnly = true)
     public Float sumaSaldoPorUsuario(Usuario usuario) {
-        
+
         Float saldoUsuario = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
         return saldoUsuario;
     }
+
+    @Transactional(readOnly = true)
+    public Float sumaSaldoPorUsuarioEfectivo(EfectivoCC efectivoCC) {
+
+        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario());
+        return saldoUsuarioEfectivo;
+    }
+
+    @Transactional(propagation = Propagation.NESTED)
+    public void eliminardeListaUsuariosTuki(String idUsuario, String idCuentaComun) {
+        Usuario usuario = usuarioRepositorio.buscarPorId(idUsuario);
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
+        List<Usuario> listaUsuarios = cuentaComun.getUsuarios();
+        Iterator<Usuario> it2 = listaUsuarios.iterator();
+
+        while (it2.hasNext()) {
+
+            if (it2.next().equals(usuario)) {
+
+                it2.remove();
+
+            }
+        }
+
+        cuentaComun.setUsuarios(listaUsuarios);
+    }
+
+    @Transactional(propagation = Propagation.NESTED)
+    public void eliminardeListaUsuariosSinTuki(String idE2, String idCuentaComun) {
+        EfectivoCC usuarioEfectivo = efectivoCCRepositorio.buscarEfectivoPorId(idE2);
+        System.out.println(usuarioEfectivo);
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
+        List<EfectivoCC> listaUsuariosEfectivo = cuentaComun.getEfectivoCC();
+        Iterator<EfectivoCC> it2 = listaUsuariosEfectivo.iterator();
+
+        while (it2.hasNext()) {
+
+            if (it2.next().equals(usuarioEfectivo)) {
+
+                it2.remove();
+                efectivoCCRepositorio.deleteById(idE2);
+            }
+        }
+
+        cuentaComun.setEfectivoCC(listaUsuariosEfectivo);
+    }
+
 }

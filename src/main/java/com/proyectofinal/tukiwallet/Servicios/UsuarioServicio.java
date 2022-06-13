@@ -92,7 +92,7 @@ public class UsuarioServicio implements UserDetailsService{
         listaUsuario.add(usuario);
         aux=aux+1;
         String auxnombreCC="MiPrimerCuentaComun"+aux;
-        CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(auxnombreCC, listaUsuario);
+        CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(auxnombreCC, usuario.getId(),listaUsuario);
        
         listaCuentaComun.add(cuentaComun);
         
@@ -173,7 +173,6 @@ public class UsuarioServicio implements UserDetailsService{
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
             usuario.setAlta(Boolean.FALSE);
-
             usuarioRepositorio.save(usuario);
         } else {
             throw new ErrorServicio("No se encontro el usuario solicitado");
