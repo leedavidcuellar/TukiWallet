@@ -24,7 +24,7 @@
     <div class="main-agileinfo">
       <div class="agileits-top">
         <form action="/usuario/registrarUsuario" method="post" enctype="multipart/form-data">
-          <p th:if="${Error != null}" th:text="${Error}" style=color:red;></p>
+          <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
 
           <input class="text" type="text" name="nombre" placeholder="Nombre" th:value="${nombre}" required="" />
           <br>

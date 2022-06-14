@@ -220,15 +220,31 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Elige tu Cuenta Comun</h4>
+        <h4 class="modal-title">Elige una Cuenta Comun</h4>
       </div>
       <div class="col-md-5">
         <form>
+          <label class="text">Mis Cuentas Comun</label>
           <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
           <br>
           <select class="form-control" name="idCC">
             <option></option>
-            <option th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+            <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+              th:value="${listaCCAux.id}"></option>
+          </select>
+          <br>
+          <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+          <br>
+        </form>
+      </div>
+      <div class="col-md-5">
+        <form>
+          <label class="text">Cuentas Comun Soy Parte</label>
+          <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+          <br>
+          <select class="form-control" name="idCC">
+            <option></option>
+            <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
               th:value="${listaCCAux.id}"></option>
           </select>
           <br>
