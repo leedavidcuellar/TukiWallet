@@ -145,14 +145,18 @@
       <div class="text">Inicio</div>
     </header>
 
-    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-    <p th:if="${exito != null}" th:text="${exito}" style="color:green"></p>
+    <div th:replace="principalFinal::mensajes"></div>
 
     <div class="wrapper" Style="text-align:center">
       <h4 name="nombre" th:value="${micuentaC.nombre}" th:if="${session.usuariosession != null}"
         th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
       <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
       <input class="textarea" type="text" name="nombrecc" th:value="${cuentaComun.nombre}" />
+
+      <button type="button" class="btn btn-success " disabled th:if="${cuentaComun.alta}==true">Activo</button>
+      <button type="button" class="btn btn-danger " disabled th:if="${cuentaComun.alta}==false">Desactivo</button>
+
+
       <header>Dinero disponible</header>
       <form action="#">
         <div class="monto">
@@ -183,8 +187,21 @@
       </table>
     </div>
 
-    </div>
-    </div>
+<div th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
+    <form th:if= "${cuentaComun.alta}==true" action="/cuentaComun/deshabilitarCC" method="post">
+      <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+      <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
+      style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta Comun</button>
+    </form> 
+    <form th:if= "${cuentaComun.alta}==false" action="/cuentaComun/habilitarCC" method="post">
+      <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+      <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+      style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta Comun</button>
+    </form> 
+  </div>
+  
     <div class="wrapper3">
       <div class="comun">
         <h5>Usuarios con Tuki</h5>
@@ -262,6 +279,8 @@
 
       </form>
     </div>
+
+
   </section>
 
   <!-- Modal ModalMostrarDatos -->
