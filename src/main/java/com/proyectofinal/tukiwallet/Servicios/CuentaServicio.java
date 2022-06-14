@@ -58,7 +58,7 @@ public class CuentaServicio {
             return cuenta;
             
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el id cuenta");
         }
         
     }
@@ -72,7 +72,7 @@ public class CuentaServicio {
             cuentaRepositorio.save(cuenta);
             actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el Cuenta1");
+            throw new ErrorServicio("No se ha encontrado la Cuenta Destino que ingresa dinero");
         }
     }
     
@@ -86,7 +86,7 @@ public class CuentaServicio {
             //ERROR EN REGISTRAR 
             actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
         } else {
-            throw new ErrorServicio("No se ha encontrado el Cuenta2");
+            throw new ErrorServicio("No se ha encontrado la Cuenta a origen que egresa dinero");
         }
     }
     
@@ -100,22 +100,28 @@ public class CuentaServicio {
                 throw new ErrorServicio("No puede transferir una cantidad negativa");
             }
             if (cvu2.equals(cvu1)) {
-            throw new ErrorServicio("No se puede transferir al mismo cvu");
+            throw new ErrorServicio("No se puede transferir al mismo cvu cuenta");
             }
         }else{
-            throw new ErrorServicio("No se ha encontrado el cvu");
+            throw new ErrorServicio("No se ha encontrado el cvu de la cuenta");
         }
     }
 
     @Transactional(propagation = Propagation.NESTED)
     public void baja(String id)throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
+       
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
-            cuenta.setAlta(false);
-            cuentaRepositorio.save(cuenta);
+           
+            if(cuenta.getSaldo()==0f){
+                cuenta.setAlta(false);
+                cuentaRepositorio.save(cuenta);
+            }else{
+                throw new ErrorServicio("No se puede dar Baja porque tiene saldo la Cuenta, debe transferir a otra Cuenta");
+            }
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el id de la Cuenta");
         }
     }
     
@@ -127,7 +133,7 @@ public class CuentaServicio {
             cuenta.setAlta(true);
             cuentaRepositorio.save(cuenta);
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el id cuenta");
         }
     }
     
@@ -137,7 +143,7 @@ public class CuentaServicio {
         if (optional.isPresent()) {
             cuentaRepositorio.delete(optional.get());
         }else{
-            throw new ErrorServicio("No se encontró el id");
+            throw new ErrorServicio("No se encontró el id cuenta");
         }
     } 
     
@@ -147,19 +153,19 @@ public class CuentaServicio {
         if (optional.isPresent()) {
             return optional.get();
         }else{
-            throw new ErrorServicio("No se encontró el Id");
+            throw new ErrorServicio("No se encontró el Id cuenta");
         }
     } 
     
     public void validarSaldo(Float saldo) throws ErrorServicio{
         if (saldo == null || saldo.toString().trim().isEmpty()) {
-            throw new ErrorServicio("El saldo no puede ser nulo"); 
+            throw new ErrorServicio("El saldo no puede ser nulo cuenta"); 
         }
     }
     
     public void validarAlias(String alias) throws ErrorServicio{
         if (alias == null || alias.trim().isEmpty()) {
-            throw new ErrorServicio("El alias no puede ser nulo"); 
+            throw new ErrorServicio("El alias no puede ser nulo cuenta"); 
         }
     }
     
@@ -254,7 +260,7 @@ public class CuentaServicio {
             actividades.add(actividad);
             cuentaRepositorio.save(cuenta);
         }else{
-            throw new ErrorServicio("No se encontró el id");
+            throw new ErrorServicio("No se encontró el id cuenta");
         }
     }
     

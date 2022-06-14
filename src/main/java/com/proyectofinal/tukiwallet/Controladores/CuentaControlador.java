@@ -51,9 +51,9 @@ public class CuentaControlador {
             return "redirect:/login";
         }
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
-        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
         modelo.addAttribute("micuenta", usuarioCuenta);
-        modelo.addAttribute("listaCC",listaCC);
+        modelo.addAttribute("listaCC", listaCC);
         return "cuenta.html";
     }
 
@@ -78,34 +78,57 @@ public class CuentaControlador {
         }
     }
 
-    @PostMapping("/altaCuenta/{id}")
-    public String altaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio {
+    @PostMapping("/altaCuenta")
+    public String altaCuenta(ModelMap model, @RequestParam String idCuenta,@RequestParam String idUsuario ) throws ErrorServicio {
         try {
 
-            cuentaServicio.alta(id);
-            //ver bien el Return
-            return "/inicio";
-
+            cuentaServicio.alta(idCuenta);
+            Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+            model.addAttribute("perfil", usuario);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            model.put("mensaje", "Se Habilitado correctamente la Cuenta");
+            model.put("clase", "success");
+            return "cuenta.html";
         } catch (ErrorServicio e) {
             model.put("mensaje", e.getMessage());
-            //ver bien el Return
-            return "/index";
+            Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+            model.addAttribute("perfil", usuario);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            model.put("mensaje1", "Error al Habilitar la Cuenta " + e.getMessage());
+            model.put("clase1", "danger");
+            return "cuenta.html";
         }
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @PostMapping("/bajaCuenta/{id}")
-    public String bajaCuenta(ModelMap model, @PathVariable("id") String id) throws ErrorServicio {
+    @PostMapping("/bajaCuenta")
+    public String bajaCuenta(ModelMap model, @RequestParam String idCuenta, @RequestParam String idUsuario) throws ErrorServicio {
         try {
 
-            cuentaServicio.baja(id);
-            //ver bien el Return
-            return "/index";
+            cuentaServicio.baja(idCuenta);
+            Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+            //model.addAttribute("perfil", usuario);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            model.put("mensaje", "Se Deshabilitado correctamente la Cuenta");
+            model.put("clase", "success");
+            return "cuenta.html";
 
         } catch (ErrorServicio e) {
-            model.put("mensaje", e.getMessage());
-            //ver bien el Return
-            return "/inicio";
+            
+            Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+           
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            model.put("mensaje1", "Error al Deshabilitar la Cuenta " + e.getMessage());
+            model.put("clase1", "danger");
+            return "cuenta.html";
         }
     }
 
@@ -124,14 +147,13 @@ public class CuentaControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/transferir")
     public String transferir(ModelMap modelo, HttpSession session, String id, String cvuCuenta, String cvuoAlias, String monto, String motivo) throws ErrorServicio {
-       Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         try {
             Usuario login = (Usuario) session.getAttribute("usuariosession");
             if (login == null || !login.getId().equals(id)) {
-            return "redirect:/login";
+                return "redirect:/login";
             }
-           
-            
+
             Float montof = Float.valueOf(monto);
             String cvu1 = cvuCuenta;
             String cvu2 = null;
@@ -163,19 +185,19 @@ public class CuentaControlador {
             }
 
             modelo.put("exito", "Se transfirio correctamente");
-                    
-        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
-        modelo.addAttribute("micuenta", usuarioCuenta);
-        modelo.addAttribute("listaCC",listaCC);
+
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+            modelo.addAttribute("micuenta", usuarioCuenta);
+            modelo.addAttribute("listaCC", listaCC);
             return "cuenta.html";
 
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             System.out.println(e.getMessage());
-        
-        List<CuentaComun> listaCC=cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
-        modelo.addAttribute("micuenta", usuarioCuenta);
-        modelo.addAttribute("listaCC",listaCC);
+
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+            modelo.addAttribute("micuenta", usuarioCuenta);
+            modelo.addAttribute("listaCC", listaCC);
             return "cuenta.html";
         }
     }

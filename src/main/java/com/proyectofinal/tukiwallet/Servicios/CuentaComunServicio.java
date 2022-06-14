@@ -206,10 +206,17 @@ public class CuentaComunServicio {
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
+            
+             if(cuentaComun.getSaldoCC()==0f){
+                                
             cuentaComun.setAlta(Boolean.FALSE);
             cuentaComunRepositorio.save(cuentaComun);
+            }else{
+                throw new ErrorServicio("No se puede dar Baja porque tiene saldo Cuenta Comun, debe transferir a otra Cuenta");
+            }
+           
         } else {
-            throw new ErrorServicio("NO se enceontró el usuario solicitado.");
+            throw new ErrorServicio("NO se ha encontrado Id de la Cuenta Comun solicitada.");
         }
     }
 
