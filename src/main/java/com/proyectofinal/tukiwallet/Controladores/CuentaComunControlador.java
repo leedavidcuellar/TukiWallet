@@ -65,6 +65,7 @@ public class CuentaComunControlador {
 
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
+        modelo.addAttribute("micuenta", usuarioCuentaC);
         modelo.addAttribute("cuentaComun", cuentaComun);
         modelo.addAttribute("listaUsuarios", listaUsuarios);
         modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);

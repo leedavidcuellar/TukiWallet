@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -65,7 +66,7 @@ public class UsuarioServicio implements UserDetailsService{
     private Integer aux =0;
     
      @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio{
+     public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio, MessagingException{
            List<Usuario> listaUsuario =new ArrayList<Usuario>();
             List<CuentaComun> listaCuentaComun = new ArrayList<CuentaComun>();
          
@@ -89,6 +90,8 @@ public class UsuarioServicio implements UserDetailsService{
         
         usuario.setCuenta(cuenta);
       
+        usuarioRepositorio.save(usuario);
+        
         listaUsuario.add(usuario);
         aux=aux+1;
         String auxnombreCC="MiPrimerCuentaComun"+aux;
@@ -101,6 +104,7 @@ public class UsuarioServicio implements UserDetailsService{
         usuarioRepositorio.save(usuario);
         
         notificacionServicio.enviar("Bienvenido al TukiWallet", "Tuki Wallet", usuario.getMail());
+        //notificacionServicio.enviarHtml("Bienvenido al TukiWallet", "Tuki Wallet", usuario.getMail(),usuario.getNombre());
         
      }
      

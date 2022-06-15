@@ -1,11 +1,15 @@
 package com.proyectofinal.tukiwallet.Controladores;
 
+import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
+import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,9 +28,12 @@ public class UsuarioControlador {
 
     @Autowired
     UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    CuentaComunServicio cuentaComunServicio;
 
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo, RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException {
+    public String registrarUsuario(ModelMap model, HttpSession session, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, @RequestParam MultipartFile archivo, RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException, MessagingException {
         SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
         Date fechaNacimientoAux = formatoDateFecha.parse(fechaNacimiento);
 
@@ -63,6 +70,11 @@ public class UsuarioControlador {
             usuarioServicio.modificarUsuario(archivo, id, nombre, apellido, dni, mail, fechaNacimientoAux, clave1, clave2);
             session.setAttribute("usuariosession", usuario);
 
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            
+            
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario Editado correctamente")
                     .addFlashAttribute("clase", "success");
@@ -70,6 +82,11 @@ public class UsuarioControlador {
 
         } catch (ErrorServicio e) {
             e.printStackTrace();
+            session.setAttribute("usuariosession", usuario);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            
             model.put("mensaje1", "Error al editar Usuario " + e.getMessage());
             model.put("clase1", "danger");
             model.put("perfil", usuario);
@@ -91,12 +108,14 @@ public class UsuarioControlador {
             return "redirect:/inicio";
         }
 
-        //try{
         Usuario usuario = usuarioServicio.buscarPorId(id);
         model.addAttribute("perfil", usuario);
-//        } catch (ErrorServicio e){
-//            model.addAttribute("error", e.getMessage());
-//        }
+
+            Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuarioCuenta);
+            model.addAttribute("listaCC", listaCC);
 
         return "tuperfil.html";
     }
@@ -109,6 +128,12 @@ public class UsuarioControlador {
             usuarioServicio.habilitarUsuario(id);
             Usuario usuario = usuarioServicio.buscarPorId(id);
             model.addAttribute("perfil", usuario);
+            Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuarioCuenta);
+            model.addAttribute("listaCC", listaCC);
+            
             model.put("mensaje", "Se Habilitado correctamente al Usuario");
             model.put("clase", "success");
             return "tuperfil.html";
@@ -116,7 +141,12 @@ public class UsuarioControlador {
         } catch (ErrorServicio e) {
             Usuario usuario = usuarioServicio.buscarPorId(id);
             model.addAttribute("perfil", usuario);
-            model.put("mensaje1", "Error al editar Usuario " + e.getMessage());
+            
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            
+            model.put("mensaje1", "Error al Desahbilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
 
             return "/inicio";
@@ -132,14 +162,25 @@ public class UsuarioControlador {
             usuarioServicio.deshabilitarUsuario(id);
             Usuario usuario = usuarioServicio.buscarPorId(id);
             model.addAttribute("perfil", usuario);
+            Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuarioCuenta);
+            model.addAttribute("listaCC", listaCC);
+            
             model.put("mensaje", "Se Deshabilitado correctamente al Usuario");
             model.put("clase", "success");
+            
             return "tuperfil.html";
 
         } catch (ErrorServicio e) {
             Usuario usuario = usuarioServicio.buscarPorId(id);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            
             model.addAttribute("perfil", usuario);
-            model.put("mensaje1", "Error al editar Usuario " + e.getMessage());
+            model.put("mensaje1", "Error al Deshabilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
             //ver bien el Return
             return "/inicio";
