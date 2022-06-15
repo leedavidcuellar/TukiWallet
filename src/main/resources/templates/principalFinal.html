@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUKI</title>
-    <link rel="stylesheet" href="/src/main/resources/static/css/estiloPrincipal.css">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title>Tuki</title>
+    <link rel="stylesheet" href="/css/estiloPrincipal.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+
+    
 
 <!-- Google fonts // Si quieren las cambian-->
 <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -18,29 +22,30 @@
    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
 
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
 
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
-
-
 <body>
+   
     <nav class="sidebar close">
         <header>
             <div class="image-text">
                 <span class="image">
-                    <img th:if="${session.usuariosession.foto != null}"
-                            style="max-height: 200px; border-radius:100%"
-                            th:src="${'/foto/usuario/'+ session.usuariosession.id}" alt="">
-                        <img th:if="${session.usuariosession.foto == null}"
-                            style="max-height: 200px; border-radius:100%" src="/assets/img/birrita.png" alt="">
+                    <img th:if="${session.usuariosession.foto != null}" style="max-height: 200px; border-radius:100%"
+                        th:src="${'/foto/usuario/'+ session.usuariosession.id}" alt="">
+                    <img th:if="${session.usuariosession.foto == null}" style="max-height: 200px; border-radius:100%"
+                        src="/assets/img/birrita.png" alt="">
                 </span>
 
                 <div class="text logo-text">
                     <span class="name">¡Hola!</span>
                     <span class="profession" th:if="${session.usuariosession != null}"
-                            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
-                        <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+                        th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+                    <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+
                 </div>
             </div>
 
@@ -53,14 +58,14 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a th:href="@{/inicio(id=${session.usuariosession.id})}">
-                            <i class='bx bx-home-alt icon' ></i>
+                            <i class='bx bx-home-alt icon'></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
-                            <i class='bx bx-user icon' ></i>
+                            <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Tu perfil</span>
                         </a>
                     </li>
@@ -73,19 +78,18 @@
                     </li>
 
                     <li class="nav-link">
-                          <!-- Llamado ModalElegirCuentaComun-->
-                     <div>
-                            <a
-                                data-toggle="modal" data-target="#myModal">
-                            <i class='bx bx-group icon' ></i>
-                            <span class="text nav-text">Cuenta comun</span>
-                          </a>
-                    </div><!-- fin llamado ModalElegirCuentaComun-->
+                        <!-- Llamado ModalElegirCuentaComun-->
+                        <div>
+                            <a data-toggle="modal" data-target="#myModal">
+                                <i class='bx bx-group icon'></i>
+                                <span class="text nav-text">Cuenta comun</span>
+                            </a>
+                        </div><!-- fin llamado ModalElegirCuentaComun-->
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-transfer icon' ></i>
+                            <i class='bx bx-transfer icon'></i>
                             <span class="text nav-text">Transferir</span>
                         </a>
                     </li>
@@ -94,6 +98,7 @@
                         <!--     <i class='bx bx-search icon'></i>
                              <input type="text" placeholder="" >   -->
                     </li>
+
                 </ul>
             </div>
 
@@ -104,16 +109,16 @@
                         <i class='bx bx-moon icon moon'></i>
                         <i class='bx bx-sun icon sun'></i>
                     </div>
-                    <span class="mode-text text">Noche</span>
+                    <span class="mode-text text">Modo noche</span>
 
                     <div class="toggle-switch">
                         <span class="switch"></span>
                     </div>
-                </li> 
-                
+                </li>
+
                 <li class="salir">
                     <a href="/logout">
-                        <i class='bx bx-log-out icon' ></i>
+                        <i class='bx bx-log-out icon'></i>
                         <span class="text nav-text">Salir</span>
                     </a>
                 </li>
@@ -121,85 +126,89 @@
             </div>
         </div>
     </nav>
+  
     <div class="encabezado">
-      <div class="cabeza">
-        <div class="textTuki">TukiWallet</div>
-        <div class="text">Inicio</div>
-      </div>
-      <div class="contenido">
-   
-        <div th:fragment="mensajes">
-            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                th:text="${mensaje}" class="alert" data-dismiss="alert" aria-label="close">&times;
-            </div>
-
-            <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
-                th:text="${mensaje1}" class="alert" data-dismiss="alert" aria-label="close">&times;
-            </div>
-
-            
+        <div class="cabeza">
+            <div class="textTuki">TukiWallet</div>
+            <div class="text">Inicio</div>
         </div>
+        <div class="contenido">
+            <div th:fragment="mensajes">
+                <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                    th:text="${mensaje}" class="alert" data-dismiss="alert" aria-label="close">&times;
+                </div>
 
-
-      </div>
+                <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
+                    th:text="${mensaje1}" class="alert" data-dismiss="alert" aria-label="close">&times;
+                </div>
+            </div>
+            <p class="texto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos excepturi enim
+                reiciendis sed id sint veniam nostrum! Dolore rem soluta ut voluptatem necessitatibus assumenda veniam
+                accusamus ea, odio repellendus delectus.</p>
+        </div>
     </div>
 
-<!-- ModalElegirCuentaComun -->
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
+    <!-- ModalElegirCuentaComun -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
 
-      <!-- Modal content ModalElegirCuentaComun-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Elige una Cuenta Comun</h4>
-        </div>
-        <div class="col-md-5">
-          <form>
-            <label class="text">Mis Cuentas Comun</label>
-            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-            <br>
-            <select class="form-control" name="idCC">
-              <option></option>
-              <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
-                th:value="${listaCCAux.id}"></option>
-            </select>
-            <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
-            <br>
-          </form>
-        </div>
-        <div class="col-md-5">
-          <form>
-            <label class="text">Cuentas Comun Soy Parte</label>
-            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-            <br>
-            <select class="form-control" name="idCC">
-              <option></option>
-              <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
-                th:value="${listaCCAux.id}"></option>
-            </select>
-            <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
-            <br>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+            <!-- Modal content ModalElegirCuentaComun-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <h4 class="modal-title">Elige una Cuenta Comun</h4>
+                </div>
+                <div class="col-md-5">
+                    <form>
+                        <label class="text">Mis Cuentas Comun</label>
+                        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+                        <br>
+                        <select class="form-control" name="idCC">
+                            <option></option>
+                            <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}"
+                                th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+                                th:value="${listaCCAux.id}"></option>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-primary"
+                            formaction="/cuentaComun/micuentaC">Seleccionar</button>
+                        <br>
+                    </form>
+                </div>
+                <div class="col-md-5">
+                    <form>
+                        <label class="text">Cuentas Comun Soy Parte</label>
+                        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+                        <br>
+                        <select class="form-control" name="idCC">
+                            <option></option>
+                            <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}"
+                                th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+                                th:value="${listaCCAux.id}"></option>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-primary"
+                            formaction="/cuentaComun/micuentaC">Seleccionar</button>
+                        <br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
 
+        </div>
     </div>
-  </div>
-  <!-- Final ModalElegirCuentaComun -->
+    <!-- Final ModalElegirCuentaComun -->
 
-
-    <script src="/src/main/resources/static/js/script.js"></script>
+    <script src="/static/js/jssPrincipal.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
+
 </body>
+
 </html>
