@@ -2,6 +2,7 @@
 package com.proyectofinal.tukiwallet.Repositorios;
 
 
+import com.proyectofinal.tukiwallet.Entidades.Actividad;
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
@@ -22,17 +23,20 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     
 @Query("SELECT cc.usuarios FROM CuentaComun cc WHERE cc.id = :id")
     public List<Usuario> mostrarUsuarios (@Param("id") String id);  
+
     
-    @Query("SELECT cc.efectivoCC FROM CuentaComun cc WHERE cc.id = :id")
+@Query("SELECT cc.efectivoCC FROM CuentaComun cc WHERE cc.id = :id")
     public List<EfectivoCC> mostrarUsuariosEfectivos (@Param("id") String id);  
+
     
 @Query("SELECT cc FROM CuentaComun cc JOIN cc.usuarios u WHERE u.id = :id")
     public List<CuentaComun> buscarCuentaComunPorIdUsuario (@Param("id") String id);
+
     
-    @Query("SELECT u FROM CuentaComun cc JOIN cc.usuarios u WHERE u.id = :id")
+@Query("SELECT u FROM CuentaComun cc JOIN cc.usuarios u WHERE u.id = :id")
     public Usuario buscarUsuarioCC (@Param("id") String id);      
 
-
+    
 @Query("SELECT cc FROM CuentaComun cc WHERE cc.nombre = :nombre")
     public CuentaComun mostrarPorNombre (@Param("nombre") String nombre);  
 
@@ -45,24 +49,33 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     public CuentaComun buscarCuentaPorAliasCC (@Param("aliasCC") String alias); 
     
     
- @Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario")
+@Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario")
     public Float sumaSaldoCCporUsuarioEfectivo (@Param("idUsuario") String idUsuario);     
+ 
     
- @Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.cvu = :idCvu")
+@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.cvu = :idCvu")
     public Float sumaSaldoCCporCVU (@Param("idCvu") String idCvu);   //Engreso a CC, para saber usuario deposito
 
-  @Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.cvu = :idCvu2")
+    
+@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.cvu = :idCvu2")
     public Float sumaSaldoCCporCVU2 (@Param("idCvu2") String idCvu2);  //Igreso a CC 
     
-  @Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario")
+    
+@Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario")
     public Float sumaSaldoEfectivoPorIdUsuario (@Param("idUsuario") String idUsuario);  
     
-  @Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.movimiento = True")
+    
+@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividad acc WHERE acc.movimiento = True")
   public Float sumaGastoTotalCC ();  
   
-  @Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc")
+  
+@Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc")
   public Float sumaGastoTotalEfectivoCC ();   
-    
+ 
+  
+@Query("SELECT a.actividad FROM CuentaComun a WHERE a.id = :id")
+public List<Actividad> mostrarActividaddeCuentaComun(@Param("id") String id);  
+  
 }
 
 
