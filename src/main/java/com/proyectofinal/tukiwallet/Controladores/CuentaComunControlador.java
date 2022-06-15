@@ -1,5 +1,6 @@
 package com.proyectofinal.tukiwallet.Controladores;
 
+import com.proyectofinal.tukiwallet.Entidades.Actividad;
 import com.proyectofinal.tukiwallet.Entidades.Cuenta;
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
@@ -40,7 +41,7 @@ public class CuentaComunControlador {
     private EfectivoCCServicio efectivoCCServicio;
 
     @GetMapping("/micuentaC")
-    public String miCuentaC(ModelMap modelo, HttpSession session, String idUsuario, String idCC) {
+    public String miCuentaC(ModelMap modelo, HttpSession session, String idUsuario, String idCC) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(idUsuario)) {
             return "redirect:/login";
@@ -67,10 +68,13 @@ public class CuentaComunControlador {
         modelo.addAttribute("cuentaComun", cuentaComun);
         modelo.addAttribute("listaUsuarios", listaUsuarios);
         modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
-
         modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
         modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
-
+        modelo.addAttribute("saldosUsuarios", saldosUsuarios);
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
+        
         return "cuentaComun.html";
     }
 

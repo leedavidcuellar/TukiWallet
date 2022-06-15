@@ -161,18 +161,27 @@
 
       <div class="p-3 border bg-light">
         <header class="movimiento">Movimiento de tu actividad</header>
-        <table class="table table-hover">
-          <tr>
-            <td>Obtuviste rendimientos</td>
-          </tr>
-          <tr>
-            <td>Obtuviste rendimientos</td>
-          </tr>
-          <tr>
-            <td>Obtuviste rendimientos</td>
-          </tr>
-        </table>
+        
+         <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <td>Cvu</td>
+                              <td>Monto</td>
+                              <td>Motivo</td>
+                              <td>Fecha</td>
+                          </tr>
+                      </thead>
+                      <tr th:each="actividad:${actividad}">
+                              <td th:if="${actividad.cvu}!=${cuentaComun.cvuCC}" th:text="${actividad.cvu}"></td>
+                              <td th:unless="${actividad.cvu}!=${cuentaComun.cvuCC}" th:text="${actividad.cvu2}"></td>
+                              <td th:if="${actividad.movimiento}" th:text="${actividad.monto}" style="color: red"></td>
+                              <td th:unless="${actividad.movimiento}" th:text="${actividad.monto}" style="color: green"></td>
+                              <td th:text="${actividad.motivo}"></td>
+                              <td th:text="${actividad.fecha}"></td>
+                     </tr>
+          </table>
       </div>
+  
 
       <div th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
         <form th:if="${cuentaComun.alta}==true" action="/cuentaComun/deshabilitarCC" method="post">
@@ -272,8 +281,7 @@
       </div>
     </div>
   </div>
-
-
+      
   <!-- ModalElegirCuentaComun -->
   <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -351,8 +359,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- Final ModalMostrarDatos -->
+
+        <!-- Final ModalMostrarDatos -->
 
 
       <!-- Modal ModalAgregarUsuario -->

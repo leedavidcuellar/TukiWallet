@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
@@ -10,6 +6,7 @@ import com.proyectofinal.tukiwallet.Entidades.Cuenta;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author Joaquin Calderon
- */
+
 @Service
 public class CuentaServicio {
     
@@ -70,7 +64,12 @@ public class CuentaServicio {
         if (cuenta != null) {
             cuenta.setSaldo(cuenta.getSaldo() + cantidad);
             cuentaRepositorio.save(cuenta);
-            actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+            List<Actividad> actividades = new ArrayList<Actividad>();
+            actividades.add(actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa));
+            cuenta.setActividad(actividades);
+            
+            System.out.println("llegue a ingreso cuenta");
+            
         } else {
             throw new ErrorServicio("No se ha encontrado la Cuenta Destino que ingresa dinero");
         }
@@ -79,12 +78,18 @@ public class CuentaServicio {
     //egresa
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void egresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
+        List<Actividad> actividades = new ArrayList<Actividad>();
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuEgresa);
         if (cuenta != null) {
             cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             cuentaRepositorio.save(cuenta);
-            //ERROR EN REGISTRAR 
-            actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            
+            System.out.println("llegue a egreso");
+            
+            Actividad actividad = actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            actividades.add(actividad);
+            cuenta.setActividad(actividades);
+         
         } else {
             throw new ErrorServicio("No se ha encontrado la Cuenta a origen que egresa dinero");
         }
@@ -263,6 +268,18 @@ public class CuentaServicio {
             throw new ErrorServicio("No se encontró el id cuenta");
         }
     }
+ 
+    @Transactional(readOnly = true)
+    public List<Actividad> verActividadCuenta(String id) throws ErrorServicio{
+        Optional<Cuenta> optional = cuentaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            List<Actividad> actividad = cuentaRepositorio.mostrarActividadDeCuenta(id);
+            return actividad;
+        }else{
+            throw new ErrorServicio("No se encontró el id");
+        }
+    } 
+    
     
     
 }
