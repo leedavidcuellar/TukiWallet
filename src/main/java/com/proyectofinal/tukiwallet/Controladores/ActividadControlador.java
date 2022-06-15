@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Controladores;
 
 import com.proyectofinal.tukiwallet.Servicios.ActividadServicio;
@@ -13,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- *
- * @author leedavidcuellar
- */
+
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 public class ActividadControlador {
@@ -28,14 +21,14 @@ public class ActividadControlador {
     UsuarioServicio usuarioServicio;
     
     @GetMapping("/actividadC")
-    public String listaActividades(ModelMap modelo){
-        modelo.addAttribute("lista", actividadServicio.listadoActividad());
+    public String listaActividades(ModelMap modelo, String cvu){
+        modelo.addAttribute("lista", actividadServicio.listadoActividadEgreso(cvu));
         return "actividad.html";
     }
     
     @GetMapping("/actividadCC")
-    public String listarActividadesCC(ModelMap modelo){
-        modelo.addAttribute("lista", actividadServicio.listadoActividadCC());
+    public String listarActividadesCC(ModelMap modelo, String cvu){
+        modelo.addAttribute("lista", actividadServicio.listadoActividadIngeso(cvu));
         return "actividadCC.html";
     }
     

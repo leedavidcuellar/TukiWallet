@@ -156,36 +156,79 @@
         </form>
   
       </div>
-      <div class="p-3 border bg-light">
-        <header>Movimiento de tu actividad</header>
-        <table class="table table-hover">
-          <tr>
-            <td>Obtuviste rendimientos</td>
-          </tr>
-          <tr>
-            <td>Obtuviste rendimientos</td>
-          </tr>
-          <tr>
-            <td>Obtuviste rendimientos</td>
-          </tr>
+
+    </div>
+
+  </nav>
+  <section class="home">
+    <header class="head1">
+      <div class="textTuki">TukiWallet</div>
+      <div class="text">Inicio</div>
+    </header>
+    <div th:replace="principalFinal::mensajes"></div>
+
+    <div class="wrapper" Style="text-align:center">
+      <h4 name="nombre" th:value="${micuenta.nombre}" th:if="${session.usuariosession != null}"
+        th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
+      <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+
+      <button type="button" class="btn btn-success " disabled th:if="${micuenta.cuenta.alta}==true">Activo</button>
+      <button type="button" class="btn btn-danger " disabled th:if="${micuenta.cuenta.alta}==false">Desactivo</button>
+
+      <header>Dinero disponible</header>
+      <form action="#">
+        <div class="monto">
+          <h4><input class="textarea" type="number" name="saldo" th:value="${micuenta.cuenta.saldo}"
+              readonly="readonly" /></h4>
+        </div>
+        <div class="wrapper2">
+            <a class="button" th:href="@{/cuenta/transferirlink(id=${session.usuariosession.id})}">
+                Transferir
+            </a>
+            <a class="button" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </a>
+      </form>
+
+    </div>
+    <div class="p-3 border bg-light">
+      <header>Movimiento de tu actividad</header>
+      
+       <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>Cvu</td>
+                            <td>Monto</td>
+                            <td>Motivo</td>
+                            <td>Fecha</td>
+                        </tr>
+                    </thead>
+                    <tr th:each="actividad:${actividad}">
+                            <td th:if="${actividad.cvu}!=${micuenta.cuenta.cvu}" th:text="${actividad.cvu}"></td>
+                            <td th:unless="${actividad.cvu}!=${micuenta.cuenta.cvu}" th:text="${actividad.cvu2}"></td>
+                            <td th:if="${actividad.movimiento}" th:text="${actividad.monto}" style="color: red"></td>
+                            <td th:unless="${actividad.movimiento}" th:text="${actividad.monto}" style="color: green"></td>
+                            <td th:text="${actividad.motivo}"></td>
+                            <td th:text="${actividad.fecha}"></td>
+                   </tr>
         </table>
-      </div>
-  
-  
-      <form th:if= "${micuenta.cuenta.alta}==true" action="/cuenta/bajaCuenta" method="post">
-        <input type="hidden" name="idCuenta" th:value="${micuenta.cuenta.id}" />
-        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-        <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
-        style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta</button>
-      </form> 
-      <form th:if= "${micuenta.cuenta.alta}==false" action="/cuenta/altaCuenta" method="post">
-        <input type="hidden" name="idCuenta" th:value="${micuenta.cuenta.id}" />
-        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-        <button type="submit" class="btn btn-success btn-xl rounded mt-2"
-        style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta</button>
-      </form> 
-      </div>
-    
+      
+    </div>
+
+
+    <form th:if= "${micuenta.cuenta.alta}==true" action="/cuenta/bajaCuenta" method="post">
+      <input type="hidden" name="idCuenta" th:value="${micuenta.cuenta.id}" />
+      <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
+      style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta</button>
+    </form> 
+    <form th:if= "${micuenta.cuenta.alta}==false" action="/cuenta/altaCuenta" method="post">
+      <input type="hidden" name="idCuenta" th:value="${micuenta.cuenta.id}" />
+      <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+      style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta</button>
+    </form> 
+
+  </section>
+  </div>
 
       <!-- Modal ModalMostrarDatos -->
   <div id="misDatos" class="modal fade" tabindex="-1" role="dialog">

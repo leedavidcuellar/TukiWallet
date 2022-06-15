@@ -296,24 +296,78 @@
             </div>
           </div>
         </div>
+
+        <div class="wrapper2">
+          <button>Transferir</button>
+          
+          <button type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
+
+
+      </form>
+    </div>
+
+    <div class="p-3 border bg-light">
+      <header class="movimiento">Movimiento de tu actividad</header>
+      
+       <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>Cvu</td>
+                            <td>Monto</td>
+                            <td>Motivo</td>
+                            <td>Fecha</td>
+                        </tr>
+                    </thead>
+                    <tr th:each="actividad:${actividad}">
+                            <td th:if="${actividad.cvu}!=${cuentaComun.cvuCC}" th:text="${actividad.cvu}"></td>
+                            <td th:unless="${actividad.cvu}!=${cuentaComun.cvuCC}" th:text="${actividad.cvu2}"></td>
+                            <td th:if="${actividad.movimiento}" th:text="${actividad.monto}" style="color: red"></td>
+                            <td th:unless="${actividad.movimiento}" th:text="${actividad.monto}" style="color: green"></td>
+                            <td th:text="${actividad.motivo}"></td>
+                            <td th:text="${actividad.fecha}"></td>
+                   </tr>
+        </table>
+    </div>
+
+<div th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
+    <form th:if= "${cuentaComun.alta}==true" action="/cuentaComun/deshabilitarCC" method="post">
+      <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+      <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
+      style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta Comun</button>
+    </form> 
+    <form th:if= "${cuentaComun.alta}==false" action="/cuentaComun/habilitarCC" method="post">
+      <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+      <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+      style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta Comun</button>
+    </form> 
+  </div>
+  
+    <div class="wrapper3">
+      <div class="comun">
+        <h5>Usuarios con Tuki</h5>
       </div>
-      <!-- Final ModalMostrarDatos -->
-    
-    
-      <!-- Modal ModalAgregarUsuario -->
-      <div id="agregarUsuario" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-    
-          <!-- Modal content ModalAgregarUsuario-->
-          <div class="modal-content">
-            <div class="modal-header" style="margin:10px;">
-              <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
-              <h4 class="modal-title">Ingresa Datos del Usuario</h4>
-            </div>
-            <div class="col-md-9" style="margin:70px;">
-              <form action="/cuentaComun/agregarUsuarioCC/" method="POST">
-    
-                <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td><Strong>#</Strong></td>
+            <td><Strong>Nombre</Strong></td>
+            <td><Strong>Monto</Strong></td>
+            <td><Strong th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Eliminar</Strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="listaUsuarios,numero:${listaUsuarios}">
+            <td th:text="${numero.index}+1"></td>
+            <td th:text="${listaUsuarios.nombre}"></td>
+            <!--<td> 300</td> -->
+            <td th:text="${saldosUsuarios}"></td>
+            <td>
+              <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/eliminardeListaUsuariosTuki/" method="post">
+                <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
+                <input type="hidden" name="idE" th:value="${listaUsuarios.id}" />
+
                 <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
                 <label class="text">Cvu:</label>
                 <input class="form-control" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />

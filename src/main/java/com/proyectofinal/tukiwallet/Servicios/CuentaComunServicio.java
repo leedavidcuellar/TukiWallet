@@ -1,6 +1,6 @@
 package com.proyectofinal.tukiwallet.Servicios;
 
-import com.proyectofinal.tukiwallet.Entidades.Cuenta;
+import com.proyectofinal.tukiwallet.Entidades.Actividad;
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
@@ -328,6 +328,19 @@ public class CuentaComunServicio {
         Float saldoUsuario = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
         return saldoUsuario;
     }
+    
+    
+     @Transactional(readOnly = true)
+    public List<Actividad> mostrarActividadCuentaComun(String id) throws ErrorServicio{
+        Optional<CuentaComun> optional = cuentaComunRepositorio.findById(id);
+        if (optional.isPresent()) {
+            List<Actividad> actividad = cuentaComunRepositorio.mostrarActividaddeCuentaComun(id);
+            return actividad;
+        }else{
+            throw new ErrorServicio("No se encontró el id");
+        }
+    }  
+    
 
     @Transactional(readOnly = true)
     public Float sumaSaldoPorUsuarioEfectivo(EfectivoCC efectivoCC) {
