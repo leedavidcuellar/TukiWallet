@@ -215,8 +215,8 @@
             <tr th:each="listaUsuarios,numero:${listaUsuarios}">
               <td th:text="${numero.index}+1"></td>
               <td th:text="${listaUsuarios.nombre}"></td>
-              <td> 300</td>
-              <!--<td th:text="${listaSaldosUsuarios}"></td>-->
+              <!--<td> 300</td>-->
+              <td th:text="${listaSaldosUsuarios}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosTuki/" method="post">
@@ -246,8 +246,8 @@
             <tr th:each="listaUsuariosEfectivo2,numeroE:${listaUsuariosEfectivo2}">
               <td th:text="${numeroE.index}+1"></td>
               <td th:text="${listaUsuariosEfectivo2.comentario}"></td>
-              <td> 300</td>
-              <!--<td th:text="${listaSaldosUsuarios}"></td>-->
+              <!--<td> 300</td>-->
+              <td th:text="${listaSaldosUsuariosEfectivo}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosSinTuki/" method="post">
@@ -292,7 +292,7 @@
 
           <h4 class="modal-title">Elige una Cuenta Comun</h4>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-10">
           <form>
             <label >Mis Cuentas Comun</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
@@ -307,7 +307,7 @@
             <br>
           </form>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-10">
           <form>
             <label >Cuentas Comun Soy Parte</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />

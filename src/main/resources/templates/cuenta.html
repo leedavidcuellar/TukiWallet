@@ -125,46 +125,13 @@
             </div>
         </div>
     </nav>
+    
     <div class="encabezado">
       <div class="cabeza">
         <div class="textTuki">TukiWallet</div>
-        <div class="text">Cuenta</div>
+        <div class="text">Cuenta común</div>
       </div>
       <div class="contenido">
-          <div th:replace="principalFinal::mensajes"></div>        
-      </div>
-      
-      <div class="wrapper" Style="text-align:center">
-        <h4 name="nombre" th:value="${micuenta.nombre}" th:if="${session.usuariosession != null}"
-          th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
-        <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
-  
-        <button type="button" class="btn btn-success " disabled th:if="${micuenta.cuenta.alta}==true">Activo</button>
-        <button type="button" class="btn btn-danger " disabled th:if="${micuenta.cuenta.alta}==false">Desactivo</button>
-  
-        <header>Dinero disponible</header>
-        <form action="#">
-          <div class="monto">
-            <h4><input class="textarea" type="number" name="saldo" th:value="${micuenta.cuenta.saldo}"
-                readonly="readonly" /></h4>
-          </div>
-          <div class="wrapper2">
-              <a class="button" th:href="@{/cuenta/transferirlink(id=${session.usuariosession.id})}">
-                  Transferir
-              </a>
-              <a class="button" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </a>
-        </form>
-  
-      </div>
-
-    </div>
-
-  </nav>
-  <section class="home">
-    <header class="head1">
-      <div class="textTuki">TukiWallet</div>
-      <div class="text">Inicio</div>
-    </header>
     <div th:replace="principalFinal::mensajes"></div>
 
     <div class="wrapper" Style="text-align:center">
@@ -227,7 +194,7 @@
       style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta</button>
     </form> 
 
-  </section>
+
   </div>
 
       <!-- Modal ModalMostrarDatos -->
@@ -272,10 +239,10 @@
       <!-- Modal content ModalElegirCuentaComun-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>
+
           <h4 class="modal-title">Elige una Cuenta Comun</h4>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-10">
           <form>
             <label class="text">Mis Cuentas Comun</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
@@ -290,7 +257,7 @@
             <br>
           </form>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-10">
           <form>
             <label class="text">Cuentas Comun Soy Parte</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
