@@ -150,15 +150,18 @@
             <h4><input class="textarea" type="number" name="saldocc" th:value="${cuentaComun.saldoCC}"
                 readonly="readonly" /></h4>
           </div>
-          <div class="wrapper2">
-            <a class="button" th:href="@{/cuenta/transferirlink(id=${session.usuariosession.id})}">
-              Transferir
-          </a>
+        
 
             <button type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
 
 
         </form>
+        <form action="/cuentaComun/transferirlinkCC">
+        <div class="wrapper2">
+          <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+          <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+          <input type="submit" value="Transferir"/>
+      </form>
       </div>
 
       <div class="p-3 border bg-light">

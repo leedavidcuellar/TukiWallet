@@ -719,5 +719,18 @@ public class CuentaComunControlador {
         }
         
     }
+    
+      @GetMapping("/transferirlinkCC")
+    public String transferirlinkCC(ModelMap model, HttpSession session, String id, String idCuentaComun) throws ErrorServicio {
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+        }
+        Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+        model.addAttribute("transferirlink", usuarioCuenta);
+        CuentaComun cuentaComun=cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
+        model.addAttribute("cuentaComun", cuentaComun);
+        return "transferir.html";
+    }
 
 }

@@ -150,7 +150,9 @@
                 <p>Cuenta de :</p>
                 <!-- nuestra cuenta automaticamente-->
                 <div class="select-box">
-                  <input type="text" th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta" readonly="readonly"/>
+                  <input type="text" th:if="${cuentaComun==null}"th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta" readonly="readonly"/>
+                  <input type="text" th:if="${cuentaComun!=null}"th:value="${cuentaComun.cvuCC}" name="cvuCuentaComun" readonly="readonly"/>
+                  <input type="hidden" th:if="${cuentaComun!=null}" th:value="${cuentaComun.id}" name="idCuentaComun">
                 </div>
               </div>
               <div class="to">
