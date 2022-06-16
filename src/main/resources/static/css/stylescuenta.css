@@ -9,6 +9,8 @@
   text-align: center;
 }
 body {
+  scroll-behavior: smooth;
+    overflow-y: scroll;
   display: flex;
   align-items: center ;
   justify-content: space-around;

@@ -23,7 +23,14 @@
     --tran-04: all 0.3s ease;
     --tran-05: all 0.3s ease;
 }
+.scroll{
+scroll-behavior: smooth;
+overflow-y: scroll;
+
+}
 body{
+scroll-behavior: smooth;
+overflow-y: scroll;
 position: relative;
 min-height: 100vh;
 width: 100%;
@@ -134,7 +141,9 @@ header .image-text .profession{
     height: 100vh;
     width: calc(100% - 178px);
 }
-
+.menu-links{
+    padding-left: 0;
+}
 /*--------------MENU------------*/
 .sidebar .menu{
    margin-top: 0;   
@@ -238,6 +247,7 @@ header .image-text .profession{
     background: linear-gradient(45deg, #007aff, rgb(159, 26, 226));
     height: 80px;
     width: 100%;
+    position:fixed;
 }
 .encabezado{
     position: absolute;
