@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -326,6 +325,11 @@
             <br>
           </form>
         </div>
+        <div class="gap-2 col-mid-9 mx-mid>
+          <form>
+            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/nuevaCuentaComun">Crear nueva cuenta comun</button>
+          </form>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -358,7 +362,8 @@
               <input class="textarea" style="width:70%;" type="text" name="alias-cc" th:value="${cuentaComun.aliasCC}"
                 readonly="readonly" />
             </div>
-            <div class="modal-footer">
+           <div class="gap-2 col-mid-9 mx-mid>
+           <div class="modal-footer">
               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
             </div>
           </div>

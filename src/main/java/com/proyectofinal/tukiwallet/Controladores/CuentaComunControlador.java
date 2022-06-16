@@ -132,7 +132,7 @@ public class CuentaComunControlador {
         //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
 
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/nuevaCuentaComun")
     public String crearCC(ModelMap modelo, @RequestParam String nombre, @RequestParam String idUsuario, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
 
@@ -295,23 +295,45 @@ public class CuentaComunControlador {
             
                     modelo.put("mensaje1", "Error al Habilitar la Cuenta Comun " + e.getMessage());
             modelo.put("clase1", "danger");
-            return "cuentaComun.html"; //check
+            return "cuentaComun.html"; 
         }
          
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editarCuentaComun")
-    public String editarCC(ModelMap modelo, @RequestParam String nombre, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
+    public String editarCC(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String id ,@RequestParam String nombre) throws ErrorServicio {
 
+        CuentaComun cuentaComun = null;
         try {
-            cuentaComunServicio.modificarCuentaComun(nombre, nombre, usuarios);
-        } catch (ErrorServicio error) {
-            modelo.put("error", error.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("usuarios", usuarios);
-            return "editarCuentaComun.html"; //check 
-        }
-        return "misCuentasComunes.html"; //check   
+            cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(id);
+            
+            cuentaComunServicio.modificarCuentaComun(id, nombre);
+            Usuario usuarioCC = usuarioServicio.buscarPorId(idUsuario);
+            
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCC.getId());
+        modelo.addAttribute("micuenta", usuarioCC);
+        modelo.addAttribute("listaCC", listaCC);
+        modelo.addAttribute("actividad", usuarioCC.getCuenta().getActividad());
+        session.setAttribute("usuariosession", usuarioCC);
+ 
+        modelo.put("mensaje", "Se modifico correctamente el nombre");
+        modelo.put("clase", "success");
+            
+            return "cuentaComun.html";
+            
+        } catch (ErrorServicio e) { 
+            
+        Usuario usuarioCC = usuarioServicio.buscarPorId(idUsuario);
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCC.getId());
+        modelo.addAttribute("micuenta", usuarioCC);
+        modelo.addAttribute("listaCC", listaCC);
+        modelo.addAttribute("actividad", usuarioCC.getCuenta().getActividad());
+        session.setAttribute("usuariosession", usuarioCC);
+        
+            modelo.put("mensaje1", "Error al modificar el alias " + e.getMessage());
+            modelo.put("clase1", "danger");;
+            return "cuentaComun.html"; 
+        } 
     }
 
     @PostMapping("/agregarUsuarioCC")

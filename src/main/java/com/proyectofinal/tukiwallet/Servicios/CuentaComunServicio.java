@@ -53,21 +53,17 @@ public class CuentaComunServicio {
         return cuentaComun;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public void modificarCuentaComun(String id, String nombre, List<Usuario> usuarios) throws ErrorServicio {
-
-        validar(nombre, usuarios);
-
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CuentaComun modificarCuentaComun(String id, String nombre) throws ErrorServicio {
+        validarNombreEditado(nombre);
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
             cuentaComun.setNombre(nombre);
-            cuentaComun.setUsuarios(usuarios);
-
             cuentaComunRepositorio.save(cuentaComun);
-
+            return cuentaComun;
         } else {
-            throw new ErrorServicio("NO se enceontró el usuario solicitado.");
+            throw new ErrorServicio("No se enceontró el usuario solicitado.");
         }
     }
 
@@ -233,7 +229,7 @@ public class CuentaComunServicio {
             cuentaComun.setAlta(Boolean.TRUE);
             cuentaComunRepositorio.save(cuentaComun);
         } else {
-            throw new ErrorServicio("NO se enceontró el usuario solicitado.");
+            throw new ErrorServicio("NO se encontró el usuario solicitado.");
         }
 
     }
@@ -248,7 +244,12 @@ public class CuentaComunServicio {
             throw new ErrorServicio("El mail del usuario no puede ser nulo.");
         }
     }
+    public void validarNombreEditado(String nombre) throws ErrorServicio {
 
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo.");
+        }
+    }
     @Transactional(readOnly = true)
     public List<Usuario> enlistar(String idCuentaComun) {
         return cuentaComunRepositorio.mostrarUsuarios(idCuentaComun);
