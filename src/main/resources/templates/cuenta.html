@@ -43,7 +43,7 @@
                 <div class="text logo-text">
                     <span class="name">¡Hola!</span>
                     <span class="profession" th:if="${session.usuariosession != null}"
-                            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+                            th:text="${session.usuariosession.nombre}"></span>
                         <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
                 </div>
             </div>
@@ -129,7 +129,7 @@
     <div class="encabezado">
       <div class="cabeza">
         <div class="textTuki">TukiWallet</div>
-        <div class="text">Cuenta común</div>
+        <div class="text">Cuenta</div>
       </div>
       <div class="contenido">
     <div th:replace="principalFinal::mensajes"></div>

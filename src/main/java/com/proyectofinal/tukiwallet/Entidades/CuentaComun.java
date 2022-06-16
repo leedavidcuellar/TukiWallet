@@ -165,8 +165,8 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
     /**
      * @param actividad the actividad to set
      */
-    public void setActividad(List<Actividad> actividad) {
-        this.actividad = actividad;
+    public void setActividad(Actividad actividad) {
+        this.actividad.add(actividad);
     }
     /**
      * @return the efectivoCC
