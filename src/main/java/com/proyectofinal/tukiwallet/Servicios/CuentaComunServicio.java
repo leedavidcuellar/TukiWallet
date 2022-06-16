@@ -116,6 +116,7 @@ public class CuentaComunServicio {
 
         int i = 0;
         Float gastoTotal = cuentaComunRepositorio.sumaGastoTotalCC() + cuentaComunRepositorio.sumaGastoTotalEfectivoCC();
+        
         Float gastoPorPersona = gastoTotal / cantidadUsuarios;
         String mensaje = "No se pudo realizar la división ya que: ";
 
@@ -237,7 +238,7 @@ public class CuentaComunServicio {
     public void validar(String nombre, List<Usuario> usuarios) throws ErrorServicio {
 
         if (nombre == null || nombre.trim().isEmpty()) {
-            throw new ErrorServicio("El nobre del usuario no puede ser nulo.");
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo.");
         }
 
         if (usuarios == null || usuarios.isEmpty()) {
