@@ -1,80 +1,122 @@
-.bloque{
-    margin: 400px;
+.bloque {
+  margin: 200px;
 }
-.primera-parte{
-    text-align: center;
-    align-items: center;
-    display: block;
-    padding: 15px;
-    font-size: 30px;
-    border-style: solid;
-        border-width: 5px;
-        border-color: rgb(79, 0, 205);
-        border-radius: 10px;
-        padding: 5px;
+.primera-parte {
+  background-color: white;
+  height: 200px;
+  text-align: center;
+  align-items: center;
+  display: block;
+  padding: 45px;
+  font-size: 30px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: rgb(79, 0, 205);
+  border-radius: 10px;
+  padding: 5px;
+  width: 500px;
 }
-.nombre-usuario{
-    padding-top: 20px;
-    display: inline-block;
-    vertical-align: top;
+.nombre-usuario {
+  padding-top: 20px;
+  display: inline-block;
+  vertical-align: top;
 }
-.foto-usuario{
-    width: 120px;
+.foto-usuario {
+  width: 120px;
 }
-.segunda-parte{ 
-    text-align: center;
-    align-items: center;
-    display: block;
-    padding: 15px;
-    font-size: 30px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: rgb(79, 0, 205);
-    border-radius: 10px;
-    padding: 5px;
+.segunda-parte {
+  margin-bottom: 50px;
+  margin-top: 50px;
+  text-align: center;
+  align-items: center;
+  display: block;
+  padding: 15px;
+  font-size: 30px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: rgb(79, 0, 205);
+  border-radius: 10px;
+  padding: 5px;
+  background-color: white;
 }
 svg {
-    width: 64px;
-    margin-top: 20px;
+  width: 64px;
+  margin-top: 20px;
 }
 .textarea {
-    border: none;
-    background-color: transparent;
-    resize: none;
-    outline: none;
-    text-align: center;
-    font-size: 70%;
-  }
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+  font-size: 70%;
+}
 
-  .textarea2 {
-    background-color: transparent;
-    resize: none;
-    outline: none;
-    text-align: center;
-    font-size: 70%;
-  }
+.textarea2 {
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+  font-size: 70%;
+}
 
-.cvu{
-    
-    padding: 4px;
+.cvu {
+  padding: 4px;
 }
-.mail{
-    padding: 4px;
+.mail {
+  padding: 4px;
 }
-.constrasena{
-    padding: 4px;
+.constrasena {
+  padding: 4px;
 }
-.terminos{
-    padding: 8px;
+.terminos {
+  padding: 8px;
 }
-.faqs{
-    padding: 8px;
+.faqs {
+  padding: 8px;
 }
-.pgrande{
-    font-size: 40px;
-    display: inline-block;
-    vertical-align: top;
+.pgrande {
+  font-size: 30px;
+  display: inline-block;
+  vertical-align: top;
 }
-a{
-    margin-top: 20px;
+a {
+  margin-top: 20px;
+}
+.contenido {
+  display: flex;
+}
+.body {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+#botonesss {
+  width: 150px;
+  margin-top: 50px;
+}
+.encabezado {
+  background-color: white;
+}
+.form-control {
+  width: 20px;
+}
+.faqs .pgrande {
+  padding-top: 10px;
+}
+
+.btn {
+  width: 30%;
+  justify-self: center;
+}
+.formControl {
+  width: 40%;
+  font-size: 20px;
+  text-align: center;
+}
+.formControlDNI {
+  width: 40%;
+  text-align: center;
+}
+.DNI {
+  margin-left: 55px;
 }
