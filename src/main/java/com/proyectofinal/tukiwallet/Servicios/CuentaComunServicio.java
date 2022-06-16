@@ -346,10 +346,10 @@ public class CuentaComunServicio {
     }  
     
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // no es de tuki
     public Float sumaSaldoPorUsuarioEfectivo(EfectivoCC efectivoCC) {
 
-        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario());
+        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario(),efectivoCC.getComentario());
         return saldoUsuarioEfectivo;
     }
 

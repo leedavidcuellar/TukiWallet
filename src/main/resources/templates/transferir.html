@@ -46,7 +46,7 @@
                 <div class="text logo-text">
                     <span class="name">¡Hola!</span>
                     <span class="profession" th:if="${session.usuariosession != null}"
-                            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+                            th:text="${session.usuariosession.nombre}"></span>
                         <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
                 </div>
             </div>
@@ -148,7 +148,7 @@
             <div class="drop-list">
               <div class="from">
                 <p>Cuenta de :</p>
-                <!--Nos deberia aparecer el nombre de nuestra cuenta automaticamente-->
+                <!-- nuestra cuenta automaticamente-->
                 <div class="select-box">
                   <input type="text" th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta" readonly="readonly"/>
                 </div>
@@ -167,9 +167,8 @@
                 <input type="submit" value="TRANSFERIR" />
           </form>
           <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
-        </div>
 
-      </div>
+        </div>
     </div>
 
 <!-- ModalElegirCuentaComun -->

@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -17,6 +19,7 @@ public class Actividad {
     private Integer nOperacion;
     private Float monto;
     private String motivo;
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean movimiento;//True Salida y False Ingreso
     private String cvu;

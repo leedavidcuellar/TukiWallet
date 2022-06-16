@@ -63,7 +63,7 @@ public class UsuarioServicio implements UserDetailsService{
     @Autowired
     private FotoServicio fotoServicio;
     
-    private Integer aux =0;
+   
     
      @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
      public void registrarUsuario(MultipartFile archivo, String nombre, String apellido, Date fechaNacimiento, String dni, String mail, String clave1, String clave2) throws ErrorServicio, MessagingException{
@@ -93,8 +93,8 @@ public class UsuarioServicio implements UserDetailsService{
         usuarioRepositorio.save(usuario);
         
         listaUsuario.add(usuario);
-        aux=aux+1;
-        String auxnombreCC="MiPrimerCuentaComun"+aux;
+        
+        String auxnombreCC=apellido+dni;
         CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(auxnombreCC, usuario.getId(),listaUsuario);
        
         listaCuentaComun.add(cuentaComun);

@@ -58,7 +58,7 @@ public class CuentaComunControlador {
             
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
-System.out.println(saldosUsuarios);
+
         //para que se vea usuarios sin tuki
         List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
         List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
@@ -168,6 +168,9 @@ System.out.println(saldosUsuarios);
         for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+        modelo.addAttribute("actividad", actividad);
 
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
@@ -200,6 +203,9 @@ System.out.println(saldosUsuarios);
         for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+        modelo.addAttribute("actividad", actividad);
 
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
@@ -240,6 +246,10 @@ System.out.println(saldosUsuarios);
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
 
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+        modelo.addAttribute("actividad", actividad);
+        
+        
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
         modelo.addAttribute("cuentaComun", cuentaComun);
@@ -270,6 +280,9 @@ System.out.println(saldosUsuarios);
         for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+        modelo.addAttribute("actividad", actividad);
 
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
@@ -302,15 +315,15 @@ System.out.println(saldosUsuarios);
     }
 
     @PostMapping("/agregarUsuarioCC")
-    public String agregarUsuarioCC(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idCC, String cvuUsuario, String aliasCC) throws ErrorServicio {
+    public String agregarUsuarioCC(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idCC, String cvuoAliasUsuario) throws ErrorServicio {
         List<Usuario> listaUsuario = new ArrayList<Usuario>();
         try {
 
-            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(aliasCC);
+            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(cvuoAliasUsuario);
 
             if (cuenta == null) {
 
-                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuUsuario);
+                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuoAliasUsuario);
             }
 
             Usuario usuario = usuarioServicio.buscarPorCuentaId(cuenta.getId());
@@ -336,6 +349,8 @@ System.out.println(saldosUsuarios);
                 saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
             }
             
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
 
             modelo.addAttribute("micuentaC", usuarioCuentaC);
             modelo.addAttribute("cuentaComun", cuentaComun);
@@ -347,12 +362,41 @@ System.out.println(saldosUsuarios);
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
-            modelo.put("error", "Error al editar Usuario " + e.getMessage());
+           //para que se vea usuarios con tuki
+        List<Float> saldosUsuarios = new ArrayList<Float>();
+        Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+        CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
+        List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+        for (Usuario usuarioAux : listaUsuarios) {
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            
+        }
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+
+        //para que se vea usuarios sin tuki
+        List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+        List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+        for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+            saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+        }
+
+        modelo.addAttribute("listaCC", listaCC);
+        modelo.addAttribute("micuentaC", usuarioCuentaC);
+        modelo.addAttribute("micuenta", usuarioCuentaC);
+        modelo.addAttribute("cuentaComun", cuentaComun);
+        modelo.addAttribute("listaUsuarios", listaUsuarios);
+        modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+        modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+        modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
+        
             modelo.put("mensaje1", "Error al editar Usuario " + e.getMessage());
             modelo.put("clase1", "danger");
-//            modelo.put("nombre", nombre);
-//            modelo.put("usuarios", usuarios);
-            return "principalFinal.html"; //check 
+
+            return "cuentaComun.html"; //check 
         }
     }
 
@@ -401,6 +445,9 @@ System.out.println(saldosUsuarios);
                 saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
 
+            
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
             modelo.addAttribute("micuentaC", usuarioCuentaC);
             modelo.addAttribute("cuentaComun", cuentaComun);
             modelo.addAttribute("listaUsuarios", listaUsuarios);
@@ -409,12 +456,37 @@ System.out.println(saldosUsuarios);
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
-            modelo.put("error", "Error al editar Usuario " + e.getMessage());
-            modelo.put("mensaje1", "Error al editar Usuario " + e.getMessage());
-            modelo.put("clase1", "danger");
-//            modelo.put("nombre", nombre);
-//            modelo.put("usuarios", usuarios);
-            return "principalFinal.html"; //check 
+           //para que se vea usuarios con tuki
+        List<Float> saldosUsuarios = new ArrayList<Float>();
+        Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+        CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
+        List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+        for (Usuario usuarioAux : listaUsuarios) {
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            
+        }
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+
+        //para que se vea usuarios sin tuki
+        List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+        List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+        for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+            saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+        }
+
+        modelo.addAttribute("listaCC", listaCC);
+        modelo.addAttribute("micuentaC", usuarioCuentaC);
+        modelo.addAttribute("micuenta", usuarioCuentaC);
+        modelo.addAttribute("cuentaComun", cuentaComun);
+        modelo.addAttribute("listaUsuarios", listaUsuarios);
+        modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+        modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+        modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
+            return "cuentaComun.html"; //check 
         }
     }
 
@@ -445,6 +517,9 @@ System.out.println(saldosUsuarios);
                 saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
 
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
+        
             modelo.addAttribute("listaUsuarios", listaUsuarios);
             modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
 
@@ -456,17 +531,42 @@ System.out.println(saldosUsuarios);
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
-            modelo.put("error", "Error al editar Usuario " + e.getMessage());
-            modelo.put("mensaje1", "Error al editar Usuario " + e.getMessage());
-            modelo.put("clase1", "danger");
-//            modelo.put("nombre", nombre);
-//            modelo.put("usuarios", usuarios);
-            return "principalFinal.html"; //check 
+           //para que se vea usuarios con tuki
+        List<Float> saldosUsuarios = new ArrayList<Float>();
+        Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+        CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
+        List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+        for (Usuario usuarioAux : listaUsuarios) {
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            
+        }
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+
+        //para que se vea usuarios sin tuki
+        List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+        List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+        for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+            saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+        }
+
+        modelo.addAttribute("listaCC", listaCC);
+        modelo.addAttribute("micuentaC", usuarioCuentaC);
+        modelo.addAttribute("micuenta", usuarioCuentaC);
+        modelo.addAttribute("cuentaComun", cuentaComun);
+        modelo.addAttribute("listaUsuarios", listaUsuarios);
+        modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+        modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+        modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
+            return "cuentaComun.html"; //check 
         }
     }
     
     @PostMapping("/eliminardeListaUsuariosTuki")
-    public String eliminardeListaUsuariosTuki(HttpSession session, ModelMap modelo,@RequestParam String idUsuario, @RequestParam String idE, @RequestParam String idCC) {
+    public String eliminardeListaUsuariosTuki(HttpSession session, ModelMap modelo,@RequestParam String idUsuario, @RequestParam String idE, @RequestParam String idCC) throws ErrorServicio {
    
             cuentaComunServicio.eliminardeListaUsuariosTuki(idE, idCC);
 
@@ -487,6 +587,9 @@ System.out.println(saldosUsuarios);
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
 
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
+        
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
         modelo.addAttribute("cuentaComun", cuentaComun);
@@ -501,7 +604,7 @@ System.out.println(saldosUsuarios);
     }
     
         @PostMapping("/eliminardeListaUsuariosSinTuki")
-    public String eliminardeListaUsuariosSinTuki(HttpSession session, ModelMap modelo,@RequestParam String idUsuario, @RequestParam String idE2, @RequestParam String idCC) {
+    public String eliminardeListaUsuariosSinTuki(HttpSession session, ModelMap modelo,@RequestParam String idUsuario, @RequestParam String idE2, @RequestParam String idCC) throws ErrorServicio {
    
             cuentaComunServicio.eliminardeListaUsuariosSinTuki(idE2, idCC);
 
@@ -521,6 +624,9 @@ System.out.println(saldosUsuarios);
         for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
+        modelo.addAttribute("actividad", actividad);
 
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
@@ -536,7 +642,7 @@ System.out.println(saldosUsuarios);
     }
     
     @PostMapping("/divisionJusta")
-    public String divisionJusta(HttpSession session, ModelMap modelo,@RequestParam String idUsuario, @RequestParam String idCuentaComun) {
+    public String divisionJusta(HttpSession session, ModelMap modelo,@RequestParam String idUsuario, @RequestParam String idCuentaComun) throws ErrorServicio {
         try {
             cuentaComunServicio.divisionJusta(idCuentaComun);
             
@@ -558,6 +664,9 @@ System.out.println(saldosUsuarios);
         for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
+        
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+        modelo.addAttribute("actividad", actividad);
 
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
@@ -593,6 +702,8 @@ System.out.println(saldosUsuarios);
             saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
         }
 
+        List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+        modelo.addAttribute("actividad", actividad);
         modelo.addAttribute("listaCC", listaCC);
         modelo.addAttribute("micuentaC", usuarioCuentaC);
         modelo.addAttribute("cuentaComun", cuentaComun);
