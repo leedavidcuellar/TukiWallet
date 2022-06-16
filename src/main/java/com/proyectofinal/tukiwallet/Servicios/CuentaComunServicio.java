@@ -101,15 +101,15 @@ public class CuentaComunServicio {
     public void divisionJusta(String idCuentaComun) throws ErrorServicio {
 
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
-        for (EfectivoCC efectivo : cuentaComun.getEfectivoCC()) {
-
-            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId());
-
-            if (usuarioExtra == null) {
-                cuentaComun.getUsuarios().add(usuarioExtra);
-            }
-
-        }
+//        for (EfectivoCC efectivo : cuentaComun.getEfectivoCC()) {
+//
+//            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId());
+//
+//            if (usuarioExtra == null) {
+//                cuentaComun.getUsuarios().add(usuarioExtra);
+//            }
+//
+//        }
         Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
         String[][] aux = new String[cantidadUsuarios][4];
         Boolean flag = Boolean.TRUE;
@@ -160,7 +160,10 @@ public class CuentaComunServicio {
         if (cuentaComun != null) {
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() + cantidad);
             cuentaComunRepositorio.save(cuentaComun);
-            actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+                  Actividad actividad = actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+            cuentaComun.setActividad(actividad);
+
+
         } else {
             throw new ErrorServicio("No se pudo ingresar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
@@ -173,7 +176,8 @@ public class CuentaComunServicio {
         if (cuentaComun != null) {
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() - cantidad);
             cuentaComunRepositorio.save(cuentaComun);
-            actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            Actividad actividad = actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            cuentaComun.setActividad(actividad);
         } else {
             throw new ErrorServicio("No se pudo sacar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
@@ -343,10 +347,10 @@ public class CuentaComunServicio {
     }  
     
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // no es de tuki
     public Float sumaSaldoPorUsuarioEfectivo(EfectivoCC efectivoCC) {
 
-        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario());
+        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario(),efectivoCC.getComentario());
         return saldoUsuarioEfectivo;
     }
 

@@ -45,7 +45,7 @@
         <div class="text logo-text">
           <span class="name">¡Hola!</span>
           <span class="profession" th:if="${session.usuariosession != null}"
-            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+            th:text="${session.usuariosession.nombre}"></span>
           <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         </div>
       </div>
