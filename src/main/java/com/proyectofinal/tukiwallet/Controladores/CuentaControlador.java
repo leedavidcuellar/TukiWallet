@@ -56,22 +56,36 @@ public class CuentaControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-cuenta")
-    public String editarCuenta(ModelMap model, HttpSession session, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException {
+    public String editarCuenta(ModelMap model, HttpSession session, @RequestParam String idUsuario, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException {
         Cuenta cuenta = null;
         try {
             cuenta = cuentaServicio.buscarPorId(id);
 
             cuentaServicio.modificarAlias(alias, id);
-
-            session.setAttribute("usuariosession", cuenta);
-            //VER BIEN EL REDIRECT
-            return "redirect:/inicio";
+            Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
+        
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        model.addAttribute("micuenta", usuarioCuenta);
+        model.addAttribute("listaCC", listaCC);
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+        session.setAttribute("usuariosession", usuarioCuenta);
+ 
+        model.put("mensaje", "Se modifico correctamente el alias");
+        model.put("clase", "success");
+            
+            return "cuenta.html";
 
         } catch (ErrorServicio e) {
-            model.put("perfil", cuenta);
-            model.put("mensaje", e.getMessage());
-            //VER BIEN EL REDIRECT
-            return "tuperfil.html";
+        Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        model.addAttribute("micuenta", usuarioCuenta);
+        model.addAttribute("listaCC", listaCC);
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+        session.setAttribute("usuariosession", usuarioCuenta);
+        
+            model.put("mensaje1", "Error al modificar el alias " + e.getMessage());
+            model.put("clase1", "danger");;
+            return "cuenta.html";
         }
     }
 
