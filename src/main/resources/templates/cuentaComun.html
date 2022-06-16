@@ -216,7 +216,8 @@
               <td th:text="${numero.index}+1"></td>
               <td th:text="${listaUsuarios.nombre}"></td>
               <!--<td> 300</td>-->
-              <td th:text="${listaSaldosUsuarios}"></td>
+              <td th:each="listaSaldosUsuarios,numero1:${listaSaldosUsuarios}"
+              th:if="${numero.index}==${numero1.index}"th:text="${listaSaldosUsuarios}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosTuki/" method="post">
@@ -273,11 +274,17 @@
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuarioSinTukiEfectivo"
               th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Sin Tuki/Efectivo</a>
 
-            <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>
-
-
-
         </form>
+
+        <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/divisionJusta"
+        method="post">
+        <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+        <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+          style="float:inline-start; margin-bottom: 8px; padding: 8px;">Dividir</button>
+      </form>
+
+
       </div>
     </div>
   </div>
@@ -359,7 +366,7 @@
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Final ModalMostrarDatos -->
 
 

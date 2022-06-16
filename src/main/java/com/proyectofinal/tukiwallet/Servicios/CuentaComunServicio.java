@@ -164,7 +164,10 @@ public class CuentaComunServicio {
         if (cuentaComun != null) {
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() + cantidad);
             cuentaComunRepositorio.save(cuentaComun);
-            actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+                  Actividad actividad = actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+            cuentaComun.setActividad(actividad);
+
+
         } else {
             throw new ErrorServicio("No se pudo ingresar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
@@ -177,7 +180,8 @@ public class CuentaComunServicio {
         if (cuentaComun != null) {
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() - cantidad);
             cuentaComunRepositorio.save(cuentaComun);
-            actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            Actividad actividad = actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            cuentaComun.setActividad(actividad);
         } else {
             throw new ErrorServicio("No se pudo sacar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
