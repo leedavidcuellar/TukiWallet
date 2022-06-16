@@ -194,7 +194,7 @@
                 </div>
                 <div class="gap-2 col-mid-6 mx-auto">
                     <form>
-                        <button type="submit" class="btn btn-primary" formaction="/cuentaComun/nuevaCuentaComun">Crear nueva cuenta comun</button>
+                        <button type="submit" class="btn btn-primary" th:href="@{/cuentaComun/crearCuentaComun(id=${session.usuariosession.id})}">Crear nueva cuenta comun</button>
                     </form>
                 </div>
                 <div class="modal-footer">

@@ -129,7 +129,7 @@ public class CuentaComunControlador {
         //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
 
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/nuevaCuentaComun")
     public String crearCC(ModelMap modelo, @RequestParam String nombre, @RequestParam String idUsuario, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
 

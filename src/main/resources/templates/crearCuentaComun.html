@@ -33,21 +33,9 @@ and open the template in the editor.
 
           <input class="text" type="text" name="nombre" placeholder="Nombre de cuenta comun" th:value="${nombre}" required="" />
           <br>
-          <input class="text" type="text" name="apellido" placeholder="Apellido" th:value="${apellido}" required="" />
-
+          <label class="text">Alias de la cuenta (Si no quiere agregar un alias, se creara por defecto)</label>
+          <input class="text" type="text" name="alias" placeholder="ingrese alias" th:if="${cuentaComun.alias}==null" action="${cuentaComun.alias}=={cuentaComun.nombre} + CC + .TUKI" value="${cuentaComun.alias}" required="">
           <br>
-          <input class="number" type="number" name="dni" placeholder="DNI" th:value="${dni}" required="" />
-
-          <br>
-
-          <label class="text">Foto</label>
-          <input type="file" name="archivo" placeholder="Agregue su foto"/>
-
-          <input class="text email" type="email" name="mail" placeholder="Email" th:value="${mail}" required="" />
-          <input class="text" type="password" name="clave1" placeholder="Contraseña" required="" />
-          <input class="text w3lpass" type="password" name="clave2" placeholder="Confirme su contraseña" required="" />
-          <label class="text">Fecha Nacimeinto</label>
-          <input class="text w3lpass" type="date" name="fechaNacimiento" placeholder="DD/MM/AA" th:value="${fechaNacimiento}" required=""><br>
 
           <div class="wthree-text">
             <label class="anim">
