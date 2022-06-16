@@ -105,15 +105,15 @@ public class CuentaComunServicio {
     public void divisionJusta(String idCuentaComun) throws ErrorServicio {
 
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
-        for (EfectivoCC efectivo : cuentaComun.getEfectivoCC()) {
-
-            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId());
-
-            if (usuarioExtra == null) {
-                cuentaComun.getUsuarios().add(usuarioExtra);
-            }
-
-        }
+//        for (EfectivoCC efectivo : cuentaComun.getEfectivoCC()) {
+//
+//            Usuario usuarioExtra = cuentaComunRepositorio.buscarUsuarioCC(efectivo.getId());
+//
+//            if (usuarioExtra == null) {
+//                cuentaComun.getUsuarios().add(usuarioExtra);
+//            }
+//
+//        }
         Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
         String[][] aux = new String[cantidadUsuarios][4];
         Boolean flag = Boolean.TRUE;
