@@ -97,7 +97,7 @@ public class CuentaComunServicio {
         }
     }
 
-    @Transactional
+    @Transactional (propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void divisionJusta(String idCuentaComun) throws ErrorServicio {
 
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
@@ -111,11 +111,14 @@ public class CuentaComunServicio {
 //
 //        }
         Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
+        System.out.println(cantidadUsuarios);
         String[][] aux = new String[cantidadUsuarios][4];
         Boolean flag = Boolean.TRUE;
 
         int i = 0;
         Float gastoTotal = cuentaComunRepositorio.sumaGastoTotalCC() + cuentaComunRepositorio.sumaGastoTotalEfectivoCC();
+        
+        System.out.println(gastoTotal);
         
         Float gastoPorPersona = gastoTotal / cantidadUsuarios;
         String mensaje = "No se pudo realizar la división ya que: ";
@@ -123,13 +126,34 @@ public class CuentaComunServicio {
         for (Usuario usuario : cuentaComun.getUsuarios()) {
             if (usuario != null) {
                 aux[i][0] = usuario.getId();
-                aux[i][1] = (cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu())).toString();
-                aux[i][2] = (cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId())).toString();
-                aux[i][3] = ((Float) (Float.valueOf(aux[i][1]) + Float.valueOf(aux[i][2]) - gastoPorPersona)).toString();
+                if((cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu()))==null){
+                    Integer cero=0;
+                    aux[i][1]= cero.toString();
+                    
+                }else{
+                    aux[i][1] = (cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu())).toString();
+                }
+                
+                if((cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId()))==null){
+                    Integer cero=0;
+                    aux[i][2]= cero.toString();
+                }else{
+                    aux[i][2] = (cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId())).toString();
+                } 
+               System.out.println(aux[i][1]);
+               System.out.println(aux[i][2]);
+                System.out.println(gastoTotal);
+                  System.out.println(cantidadUsuarios);
+                System.out.println(gastoPorPersona);
+              
+                
+                   aux[i][3] = ((Float) (Float.valueOf(aux[i][1]) + Float.valueOf(aux[i][2]) - gastoPorPersona)).toString();
                 if (Float.valueOf(aux[i][2]) < 0) {
                     flag = Boolean.FALSE;
                     mensaje = mensaje + usuario.getNombre() + " debe " + aux[i][2] + "; ";
-                }
+                } 
+                
+                
                 i++;
             } else {
                 throw new ErrorServicio("NO hay otros usuarios");
