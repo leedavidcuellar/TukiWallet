@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
@@ -10,6 +6,7 @@ import com.proyectofinal.tukiwallet.Entidades.Cuenta;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author Joaquin Calderon
- */
+
 @Service
 public class CuentaServicio {
     
@@ -58,34 +52,46 @@ public class CuentaServicio {
             return cuenta;
             
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el id cuenta");
         }
         
     }
     
     //ingresa
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void ingresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuIngresa);
         if (cuenta != null) {
             cuenta.setSaldo(cuenta.getSaldo() + cantidad);
             cuentaRepositorio.save(cuenta);
-            actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+            List<Actividad> actividades = new ArrayList<Actividad>();
+            actividades.add(actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa));
+            cuenta.setActividad(actividades);
+            
+            System.out.println("llegue a ingreso cuenta");
+            
         } else {
-            throw new ErrorServicio("No se ha encontrado el Cuenta");
+            throw new ErrorServicio("No se ha encontrado la Cuenta Destino que ingresa dinero");
         }
     }
     
     //egresa
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void egresoCuenta(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
+        List<Actividad> actividades = new ArrayList<Actividad>();
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cvuEgresa);
         if (cuenta != null) {
             cuenta.setSaldo(cuenta.getSaldo() - cantidad);
             cuentaRepositorio.save(cuenta);
-            actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            
+            System.out.println("llegue a egreso");
+            
+            Actividad actividad = actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
+            actividades.add(actividad);
+            cuenta.setActividad(actividades);
+         
         } else {
-            throw new ErrorServicio("No se ha encontrado el Cuenta");
+            throw new ErrorServicio("No se ha encontrado la Cuenta a origen que egresa dinero");
         }
     }
     
@@ -99,22 +105,28 @@ public class CuentaServicio {
                 throw new ErrorServicio("No puede transferir una cantidad negativa");
             }
             if (cvu2.equals(cvu1)) {
-            throw new ErrorServicio("No se puede transferir al mismo cvu");
+            throw new ErrorServicio("No se puede transferir al mismo cvu cuenta");
             }
         }else{
-            throw new ErrorServicio("No se ha encontrado el cvu");
+            throw new ErrorServicio("No se ha encontrado el cvu de la cuenta");
         }
     }
 
     @Transactional(propagation = Propagation.NESTED)
     public void baja(String id)throws ErrorServicio{
         Optional<Cuenta> respuesta = cuentaRepositorio.findById(id);
+       
         if (respuesta.isPresent()) {
             Cuenta cuenta = respuesta.get();
-            cuenta.setAlta(false);
-            cuentaRepositorio.save(cuenta);
+           
+            if(cuenta.getSaldo()==0f){
+                cuenta.setAlta(false);
+                cuentaRepositorio.save(cuenta);
+            }else{
+                throw new ErrorServicio("No se puede dar Baja porque tiene saldo la Cuenta, debe transferir a otra Cuenta");
+            }
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el id de la Cuenta");
         }
     }
     
@@ -126,7 +138,7 @@ public class CuentaServicio {
             cuenta.setAlta(true);
             cuentaRepositorio.save(cuenta);
         }else{
-            throw new ErrorServicio("No se ha encontrado el id");
+            throw new ErrorServicio("No se ha encontrado el id cuenta");
         }
     }
     
@@ -136,25 +148,45 @@ public class CuentaServicio {
         if (optional.isPresent()) {
             cuentaRepositorio.delete(optional.get());
         }else{
-            throw new ErrorServicio("No se encontró el id");
+            throw new ErrorServicio("No se encontró el id cuenta");
+        }
+    } 
+    
+    @Transactional(propagation = Propagation.NESTED)
+    public Cuenta buscarPorId (String id) throws ErrorServicio{
+        Optional<Cuenta> optional = cuentaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }else{
+            throw new ErrorServicio("No se encontró el Id cuenta");
         }
     } 
     
     public void validarSaldo(Float saldo) throws ErrorServicio{
         if (saldo == null || saldo.toString().trim().isEmpty()) {
-            throw new ErrorServicio("El saldo no puede ser nulo"); 
+            throw new ErrorServicio("El saldo no puede ser nulo cuenta"); 
         }
     }
     
     public void validarAlias(String alias) throws ErrorServicio{
         if (alias == null || alias.trim().isEmpty()) {
-            throw new ErrorServicio("El alias no puede ser nulo"); 
+            throw new ErrorServicio("El alias no puede ser nulo cuenta"); 
         }
     }
     
     @Transactional(readOnly = true)
     public Cuenta buscarCuentaPorAlias(String alias){
         Cuenta cuenta = cuentaRepositorio.buscarCuentaPorAlias(alias);
+        if (cuenta!=null) {
+           return cuenta; 
+        }else{
+            return null;
+        }      
+    }
+    
+    @Transactional(readOnly = true)
+    public Cuenta buscarCuentaPorCbu(String cbu){
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorAlias(cbu);
         if (cuenta!=null) {
            return cuenta; 
         }else{
@@ -233,9 +265,21 @@ public class CuentaServicio {
             actividades.add(actividad);
             cuentaRepositorio.save(cuenta);
         }else{
-            throw new ErrorServicio("No se encontró el id");
+            throw new ErrorServicio("No se encontró el id cuenta");
         }
     }
+ 
+    @Transactional(readOnly = true)
+    public List<Actividad> verActividadCuenta(String id) throws ErrorServicio{
+        Optional<Cuenta> optional = cuentaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            List<Actividad> actividad = cuentaRepositorio.mostrarActividadDeCuenta(id);
+            return actividad;
+        }else{
+            throw new ErrorServicio("No se encontró el id");
+        }
+    } 
+    
     
     
 }

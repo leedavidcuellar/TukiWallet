@@ -23,8 +23,9 @@ public class CuentaComun {
     private String movimientoCC;
     private Float saldoCC;
     private String aliasCC;
-
-    @OneToMany
+    private String propietario;
+    
+    @OneToMany ( targetEntity=Usuario.class )
     private List<Usuario> usuarios;
     
     @OneToMany
@@ -151,7 +152,7 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
      * @param usuarios the usuarios to set
      */
     public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+        this.usuarios=usuarios;
     }
 
     /**
@@ -164,15 +165,9 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
     /**
      * @param actividad the actividad to set
      */
-    public void setActividad(List<Actividad> actividad) {
-        this.actividad = actividad;
+    public void setActividad(Actividad actividad) {
+        this.actividad.add(actividad);
     }
-
-    @Override
-    public String toString() {
-        return "CuentaComun{" + "id=" + getId() + ", nombre=" + getNombre() + ", alta=" + getAlta() + ", cvuCC=" + getCvuCC() + ", movimientoCC=" + getMovimientoCC() + ", saldoCC=" + getSaldoCC() + ", aliasCC=" + getAliasCC() + ", usuarios=" + getUsuarios() + ", actividad=" + getActividad() + '}';
-    }
-
     /**
      * @return the efectivoCC
      */
@@ -187,5 +182,23 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
         this.efectivoCC = efectivoCC;
     }
 
-   
+       /**
+     * @return the propietario
+     */
+    public String getPropietario() {
+        return propietario;
+    }
+
+    /**
+     * @param propietario the nombre to set
+     */
+    public void setPropietario(String propietario) {
+        this.propietario = propietario;
+    }
+
+    @Override
+    public String toString() {
+        return "CuentaComun{" + "nombre=" + nombre + ", alta=" + alta + ", cvuCC=" + cvuCC + ", movimientoCC=" + movimientoCC + ", saldoCC=" + saldoCC + ", aliasCC=" + aliasCC + ", propietario=" + propietario + ", usuarios=" + usuarios + ", actividad=" + actividad + ", efectivoCC=" + efectivoCC + '}';
+    }
+    
 }

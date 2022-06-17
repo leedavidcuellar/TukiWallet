@@ -16,9 +16,23 @@ body {
   padding: 0 10px;
   background: rgb(216, 216, 216);
   margin-top: 100px;
-
-
+  margin-left: 200px;
   font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;;
+}
+.col{
+  text-align: center;
+}
+::selection {
+  color: #fff;
+  background: #675AFE;
+}
+
+.wrapper{
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 0px;
+  width: 500px
 }
 
 .textarea {
@@ -29,49 +43,65 @@ body {
   text-align: center;
 }
 
-
-
-
-
-::selection {
-  color: rgb(241, 241, 241);
-  background: #675AFE;
-}
-
-.wrapper{
-  background-color: rgb(241, 241, 241);
-  border-radius: 10px;
-  margin-top: 20px;
-  margin:200px;
-  display:inline-block;
-}
-
 header{
   margin-top: 20px;
-  padding: 10px;
 }
-.p-3{
-  border-radius: 10px;
+
+
+h5{
+  font-size: 1.70rem;
 }
+
+
 .wrapper2 {
   display: flex;
   justify-content: space-evenly;
-  width: 600px;
-  padding: 0px;
+  width: 500px;
+  padding: 30px;
   border-radius: 10px;
-  padding-bottom: 40px;
-  background: rgb(241, 241, 241);
+  background: #fff;
   box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+ 
 }
 
+header{
+  padding-top: 9px;
+}
+
+.movimiento{
+  padding: 20px;
+}
+.wrapper3 {
+  
+  justify-content: space-evenly;
+  width: 500px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 103px;
+}
+
+.table {
+font-size: 20px;
+}
+
+.comun{
+  text-align: center;
+  margin-bottom: 70px
+}
 .wrapper header {
   font-size: 28px;
   font-weight: 500;
   text-align: center;
+ 
 }
 
 .wrapper form {
   margin: 40px 0 20px 0;
+ 
 }
 
 form :where(input, select, button) {
@@ -90,7 +120,7 @@ form input {
   height: 50px;
   font-size: 17px;
   padding: 0 15px;
-  border: 1px solid rgb(241, 241, 241);
+  border: 1px solid #999;
 }
 
 form input:focus {
@@ -138,23 +168,27 @@ form .drop-list {
   margin: 0 -5px 0 5px;
 }
 
+.p-3{
+  border-radius: 10px;
+}
+
+.largoB{
+  width: 300px;
+}
 
 
-form .button {
-  margin-top: 30px;
-  height: 40px;
+form button {
+  margin-top: 10px;
+  height: 50px;
   width: 130px;
-  color: rgb(241, 241, 241);
+  color: #fff;
   font-size: 19px;
   cursor: pointer;
   background: #3719bb;
   transition: 0.3s ease;
-  border-radius: 10px;
-  text-decoration: none;
-  padding-top: 4px;
 }
 
-form .button:hover {
+form button:hover {
   background: #4e1daa;
 }
 .container{

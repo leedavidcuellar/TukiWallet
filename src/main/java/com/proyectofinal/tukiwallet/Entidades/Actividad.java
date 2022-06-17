@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -14,9 +16,10 @@ public class Actividad {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String nOperacion;
+    private Integer nOperacion;
     private Float monto;
     private String motivo;
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean movimiento;//True Salida y False Ingreso
     private String cvu;
@@ -109,14 +112,14 @@ public class Actividad {
     /**
      * @return the nOperacion
      */
-    public String getnOperacion() {
+    public Integer getnOperacion() {
         return nOperacion;
     }
 
     /**
      * @param nOperacion the nOperacion to set
      */
-    public void setnOperacion(String nOperacion) {
+    public void setnOperacion(Integer nOperacion) {
         this.nOperacion = nOperacion;
     }
 

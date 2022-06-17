@@ -112,7 +112,7 @@ public class Cuenta {
      * @param actividad the actividad to set
      */
     public void setActividad(List<Actividad> actividad) {
-        this.actividad = actividad;
+        this.actividad.addAll(actividad);
     }
 
     /**
