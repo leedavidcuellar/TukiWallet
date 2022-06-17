@@ -3,10 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 *{
+    
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Kanit, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 :root{
     /* ===== Colors ===== */
@@ -26,8 +27,8 @@
 .scroll{
 scroll-behavior: smooth;
 overflow-y: scroll;
-
 }
+
 body{
 scroll-behavior: smooth;
 overflow-y: scroll;
@@ -247,7 +248,7 @@ header .image-text .profession{
     background: linear-gradient(45deg, #007aff, rgb(159, 26, 226));
     height: 80px;
     width: 100%;
-    position:fixed;
+    
 }
 .encabezado{
     position: absolute;
@@ -265,9 +266,10 @@ header .image-text .profession{
     text-align: left;
     left: 50%;
     top: 50%;
-    transform: translatey(40%) translateX(5%);
+    transform: translatey(25%) translateX(5%);
 }
 .encabezado .textTuki{
+    margin-right: 70px;
     font-size: 40px;
     font-weight: 700;
     color: rgb(255, 253, 253);
@@ -282,7 +284,9 @@ header .image-text .profession{
     width: calc(100% - 70px);
 }
 
-
+.contenido{
+    background-color: #707070;
+}
 /*---------MODO NOCHE--------*/
 
 body.dark .sidebar header .toggle{
@@ -321,4 +325,8 @@ body.dark .encabezado{
 }
 body.dark .sidebar header .toggle{
     background-color: rgb(83, 11, 118);
+}
+
+body.dark .contenido{
+    background: linear-gradient(to bottom, #00162c, rgb(54, 7, 77) 70%, #00162c);
 }

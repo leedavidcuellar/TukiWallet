@@ -140,26 +140,22 @@
         <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         <input class="textarea" type="text" name="nombrecc" th:value="${cuentaComun.nombre}" />
 
-        <button type="button" class="btn btn-success " disabled th:if="${cuentaComun.alta}==true">Activo</button>
-        <button type="button" class="btn btn-danger " disabled th:if="${cuentaComun.alta}==false">Desactivo</button>
-
-
-        <header>Dinero disponible</header>
+        <header class="coso">Dinero disponible</header>
         <form action="#">
           <div class="monto">
             <h4><input class="textarea" type="number" name="saldocc" th:value="${cuentaComun.saldoCC}"
                 readonly="readonly" /></h4>
           </div>
           <div class="wrapper2">
-            <button>Transferir</button>
+            <button class="redondeo">Transferir</button>
 
-            <button type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
+            <button class= "redondeo" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
 
 
         </form>
       </div>
 
-      <div class="p-3 border bg-light">
+      <div id=dark class="p-3 border bg-light">
         <header class="movimiento">Movimiento de tu actividad</header>
         
          <table class="table table-hover">
@@ -183,25 +179,29 @@
       </div>
   
 
-      <div th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
+      <div class="botones4" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
         <form th:if="${cuentaComun.alta}==true" action="/cuentaComun/deshabilitarCC" method="post">
           <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
           <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-          <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
+          <button type="submit" id = "b" class="btn btn-danger btn-xl rounded mt-2"
             style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta Comun</button>
         </form>
         <form th:if="${cuentaComun.alta}==false" action="/cuentaComun/habilitarCC" method="post">
           <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
           <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-          <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+          <button type="submit" id = "b" class="btn btn-success btn-xl rounded mt-2"
             style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta Comun</button>
         </form>
+      </div>
+      <div class="activodesactivo">
+        <button type="button" class="btn btn-success " disabled th:if="${cuentaComun.alta}==true">Activo</button>
+        <button type="button" class="btn btn-danger " disabled th:if="${cuentaComun.alta}==false">Inactivo</button>
       </div>
   </div>
   <div class="BLOQUE2">
       <div class="wrapper3">
         <div class="comun">
-          <h5>Usuarios con Tuki</h5>
+          <header class="coso">Usuario Con Tuki</header>
         </div>
         <table class="table table-hover">
           <thead>
@@ -270,10 +270,11 @@
           <div class="wrapper4">
 
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuario"
-              th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Con Tuki</a>
+              th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB">Agregar persona con Tuki</button></a>
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuarioSinTukiEfectivo"
-              th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Sin Tuki/Efectivo</a>
-
+              th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB" >Agregar Persona Sin Tuki</button></a>
+              
+             
             <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>
 
 
