@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,7 +43,7 @@
         <div class="text logo-text">
           <span class="name">¡Hola!</span>
           <span class="profession" th:if="${session.usuariosession != null}"
-            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+            th:text="${session.usuariosession.nombre}"></span>
           <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         </div>
       </div>
@@ -149,10 +148,17 @@
           <div class="wrapper2">
             <button class="redondeo">Transferir</button>
 
+
             <button class= "redondeo" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
 
 
         </form>
+        <form action="/cuentaComun/transferirlinkCC">
+        <div class="wrapper2">
+          <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+          <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+          <input type="submit" value="Transferir"/>
+      </form>
       </div>
 
       <div id=dark class="p-3 border bg-light">
@@ -216,15 +222,15 @@
             <tr th:each="listaUsuarios,numero:${listaUsuarios}">
               <td th:text="${numero.index}+1"></td>
               <td th:text="${listaUsuarios.nombre}"></td>
-              <!--<td> 300</td>-->
-              <td th:text="${listaSaldosUsuarios}"></td>
+              <td th:each="listaSaldosUsuarios,numero1:${listaSaldosUsuarios}"
+              th:if="${numero.index}==${numero1.index}"th:text="${listaSaldosUsuarios}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosTuki/" method="post">
                   <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
                   <input type="hidden" name="idE" th:value="${listaUsuarios.id}" />
                   <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
-                  <button type="submit" class="btn btn-danger">Eliminar</i></button>
+                  <button type="submit" class="btn btn-danger" th:if="${listaUsuarios.id}!=${session.usuariosession.id}">Eliminar</i></button>
                 </form>
               </td>
             </tr>
@@ -244,27 +250,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="listaUsuariosEfectivo2,numeroE:${listaUsuariosEfectivo2}">
-              <td th:text="${numeroE.index}+1"></td>
+            <tr th:each="listaUsuariosEfectivo2,numeroES:${listaUsuariosEfectivo2}">
+              <td th:text="${numeroES.index}+1"></td>
               <td th:text="${listaUsuariosEfectivo2.comentario}"></td>
-              <!--<td> 300</td>-->
-              <td th:text="${listaSaldosUsuariosEfectivo}"></td>
+              <td th:each="listaSaldosUsuariosEfectivo,numeroES1:${listaSaldosUsuariosEfectivo}"
+              th:if="${numeroES.index}==${numeroES1.index}"th:text="${listaSaldosUsuariosEfectivo}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosSinTuki/" method="post">
                   <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
                   <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
                   <input type="hidden" name="idE2" th:value="${listaUsuariosEfectivo2.id}" />
-                  <button type="submit" class="btn btn-danger">Eliminar</i></button>
+                  <button type="submit" class="btn btn-danger" th:if="${listaUsuariosEfectivo2.id}!=${session.usuariosession.id}">Eliminar</i></button>
                 </form>
               </td>
             </tr>
           </tbody>
         </table>
-
-        <!--<div class="b">
-                    <button class="boton" type="button">Dividir</button>
-                  </div>-->
 
         <form action="#">
           <div class="wrapper4">
@@ -272,14 +274,22 @@
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuario"
               th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB">Agregar persona con Tuki</button></a>
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuarioSinTukiEfectivo"
+
               th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB" >Agregar Persona Sin Tuki</button></a>
               
              
             <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>
 
 
+        <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/divisionJusta"
+        method="post">
+        <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+        <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+          style="float:inline-start; margin-bottom: 8px; padding: 8px;">Dividir</button>
+      </form>
 
-        </form>
+
       </div>
     </div>
   </div>
@@ -324,6 +334,11 @@
             <br>
           </form>
         </div>
+        <div class="gap-2 col-mid-9 mx-mid>
+          <form>
+            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/nuevaCuentaComun">Crear nueva cuenta comun</button>
+          </form>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -356,12 +371,13 @@
               <input class="textarea" style="width:70%;" type="text" name="alias-cc" th:value="${cuentaComun.aliasCC}"
                 readonly="readonly" />
             </div>
-            <div class="modal-footer">
+           <div class="gap-2 col-mid-9 mx-mid>
+           <div class="modal-footer">
               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
-
+      </div>
         <!-- Final ModalMostrarDatos -->
 
         <div class="BLOQUE3">
@@ -413,14 +429,11 @@
                 <label class="text">Persona que tiene Tuki pero aporto en Efectivo</label>
                 <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
                 <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
-                <label class="text">Cvu:</label>
-                <input class="form-control" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
-                <br>
-                <label class="text">Alias:</label>
-                <input class="form-control" style="width:90%;" type="text" name="aliasCC" th:value="${aliasCC}" />
+                <label class="text">Cvu o Alias:</label>
+                <input class="form-control" style="width:90%;" type="text" name="cvuoAliasUsuario" th:value="${cvuUsuario}" required=""/>
                 <br>
                 <label class="text">Monto:</label>
-                <input class="form-control" type="number" name="montoEfectivoTk" th:value="${montoEfectivoTk}" />
+                <input class="form-control" type="number" name="montoEfectivoTk" th:value="${montoEfectivoTk}" required=""/>
                 <button type="submit" class="btn btn-primary">Agregar</button>
               </form>
             </div>
@@ -431,10 +444,10 @@
                 <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
                 <label class="text">Nombre:</label>
                 <input class="form-control" style="width:70%;" type="text" name="nombreEfectivo"
-                  th:value="${nombreEfectivo}" />
+                  th:value="${nombreEfectivo}" required=""/>
                 <br>
                 <label class="text">Monto:</label>
-                <input class="form-control" type="number" name="montoEfectivo" th:value="${montoEfectivo}" />
+                <input class="form-control" type="number" name="montoEfectivo" th:value="${montoEfectivo}" required=""/>
 
                 <button type="submit" class="btn btn-primary">Agregar</button>
               </form>
