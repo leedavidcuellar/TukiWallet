@@ -29,7 +29,6 @@
   margin-top: 50px;
   text-align: center;
   align-items: center;
-  display: block;
   padding: 15px;
   font-size: 30px;
   border-style: solid;
@@ -40,8 +39,9 @@
   background-color: white;
 }
 svg {
-  width: 64px;
-  margin-top: 20px;
+  width: 34px;
+  margin-top: 0px;
+  margin-right: 5px;
 }
 .textarea {
   border: none;
@@ -61,13 +61,46 @@ svg {
 }
 
 .cvu {
+  display: inline-flex;
   padding: 4px;
+}
+.pgrande-cvu {
+  margin-top: 20px;
+}
+.formControl-cvu {
+  margin-top: 15px;
+  font-size: 4px;
+  margin-left: 4px;
+  width: 200px;
+  height: 50px;
+}
+.pgrande-mail {
+  margin-top: 20px;
+}
+.formControl-mail {
+  margin-top: 15px;
+  font-size: 4px;
+  margin-left: 4px;
+  width: 200px;
+  height: 50px;
 }
 .mail {
   padding: 4px;
+  display: inline-flex;
 }
 .constrasena {
   padding: 4px;
+  display: inline-flex;
+}
+.formControl-clave {
+  margin-top: 15px;
+  font-size: 4px;
+  margin-left: 40px;
+  width: 200px;
+  height: 50px;
+}
+.pgrande-contrasena {
+  margin-top: 15px;
 }
 .terminos {
   padding: 8px;

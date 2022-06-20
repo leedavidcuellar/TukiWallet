@@ -267,10 +267,10 @@
                 />
               </svg>
               <br />
-              <p class="pgrande">Mi cvu</p>
+              <p class="pgrande-cvu">Mi cvu</p>
               <br />
               <input
-                class="formControl"
+                class="formControl-cvu"
                 type="text"
                 name="cvu"
                 th:value="${perfil.cuenta.cvu}"
@@ -290,41 +290,34 @@
                 />
               </svg>
               <br />
-              <p class="pgrande">Email</p>
+              <p class="pgrande-mail">Email</p>
               <br />
               <input
-                class="formControl"
+                class="formControl-mail"
                 type="text"
                 name="mail"
-                style="width: 60%"
                 th:value="${perfil.mail}"
               />
             </div>
+            <br />
 
             <div class="contrasena">
-              <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                <path
-                  d="M12.451 17.337l-2.451 2.663h-2v2h-2v2h-6v-5l6.865-6.949c1.08 2.424 3.095 4.336 5.586 5.286zm11.549-9.337c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-3-3c0-1.104-.896-2-2-2s-2 .896-2 2 .896 2 2 2 2-.896 2-2z"
-                />
-              </svg>
-              <br />
-              <p class="pgrande">Clave</p>
-              <br />
+              <p class="pgrande-clave">Clave</p>
               <input
-                class="formControl"
+                class="formControl-clave"
                 type="password"
                 name="clave1"
-                style="width: 60%"
                 th:value="${clave1}"
               />
-              <br />
+            </div>
+            <br />
+            <div class="repetircontra">
               <label>Repetir Clave</label>
               <br />
               <input
                 type="password"
                 class="formControl"
                 name="clave2"
-                style="width: 60%"
                 th:value="${clave2}"
               />
             </div>
