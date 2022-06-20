@@ -4,6 +4,8 @@
   box-sizing: border-box;
  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
+
+
 .monto{
   font-size: 40px;
   text-align: center;
@@ -66,7 +68,6 @@ h5{
   border-radius: 10px;
   background: #fff;
   box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
- 
 }
 
 header{
@@ -107,12 +108,10 @@ font-size: 20px;
   font-size: 28px;
   font-weight: 500;
   text-align: center;
- 
 }
 
 .wrapper form {
   margin: 40px 0 20px 0;
- 
 }
 
 form :where(input, select, button) {
