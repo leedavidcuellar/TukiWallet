@@ -41,7 +41,7 @@ body.dark .contenido {
   background: linear-gradient(to bottom, #00162c, rgb(54, 7, 77) 70%, #00162c);
 }
 .contenido {
-  background: red;
+  background: white;
 }
 
 body.dark {

@@ -40,7 +40,7 @@
 }
 svg {
   width: 34px;
-  margin-top: 0px;
+  margin-top: 25px;
   margin-right: 5px;
 }
 .textarea {
@@ -105,9 +105,7 @@ svg {
 .terminos {
   padding: 8px;
 }
-.faqs {
-  padding: 8px;
-}
+
 .pgrande {
   font-size: 30px;
   display: inline-block;
@@ -133,9 +131,9 @@ a {
 .form-control {
   width: 20px;
 }
-.faqs .pgrande {
+/* .faqs .pgrande {
   padding-top: 10px;
-}
+} */
 
 .btn {
   width: 30%;
