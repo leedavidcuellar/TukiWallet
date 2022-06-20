@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/css/estiloPrincipal.css">
-  <link href="/css/stylescuentac.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/estiloPrincipal.css">
+  <link href="/static/css/stylescuentac.css" rel="stylesheet" />
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
@@ -29,7 +29,7 @@
 </head>
 
 
-<body>
+<body class="scroll">
   <nav class="sidebar close">
     <header>
       <div class="image-text">
@@ -132,26 +132,24 @@
     <div class="contenido">
 
       <div th:replace="principalFinal::mensajes"></div>
-
+      <div class="BLOQUE1">
       <div class="wrapper" Style="text-align:center">
         <h4 name="nombre" th:value="${micuentaC.nombre}" th:if="${session.usuariosession != null}"
           th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
         <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         <input class="textarea" type="text" name="nombrecc" th:value="${cuentaComun.nombre}" />
 
-        <button type="button" class="btn btn-success " disabled th:if="${cuentaComun.alta}==true">Activo</button>
-        <button type="button" class="btn btn-danger " disabled th:if="${cuentaComun.alta}==false">Desactivo</button>
-
-
-        <header>Dinero disponible</header>
+        <header class="coso">Dinero disponible</header>
         <form action="#">
           <div class="monto">
             <h4><input class="textarea" type="number" name="saldocc" th:value="${cuentaComun.saldoCC}"
                 readonly="readonly" /></h4>
           </div>
-        
+          <div class="wrapper2">
+            <button class="redondeo">Transferir</button>
 
-            <button type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
+
+            <button class= "redondeo" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
 
 
         </form>
@@ -163,7 +161,7 @@
       </form>
       </div>
 
-      <div class="p-3 border bg-light">
+      <div id=dark class="p-3 border bg-light">
         <header class="movimiento">Movimiento de tu actividad</header>
         
          <table class="table table-hover">
@@ -187,24 +185,29 @@
       </div>
   
 
-      <div th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
+      <div class="botones4" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
         <form th:if="${cuentaComun.alta}==true" action="/cuentaComun/deshabilitarCC" method="post">
           <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
           <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-          <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
+          <button type="submit" id = "b" class="btn btn-danger btn-xl rounded mt-2"
             style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta Comun</button>
         </form>
         <form th:if="${cuentaComun.alta}==false" action="/cuentaComun/habilitarCC" method="post">
           <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
           <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-          <button type="submit" class="btn btn-success btn-xl rounded mt-2"
+          <button type="submit" id = "b" class="btn btn-success btn-xl rounded mt-2"
             style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta Comun</button>
         </form>
       </div>
-
+      <div class="activodesactivo">
+        <button type="button" class="btn btn-success " disabled th:if="${cuentaComun.alta}==true">Activo</button>
+        <button type="button" class="btn btn-danger " disabled th:if="${cuentaComun.alta}==false">Inactivo</button>
+      </div>
+  </div>
+  <div class="BLOQUE2">
       <div class="wrapper3">
         <div class="comun">
-          <h5>Usuarios con Tuki</h5>
+          <header class="coso">Usuario Con Tuki</header>
         </div>
         <table class="table table-hover">
           <thead>
@@ -269,11 +272,14 @@
           <div class="wrapper4">
 
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuario"
-              th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Con Tuki</a>
+              th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB">Agregar persona con Tuki</button></a>
             <a class="button" type="button" data-toggle="modal" data-target="#agregarUsuarioSinTukiEfectivo"
-              th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Agregar Persona Sin Tuki/Efectivo</a>
 
-        </form>
+              th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB" >Agregar Persona Sin Tuki</button></a>
+              
+             
+            <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>
+
 
         <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/divisionJusta"
         method="post">
@@ -287,7 +293,7 @@
       </div>
     </div>
   </div>
-      
+  </div>    
   <!-- ModalElegirCuentaComun -->
   <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -374,7 +380,7 @@
       </div>
         <!-- Final ModalMostrarDatos -->
 
-
+        <div class="BLOQUE3">
       <!-- Modal ModalAgregarUsuario -->
       <div id="agregarUsuario" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -453,9 +459,10 @@
           </div>
         </div>
       </div>
+    </div>
       <!-- Final ModalAgregarUsuarioSinTukiEfectivo -->
 
-  <script src="/js/jssPrincipal.js"></script>
+  <script src="/static/js/script.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>

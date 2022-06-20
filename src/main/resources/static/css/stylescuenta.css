@@ -9,6 +9,8 @@
   text-align: center;
 }
 body {
+  scroll-behavior: smooth;
+    overflow-y: scroll;
   display: flex;
   align-items: center ;
   justify-content: space-around;
@@ -39,10 +41,10 @@ body {
 }
 
 .wrapper{
+  margin-left: 280px;
   background-color: rgb(241, 241, 241);
   border-radius: 10px;
-  margin-top: 20px;
-  margin:200px;
+  margin-top: 70px;
   display:inline-block;
 }
 
@@ -175,3 +177,34 @@ margin-top: 150px;
     margin-top: 100px;
     height: 200px;
 }
+
+.btn{
+  width: 150px;
+}
+
+.separacion{
+  height: 20px;
+}
+
+/*MODONOCHE*/
+
+body.dark .wrapper{
+  background-color: transparent;
+}
+
+body.dark .wrapper2{
+  background-color: transparent;
+}
+
+body.dark .p-3{
+  background-color: transparent !important;
+}
+
+body.dark header{
+  color: #fff;
+  }
+
+  body.dark .table {
+    color: #fff;
+    }
+  
