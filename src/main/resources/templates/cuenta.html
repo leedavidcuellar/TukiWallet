@@ -140,7 +140,7 @@
       <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
 
       <button type="button" class="btn btn-success " disabled th:if="${micuenta.cuenta.alta}==true">Activo</button>
-      <button type="button" class="btn btn-danger " disabled th:if="${micuenta.cuenta.alta}==false">Desactivo</button>
+      <button type="button" class="btn btn-danger " disabled th:if="${micuenta.cuenta.alta}==false">Inactivo</button>
 
       <header>Dinero disponible</header>
       <form action="#">
@@ -181,7 +181,7 @@
     </div>
 
 
-    <form th:if= "${micuenta.cuenta.alta}==true" action="/cuenta/bajaCuenta" method="post">
+    <form class="separacion" th:if= "${micuenta.cuenta.alta}==true" action="/cuenta/bajaCuenta" method="post">
       <input type="hidden" name="idCuenta" th:value="${micuenta.cuenta.id}" />
       <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
       <button type="submit" class="btn btn-danger btn-xl rounded mt-2"
