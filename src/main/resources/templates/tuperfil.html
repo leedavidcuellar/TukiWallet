@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TUKI</title>
+  <title>Tuki Wallet</title>
   <link rel="stylesheet" href="/css/estiloPrincipal.css">
   <link rel="stylesheet" href="/css/tuperfil.css">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -45,7 +45,7 @@
         <div class="text logo-text">
           <span class="name">¡Hola!</span>
           <span class="profession" th:if="${session.usuariosession != null}"
-            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+            th:text="${session.usuariosession.nombre}"></span>
           <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         </div>
       </div>
@@ -281,9 +281,10 @@
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <br>
             <select class="form-control" name="idCC">
-              <option></option>
+                <option> </option>
               <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}"
                 th:text="${listaCCAux.nombre}" th:value="${listaCCAux.id}"></option>
+              <option th:if>
             </select>
             <br>
             <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>

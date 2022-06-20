@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUKI</title>
-    <link rel="stylesheet" href="/css/estiloPrincipal.css">
-    <!-- ARREGLAR ESE CSS  -->
+
+    <title>Tuki Wallet</title>
+    <link rel="stylesheet" href="/static/css/estiloPrincipal.css">
+    <!-- ARREGLAR ESE CSS   -->
+
 
       <link rel="stylesheet" href="/css/transferir.css" />
     
@@ -46,7 +48,7 @@
                 <div class="text logo-text">
                     <span class="name">¡Hola!</span>
                     <span class="profession" th:if="${session.usuariosession != null}"
-                            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+                            th:text="${session.usuariosession.nombre}"></span>
                         <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
                 </div>
             </div>
@@ -148,9 +150,11 @@
             <div class="drop-list">
               <div class="from">
                 <p>Cuenta de :</p>
-                <!--Nos deberia aparecer el nombre de nuestra cuenta automaticamente-->
+                <!-- nuestra cuenta automaticamente-->
                 <div class="select-box">
-                  <input type="text" th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta" readonly="readonly"/>
+                  <input type="text" th:if="${cuentaComun==null}"th:value="${session.usuariosession.cuenta.cvu}" name="cvuCuenta" readonly="readonly"/>
+                  <input type="text" th:if="${cuentaComun!=null}"th:value="${cuentaComun.cvuCC}" name="cvuCuentaComun" readonly="readonly"/>
+                  <input type="hidden" th:if="${cuentaComun!=null}" th:value="${cuentaComun.id}" name="idCuentaComun">
                 </div>
               </div>
               <div class="to">
@@ -167,9 +171,8 @@
                 <input type="submit" value="TRANSFERIR" />
           </form>
           <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
-        </div>
 
-      </div>
+        </div>
     </div>
 
 <!-- ModalElegirCuentaComun -->
