@@ -274,7 +274,7 @@ header .image-text .profession {
   text-align: left;
   left: 50%;
   top: 50%;
-  transform: translatey(40%) translateX(5%);
+  transform: translatey(25%) translateX(5%);
 }
 .encabezado .textTuki {
   font-size: 40px;
