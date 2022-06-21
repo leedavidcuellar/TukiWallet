@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TUKI</title>
-    <link rel="stylesheet" href="../static/css/estiloPrincipal.css" />
-    <link rel="stylesheet" href="../static/css/tuperfil.css" />
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/estiloPrincipal.css" />
+    <link rel="stylesheet" href="../css/tuperfil.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
 
     <link
       rel="stylesheet"
@@ -67,7 +67,7 @@
             <span
               class="profession"
               th:if="${session.usuariosession != null}"
-              th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"
+              th:text="${session.usuariosession.nombre}"
             ></span>
             <input
               type="hidden"
@@ -503,7 +503,7 @@
     </div>
     <!-- Final ModalElegirCuentaComun -->
 
-    <script src="../static/js/jssPrincipal.js"></script>
+    <script src="../js/jssPrincipal.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
