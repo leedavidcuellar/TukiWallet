@@ -729,7 +729,9 @@ public class CuentaComunControlador {
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         model.addAttribute("transferirlink", usuarioCuenta);
         CuentaComun cuentaComun=cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
+         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
         model.addAttribute("cuentaComun", cuentaComun);
+        model.addAttribute("listaCC", listaCC);
         return "transferir.html";
     }
 
