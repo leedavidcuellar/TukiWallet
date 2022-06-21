@@ -217,14 +217,15 @@
               <td th:text="${numero.index}+1"></td>
               <td th:text="${listaUsuarios.nombre}"></td>
               <!--<td> 300</td>-->
-              <td th:text="${listaSaldosUsuarios}"></td>
+              <td th:each="listaSaldosUsuarios,numero1:${listaSaldosUsuarios}"
+              th:if="${numero.index}==${numero1.index}"th:text="${listaSaldosUsuarios}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosTuki/" method="post">
                   <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
                   <input type="hidden" name="idE" th:value="${listaUsuarios.id}" />
                   <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
-                  <button type="submit" class="btn btn-danger">Eliminar</i></button>
+                  <button type="submit" class="btn btn-danger" th:if="${listaUsuarios.id}!=${session.usuariosession.id}">Eliminar</i></button>
                 </form>
               </td>
             </tr>
@@ -248,14 +249,15 @@
               <td th:text="${numeroE.index}+1"></td>
               <td th:text="${listaUsuariosEfectivo2.comentario}"></td>
               <!--<td> 300</td>-->
-              <td th:text="${listaSaldosUsuariosEfectivo}"></td>
+              <td th:each="listaSaldosUsuariosEfectivo,numeroES1:${listaSaldosUsuariosEfectivo}"  
+              th:if="${numeroES.index}==${numeroES1.index}"th:text="${listaSaldosUsuariosEfectivo}"></td>
               <td>
                 <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}"
                   action="/cuentaComun/eliminardeListaUsuariosSinTuki/" method="post">
                   <input type="hidden" name="idUsuario" th:value="${micuentaC.id}" />
                   <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
                   <input type="hidden" name="idE2" th:value="${listaUsuariosEfectivo2.id}" />
-                  <button type="submit" class="btn btn-danger">Eliminar</i></button>
+                  <button type="submit" class="btn btn-danger" th:if="${listaUsuarios.id}!=${session.usuariosession.id}">Eliminar</i></button>
                 </form>
               </td>
             </tr>
