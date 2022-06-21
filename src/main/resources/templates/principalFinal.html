@@ -221,8 +221,13 @@
                         <br>
                     </form>
                 </div>
+                <div class="gap-2 col-mid-6 mx-auto">
+                    <form>
+                        <button type="submit" class="btn btn-primary" th:href="@{/cuentaComun/nuevaCuentaComun(id=${session.usuariosession.id})}">Crear nueva cuenta comun</button>
+                    </form>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                 </div>
             </div>
 
