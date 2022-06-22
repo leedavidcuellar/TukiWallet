@@ -211,21 +211,21 @@
       <div class="modal-content">
         <div class="modal-header" style="margin:10px;">
           <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
-          <h4 class="modal-title">Datos para que Ingresen Dinero</h4>
+          <h4 class="modal-title modal-datosIngresar">Datos para que Ingresen Dinero</h4>
         </div>
         <div class="col-md-9" style="margin:70px;">
-          <label class="text">Nombre y Apellido:</label>
+          <label class="text modal-Nombre">Nombre y Apellido:</label>
           <input class="textarea" type="text" name="nombre-usuario"
             th:value="${nombre + ' ' + apellido}" readonly="readonly" />
           <br>
-          <label class="text">DNI:</label>
+          <label class="text modal-DNI">DNI:</label>
           <input class="textarea" type="text" name="dni-usuario" th:value="${session.usuariosession.dni}" readonly="readonly" />
           <br>
-          <label class="text">Cvu:</label>
+          <label class="text modal-CVU">Cvu:</label>
           <input class="textarea" style="width:60%;" type="text" name="cvu-cuenta-usuario"
             th:value="${micuenta.cuenta.cvu}" readonly="readonly" />
           <br>
-          <label class="text">Alias:</label>
+          <label class="text modal-ALIAS">Alias:</label>
           <input class="textarea" type="text" name="alias-cuenta-usuario" th:value="${micuenta.cuenta.alias}"
             readonly="readonly" />
         </div>
