@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Cuenta;
@@ -35,10 +31,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author Joaquin Calderon
- */
 
 @Service
 public class UsuarioServicio implements UserDetailsService{
@@ -97,6 +89,7 @@ public class UsuarioServicio implements UserDetailsService{
         String auxnombreCC=apellido+dni;
         CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(auxnombreCC, usuario.getId(),listaUsuario);
        
+        
         listaCuentaComun.add(cuentaComun);
         
         usuario.setCuentaComun(listaCuentaComun);
@@ -124,9 +117,7 @@ public class UsuarioServicio implements UserDetailsService{
             if(fechaNacimiento != null){
             usuario.setFechaNacimiento(fechaNacimiento);
             }
-                
-            
-            
+           
             if(clave1 == null){
             String encriptada = new BCryptPasswordEncoder().encode(clave1);
             usuario.setClave(encriptada);
@@ -142,11 +133,11 @@ public class UsuarioServicio implements UserDetailsService{
                 Foto foto = fotoServicio.actualizar(idFoto,archivo);
                 usuario.setFoto(foto);
             }
-           
-           
-
-            
+                
             usuarioRepositorio.save(usuario);
+            
+          cuentaComunServicio.modificarCuentaComun(mail, nombre);
+
             
             notificacionServicio.enviar("Se Modifico su Usuario de TukiWallet", "TukiWallet", usuario.getMail());
          }else{
@@ -229,38 +220,38 @@ public class UsuarioServicio implements UserDetailsService{
     
     private void validar(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2, Cuenta cuenta) throws ErrorServicio{
         if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre del usuario no puede ser nulo");
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo. Por favor ingrese un nombre");
         }
 
         if (apellido == null || apellido.isEmpty()) {
-            throw new ErrorServicio("El apellido del usuario no puede ser nulo");
+            throw new ErrorServicio("El apellido del usuario no puede ser nulo. Por favor ingrese un apellido");
         }
 
         if (mail == null || mail.isEmpty()) {
-            throw new ErrorServicio("El mail del usuario no puede ser nulo");
+            throw new ErrorServicio("El mail del usuario no puede ser nulo. Por favor ingrese una dirección de mail");
         }
 
         if (clave1 == null || clave1.trim().isEmpty() || clave1.length() < 6) {
-            throw new ErrorServicio("El mail del usuario no puede ser nulo y no puede ser menor de 6 caracteres");
+            throw new ErrorServicio("La contraseña del usuario no puede ser nula o tener menos de 6 caracteres");
         }
         
         if (!clave1.equals(clave2)) {
-            throw new ErrorServicio("Las claves tiene que ser iguales");
+            throw new ErrorServicio("Las claves deben ser iguales. Por favor ingrese las claves nuevamente");
         }
         
         if(cuenta == null){
-            throw new ErrorServicio("No se encontro la cuenta solicitada");
+            throw new ErrorServicio("No se ha podido encontrar la cuenta solicitada.");
         }
                 
         if(dni.isEmpty() || dni == null){
-            throw new ErrorServicio("El DNI no puede ser nulo");
+            throw new ErrorServicio("El DNI no puede ser nulo. Por favor ingrese un numero de DNI");
         }
         if(usuarioRepositorio.buscarPorDni(dni) != null){
-            throw new ErrorServicio("El DNI ingresado ya tiene una cuenta vinculada!");
+            throw new ErrorServicio("El DNI ingresado ya tiene una cuenta TUKI vinculada!");
         }
         
         if(usuarioRepositorio.buscarPorMail(mail) != null){
-            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
+            throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta TUKI vinculada!");
         }
         
         if(fechaNacimiento == null){
