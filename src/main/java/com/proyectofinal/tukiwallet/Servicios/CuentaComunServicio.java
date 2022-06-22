@@ -177,6 +177,9 @@ public class CuentaComunServicio {
         }
     }
 
+    
+    
+    
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void divisionSoloTuki(String idCuentaComun) throws ErrorServicio {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
@@ -204,17 +207,25 @@ public class CuentaComunServicio {
         }
         String cvu1 = cuentaComun.getCvuCC();
       if (b) {
-          System.out.println("tercero");
-            List<Usuario> misUsuarios = cuentaComun.getUsuarios();
-            Iterator<Usuario> misUsuarios2 = misUsuarios.iterator();
-            while(misUsuarios2.hasNext()){
-                System.out.println("cuarto");
-                Usuario usuario2 = misUsuarios2.next();
+            System.out.println("tercero");
+            String[][] aux = new String[cantidadUsuarios][2];
+            int i=-1;
+            
+            for (Usuario usuario2 : cuentaComun.getUsuarios()) {
+                i++;
                 String cvu2 = usuario2.getCuenta().getCvu();
                 Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario2.getCuenta().getCvu());
                 Float monto = pago-gastoPorPersona;
-                egresoCuentaComun(monto, cvu1, cvu2, "Division Cuenta Comun");
-                cuentaServicio.ingresoCuenta(monto, cvu1, cvu2, "Division Cuenta Comun");
+                String montostring = monto.toString();
+                aux[i][0] = cvu2;
+                aux[i][1] = montostring;
+            }
+            
+            for (int j = 0; j < cantidadUsuarios; j++) {
+                String cvuUsuario2 = aux[j][0];
+                Float monto = Float.valueOf(aux[j][1]);
+                egresoCuentaComun(monto, cvu1, cvuUsuario2, "Division Cuenta Comun");
+                cuentaServicio.ingresoCuenta(monto, cvu1, cvuUsuario2, "Division Cuenta Comun");
             }
        } else {
             throw new ErrorServicio(mensaje);
