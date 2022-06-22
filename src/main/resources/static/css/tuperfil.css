@@ -2,16 +2,16 @@
   margin: 200px;
 }
 .primera-parte {
-  background-color: white;
+  background-color: transparent;
   height: 200px;
   text-align: center;
   align-items: center;
   display: block;
   padding: 45px;
   font-size: 30px;
-  border-style: solid;
+ /* border-style: solid;
   border-width: 5px;
-  border-color: rgb(79, 0, 205);
+  border-color: rgb(79, 0, 205);*/
   border-radius: 10px;
   padding: 5px;
   width: 500px;
