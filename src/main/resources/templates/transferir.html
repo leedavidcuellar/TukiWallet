@@ -126,7 +126,7 @@
     <div class="encabezado">
       <div class="cabeza">
         <div class="textTuki">TukiWallet</div>
-        <div class="text">Inicio</div>
+        <div class="text">Transferir</div>
       </div>
       <div class="contenido">
    
@@ -137,7 +137,7 @@
           <form action="/cuenta/transferir" method="post">
               <input type="hidden" th:value="${session.usuariosession.id}" name="id"/>
             <div class="amount">
-              <p>Ingrese el monto</p>
+              <p>Monto a transferir : </p>
               <input type="number" value="1" class="monto" name="monto"/>
             </div>
             <div class="drop-list">
@@ -158,7 +158,7 @@
                 </div>
               </div>
               <div class="reason">
-                <p>Monto :</p>
+                <p>Motivo :</p>
                 <input type="text" placeholder="Motivo:" name="motivo"/>
               </div>
             </div>

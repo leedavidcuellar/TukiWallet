@@ -136,7 +136,7 @@ public class UsuarioServicio implements UserDetailsService{
                 
             usuarioRepositorio.save(usuario);
             
-          cuentaComunServicio.modificarCuentaComun(mail, nombre);
+            cuentaComunServicio.modificarCuentaComun(mail, nombre);
 
             
             notificacionServicio.enviar("Se Modifico su Usuario de TukiWallet", "TukiWallet", usuario.getMail());
