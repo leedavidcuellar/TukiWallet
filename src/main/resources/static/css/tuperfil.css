@@ -62,7 +62,7 @@ svg {
 
 .formControl-cvu {
   margin-top: 15px;
-  font-size: 15px;
+  font-size: 20px;
   margin-left: 4px;
   width: 454px;
   height: 38px;
@@ -74,7 +74,7 @@ svg {
 .formControl-mail {
   text-align: center;
   margin-top: 15px;
-  font-size: 15px;
+  font-size: 20px;
   margin-left: 4px;
   width: 455px;
   height: 38px;
@@ -90,8 +90,9 @@ svg {
   display: inline-flex;
 }
 .formControl-clave {
+  text-align: center;
   margin-top: 15px;
-  font-size: 4px;
+  font-size: 20px;
   width: 455px;
   height: 38px;
 }
@@ -125,6 +126,7 @@ svg {
   margin-right: 350px;
   margin-top: 35px;
   display: inline-flex;
+  align-items: center;
 }
 
 .formControl2 {
@@ -165,8 +167,10 @@ a {
   width: 67%;
   font-size: 20px;
   text-align: center;
+  text-align: center;
 }
 .formControlDNI {
+  font-size: 20px;
   margin-right: -309px;
   width: 123%;
   text-align: center;
