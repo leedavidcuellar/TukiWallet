@@ -34,7 +34,8 @@ body {
   border-radius: 10px;
   margin-top: 70px;
   padding: 0px;
-  width: 500px
+  width: 750px;
+  margin-left: -25px;
 }
 
 .BLOQUE1{
@@ -50,17 +51,28 @@ body {
   text-align: center;
 }
 
-header{
-  margin-top: 20px;
+.text {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+  color: black;
 }
 
-
 h5{
-  font-size: 1.70rem;
+  font-size: 1.70rem !important;
+  margin-top: 60px !important;
+}
+
+#peligro{
+  height: 45px !important;
+  width: 100px !important;
 }
 
 
 .wrapper2 {
+  margin-left: 120px;
   display: flex;
   justify-content: space-evenly;
   width: 500px;
@@ -128,7 +140,7 @@ form p {
 
 form input {
   height: 50px;
-  font-size: 17px;
+  font-size: 25px;
   padding: 0 15px;
   border: 1px solid #999;
 }
@@ -235,11 +247,19 @@ margin-top: 150px;
 .activodesactivo{
   display: inherit;
   padding: 40px;
-  margin-right: 17px;
+  
 }
 
 .redondeo{
   border-radius: 6px;
+}
+
+.wrapper2 .redondeo1{
+  border-radius: 6px;
+  background: #3719bb;
+  height: 50px;
+  width: 150px;
+  color: #fff;
 }
 
 .coso{
@@ -264,10 +284,18 @@ body.dark .table {
   color: #fff;
   }
 
-  body.dark .comun{
+body.dark .comun{
     color: #fff;
-    }
+}
 
-    body.dark header{
+body.dark header{
       color: #fff;
-      }
+}
+
+body.dark #saldodark {
+  color: #fff;
+  }
+
+body.dark #nombredark {
+    color: #fff;
+}

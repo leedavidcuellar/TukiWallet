@@ -422,15 +422,15 @@ public class CuentaComunControlador {
     }
 
     @PostMapping("/agregarUsuarioCCTKEfectivo")
-    public String agregarUsuarioCCTKEfectivo(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idCC, String cvuUsuario, String aliasCC, String montoEfectivoTk) throws ErrorServicio {
+    public String agregarUsuarioCCTKEfectivo(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idCC, String cvuoAliasUsuario, String montoEfectivoTk) throws ErrorServicio {
         List<Usuario> listaUsuario = new ArrayList<Usuario>();
         try {
 
-            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(aliasCC);
+            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(cvuoAliasUsuario);
 
             if (cuenta == null) {
 
-                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuUsuario);
+                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuoAliasUsuario);
             }
 
             //para agrego usuarios a CC
@@ -662,41 +662,11 @@ public class CuentaComunControlador {
     @PostMapping("/divisionJusta")
     public String divisionJusta(HttpSession session, ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCuentaComun) throws ErrorServicio {
         try {
-            cuentaComunServicio.divisionJusta(idCuentaComun);
+            cuentaComunServicio.divisionSoloTuki(idCuentaComun);
 
-            //para que se vea usuarios con tuki
-            List<Float> saldosUsuarios = new ArrayList<Float>();
-            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
-            CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
-            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
-            for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
-            }
-            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+          
 
-            //para que se vea usuarios sin tuki
-            List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
-            List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
-            for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
-                saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
-            }
-
-            List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
-            modelo.addAttribute("actividad", actividad);
-
-            modelo.addAttribute("listaCC", listaCC);
-            modelo.addAttribute("micuentaC", usuarioCuentaC);
-            modelo.addAttribute("cuentaComun", cuentaComun);
-            modelo.addAttribute("listaUsuarios", listaUsuarios);
-            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
-
-            modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
-            modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
-
-            modelo.put("mensaje", "El saldo de la cuenta ha sido repartido exitosamente");
-            modelo.put("clase", "success");
-
-            return "cuentaComun.html";
+            return "index.html";
         } catch (ErrorServicio e) {
 
             //para que se vea usuarios con tuki
@@ -727,13 +697,12 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
-            modelo.put("mensaje1", "Error al editar Usuario " + e.getMessage());
+            modelo.put("mensaje1", "Error al cividir Saldo " + e.getMessage());
             modelo.put("clase1", "danger");
             return "cuentaComun.html";
         }
 
     }
-
     @GetMapping("/transferirlinkCC")
     public String transferirlinkCC(ModelMap model, HttpSession session, String id, String idCuentaComun) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");

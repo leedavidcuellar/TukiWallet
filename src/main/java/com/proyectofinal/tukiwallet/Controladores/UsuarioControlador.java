@@ -42,10 +42,16 @@ public class UsuarioControlador {
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
             Usuario usuario = usuarioServicio.buscarPorMail(mail);
             session.setAttribute("usuariosession", usuario);
+
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+        model.addAttribute("micuenta", usuario);
+        model.addAttribute("listaCC", listaCC);
+
+        model.addAttribute("actividad", usuario.getCuenta().getActividad());
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario agregado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "principalfinal.html";
+            return "cuenta.html";
         } catch (ErrorServicio e) {
             model.put("error", "Error al cargar Usuario " + e.getMessage());
             model.put("nombre", nombre);
@@ -73,12 +79,15 @@ public class UsuarioControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
-            
+                    Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+
+
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
             
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario Editado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "redirect:/inicio";
+            return "redirect:/cuenta";
 
         } catch (ErrorServicio e) {
             e.printStackTrace();
@@ -149,7 +158,7 @@ public class UsuarioControlador {
             model.put("mensaje1", "Error al Desahbilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
 
-            return "/inicio";
+            return "/cuenta";
         }
     }
 
@@ -183,7 +192,7 @@ public class UsuarioControlador {
             model.put("mensaje1", "Error al Deshabilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
             //ver bien el Return
-            return "/inicio";
+            return "/cuenta";
         }
     }
 
