@@ -56,13 +56,11 @@
       <div class="menu">
 
         <ul class="menu-links">
-          <!--  <li class="nav-link">
-            <a th:href="@{/inicio(id=${session.usuariosession.id})}">
-              <i class='bx bx-home-alt icon'></i>
-              <span class="text nav-text">Inicio</span>
-            </a>
-          </li>-->
-
+          <li class="nav-link">
+            <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
+              <i class='bx bx-wallet icon'></i>
+              <span class="text nav-text">Cuenta</span>
+              
           <li class="nav-link">
             <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
               <i class='bx bx-user icon'></i>
@@ -70,13 +68,7 @@
             </a>
           </li>
 
-          <li class="nav-link">
-            <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
-              <i class='bx bx-wallet icon'></i>
-              <span class="text nav-text">Cuenta</span>
-            </a>
-          </li>
-
+          
           <li class="nav-link">
             <!-- Llamado ModalElegirCuentaComun-->
             <div>
@@ -131,8 +123,8 @@
       <div class="text">Cuenta común</div>
     </div>
     <div class="contenido">
-
-      <div th:replace="principalFinal::mensajes"></div>
+        
+      <div th:replace="cuenta::mensajes"></div>
       <div class="BLOQUE1">
         <div class="wrapper" Style="text-align:center">
           <h4 name="nombre" id="nombredark" th:value="${micuentaC.nombre}" th:if="${session.usuariosession != null}"

@@ -78,7 +78,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
 
         } else {
-            throw new ErrorServicio("NO se encontró la cuenta comun  solicitada.");
+            throw new ErrorServicio("No se encontró la cuenta comun  solicitada.");
         }
     }
 
@@ -93,7 +93,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
 
         } else {
-            throw new ErrorServicio("NO se encontró la cuenta comun  solicitada.");
+            throw new ErrorServicio("No se encontró la cuenta comun  solicitada.");
         }
     }
 
