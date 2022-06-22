@@ -733,7 +733,6 @@ public class CuentaComunControlador {
         }
 
     }
-
     @GetMapping("/transferirlinkCC")
     public String transferirlinkCC(ModelMap model, HttpSession session, String id, String idCuentaComun) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");

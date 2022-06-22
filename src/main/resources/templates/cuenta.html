@@ -5,8 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUKI</title>
+
+
     <link rel="stylesheet" href="/css/estiloPrincipal.css">
     <link href="/css/stylescuenta.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     
     <!-- CSS only -->
@@ -147,7 +150,7 @@
       <header>Dinero disponible</header>
       <form action="#">
         <div class="monto">
-          <h4><input class="textarea" type="number" name="saldo" th:value="${session.usuariosession.cuenta.saldo}"
+          <h4><input class="textarea" type="number" id="saldodark" name="saldo" th:value="${session.usuariosession.cuenta.saldo}"
               readonly="readonly" /></h4>
         </div>
         <div class="wrapper2">
@@ -246,31 +249,30 @@
         </div>
         <div class="col-md-10">
           <form>
-            <label class="text">Mis Cuentas Comun</label>
+            <label class="modal-text">Mis Cuentas Comun</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <br>
-            <select class="form-control" name="idCC">
+            <select class="form-control modal-control" name="idCC">
               <option></option>
               <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
                 th:value="${listaCCAux.id}"></option>
             </select>
-            <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+            <button id="modal-btn" type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
             <br>
           </form>
         </div>
+        <br>
         <div class="col-md-10">
           <form>
-            <label class="text">Cuentas Comun Soy Parte</label>
-            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <label class="modal-text">Cuentas Comun Soy Parte</label>
+            <input class="modal-idUsuario" type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <br>
-            <select class="form-control" name="idCC">
+            <select class="form-control modal-control" name="idCC">
               <option></option>
               <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
                 th:value="${listaCCAux.id}"></option>
             </select>
-            <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+            <button id="modal-btn" type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
             <br>
           </form>
         </div>
