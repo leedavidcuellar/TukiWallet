@@ -200,7 +200,11 @@ body.dark header{
   color: #fff;
   }
 
-  body.dark .table {
+body.dark .table {
     color: #fff;
-    }
+}
+
+body.dark #saldodark {
+  color: #fff;
+}
   

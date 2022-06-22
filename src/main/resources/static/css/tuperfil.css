@@ -30,7 +30,7 @@
   text-align: center;
   align-items: center;
   padding: 15px;
-  font-size: 30px;
+  font-size: 20px;
   border-style: solid;
   border-width: 5px;
   border-color: rgb(79, 0, 205);
@@ -40,7 +40,7 @@
 }
 svg {
   width: 34px;
-  margin-top: 25px;
+  
   margin-right: 5px;
 }
 .textarea {
@@ -62,7 +62,7 @@ svg {
 
 .cvu {
   display: inline-flex;
-  padding: 4px;
+ 
 }
 .pgrande-cvu {
   margin-top: 20px;
@@ -72,7 +72,7 @@ svg {
   font-size: 4px;
   margin-left: 4px;
   width: 200px;
-  height: 50px;
+  height: 38px;
 }
 .pgrande-mail {
   margin-top: 20px;
@@ -82,7 +82,7 @@ svg {
   font-size: 4px;
   margin-left: 4px;
   width: 200px;
-  height: 50px;
+  height: 38px;
 }
 .mail {
   padding: 4px;
@@ -95,19 +95,34 @@ svg {
 .formControl-clave {
   margin-top: 15px;
   font-size: 4px;
-  margin-left: 40px;
   width: 200px;
-  height: 50px;
+  height: 38px;
 }
 .pgrande-contrasena {
-  margin-top: 15px;
+  margin-top: 10px;
 }
+.pgrande-clave{
+  margin-top: 20px;
+  margin-right: 4px;
+}
+
+.repetircontra{
+  display: inline-flex;
+  margin-top: 20px;
+  margin-left: 60px;
+}
+
 .terminos {
   padding: 8px;
 }
 
+.contrasena{
+  display: inline-flex;
+  margin-left: 38px;
+}
+
 .pgrande {
-  font-size: 30px;
+  font-size: 20px;
   display: inline-block;
   vertical-align: top;
 }
@@ -140,7 +155,7 @@ a {
   justify-self: center;
 }
 .formControl {
-  width: 40%;
+  width: 67%;
   font-size: 20px;
   text-align: center;
 }
@@ -149,5 +164,5 @@ a {
   text-align: center;
 }
 .DNI {
-  margin-left: 55px;
+  margin-left: 42px;
 }
