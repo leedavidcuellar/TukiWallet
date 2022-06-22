@@ -247,31 +247,30 @@
         </div>
         <div class="col-md-10">
           <form>
-            <label class="text">Mis Cuentas Comun</label>
+            <label class="modal-text">Mis Cuentas Comun</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <br>
-            <select class="form-control" name="idCC">
+            <select class="form-control modal-control" name="idCC">
               <option></option>
               <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
                 th:value="${listaCCAux.id}"></option>
             </select>
-            <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+            <button id="modal-btn" type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
             <br>
           </form>
         </div>
+        <br>
         <div class="col-md-10">
           <form>
-            <label class="text">Cuentas Comun Soy Parte</label>
-            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <label class="modal-text">Cuentas Comun Soy Parte</label>
+            <input class="modal-idUsuario" type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <br>
-            <select class="form-control" name="idCC">
+            <select class="form-control modal-control" name="idCC">
               <option></option>
               <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
                 th:value="${listaCCAux.id}"></option>
             </select>
-            <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+            <button id="modal-btn" type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
             <br>
           </form>
         </div>

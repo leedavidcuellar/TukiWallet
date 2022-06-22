@@ -2,25 +2,28 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
- font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
 }
-.monto{
+.monto {
   font-size: 40px;
   text-align: center;
 }
 body {
   scroll-behavior: smooth;
-    overflow-y: scroll;
+  overflow-y: scroll;
   display: flex;
-  align-items: center ;
+  align-items: center;
   justify-content: space-around;
   min-height: 100vh;
   padding: 0 10px;
   background: rgb(216, 216, 216);
   margin-top: 100px;
 
-
-  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;;
+  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
 }
 
 .textarea {
@@ -33,22 +36,22 @@ body {
 
 ::selection {
   color: rgb(241, 241, 241);
-  background: #675AFE;
+  background: #675afe;
 }
 
-.wrapper{
+.wrapper {
   margin-left: 280px;
   background-color: rgb(241, 241, 241);
   border-radius: 10px;
   margin-top: 70px;
-  display:inline-block;
+  display: inline-block;
 }
 
-header{
+header {
   margin-top: 20px;
   padding: 10px;
 }
-.p-3{
+.p-3 {
   border-radius: 10px;
 }
 .wrapper2 {
@@ -93,7 +96,7 @@ form input {
 
 form input:focus {
   padding: 0 14px;
-  border: 2px solid #675AFE;
+  border: 2px solid #675afe;
 }
 
 form .drop-list {
@@ -116,14 +119,13 @@ form .drop-list {
 .drop-list .select-box1 {
   margin-top: 20px;
   display: flex;
-  width:500px;
+  width: 500px;
   height: 45px;
   align-items: center;
   border-radius: 5px;
   justify-content: center;
   border: 1px solid #999;
 }
-
 
 .select-box img {
   max-width: 11px;
@@ -135,8 +137,6 @@ form .drop-list {
   background: none;
   margin: 0 -5px 0 5px;
 }
-
-
 
 form .button {
   margin-top: 30px;
@@ -155,56 +155,71 @@ form .button {
 form .button:hover {
   background: #4e1daa;
 }
-.container{
-margin: 100px;
-text-align: center;
-margin-top: 150px;
+.container {
+  margin: 100px;
+  text-align: center;
+  margin-top: 150px;
 }
 
-.row gx-5{
+.row gx-5 {
   display: block;
   padding: 100px;
   width: 1500px;
 }
 
-.col{
+.col {
   border: 200px;
-    background: red;
-    margin-top: 100px;
-    height: 200px;
+  background: red;
+  margin-top: 100px;
+  height: 200px;
 }
 
-.btn{
+.btn {
   width: 150px;
 }
 
-.separacion{
+.separacion {
   height: 20px;
 }
 
 /*MODONOCHE*/
 
-body.dark .wrapper{
+body.dark .wrapper {
   background-color: transparent;
 }
 
-body.dark .wrapper2{
+body.dark .wrapper2 {
   background-color: transparent;
 }
 
-body.dark .p-3{
+body.dark .p-3 {
   background-color: transparent !important;
 }
 
-body.dark header{
+body.dark header {
   color: #fff;
-  }
+}
 
 body.dark .table {
-    color: #fff;
+  color: #fff;
 }
 
 body.dark #saldodark {
   color: #fff;
 }
-  
+.modal-text {
+  margin-left: 10px;
+}
+.modal-idUsuario {
+  color: black;
+}
+.modal-control {
+  margin-left: 10px;
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#modal-btn {
+  margin-left: 10px;
+  width: 125px;
+}
