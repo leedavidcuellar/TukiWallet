@@ -151,9 +151,11 @@
                   readonly="readonly" /></h4>
             </div>
             <div class="wrapper2">
-              <a class="redondeo1" th:href="@{/cuentaComun/transferirlinkCC(id=${session.usuariosession.id})}">
-                Transferir
-            </a>
+          <form action="@{/cuentaComun/transferirlinkCC(id=${session.usuariosession.id})}" method="get">
+          <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+          <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+          <button type="submit" class="redondeo1" formaction="/cuentaComun/transferirlinkCC">transferir</button>
+           </form>
             <a class="redondeo1" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </a>
         
           </div>
