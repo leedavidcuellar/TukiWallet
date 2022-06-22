@@ -319,13 +319,13 @@ public class CuentaControlador {
             }
         }
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/transferirlink")
     public String transferirlink(ModelMap model, HttpSession session, String id) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
-        }
+        }   
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         model.addAttribute("transferirlink", usuarioCuenta);
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
