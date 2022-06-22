@@ -1,6 +1,6 @@
 .wrapper {
 border-radius: 10px;
-height: 800px;
+height: 750px;
 margin-left: 50%;
 transform: translateX(-50%) ;
 padding: 20px;
@@ -10,14 +10,14 @@ text-align: -webkit-center ;
 }
 
 .monto{
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
 }
 .wrapper header {
-    margin-top: 50px;
-    height: 80px;
+    margin-top: 25px;
+    height: 50px;
     width: 85%;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 500;
     text-align: center;
     border: 1px solid #999;
@@ -26,7 +26,7 @@ text-align: -webkit-center ;
 
 .wrapper form {
     height: 550px;
-    margin: 40px 0 20px 0;
+    margin: 30px 0 20px 0;
 }
 
 form :where(input, select, button) {
@@ -36,7 +36,7 @@ form :where(input, select, button) {
 }
 
 form p {
-    font-size: 28px;
+    font-size: 22px;
     margin-bottom: 5px;
     
 }
@@ -77,7 +77,7 @@ body.dark{
     color: #fff;
 }
 body.dark .wrapper header {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 500;
     text-align: center;
     border: 1px solid rgb(159, 26, 226);
@@ -110,4 +110,8 @@ body.dark form input:focus {
 }
 .contenido{
     background: #dadada;
+}
+
+.encabezado{
+    background-color: #dadada;
 }
