@@ -67,7 +67,7 @@ public class PortalControlador {
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
         model.addAttribute("listaCC",listaCC);
-                return "principalFinal.html";
+                return "cuenta.html";
 
 }
 }

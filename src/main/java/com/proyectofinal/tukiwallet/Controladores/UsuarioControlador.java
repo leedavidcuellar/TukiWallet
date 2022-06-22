@@ -45,7 +45,7 @@ public class UsuarioControlador {
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario agregado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "principalfinal.html";
+            return "cuenta.html";
         } catch (ErrorServicio e) {
             model.put("error", "Error al cargar Usuario " + e.getMessage());
             model.put("nombre", nombre);
@@ -78,7 +78,7 @@ public class UsuarioControlador {
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario Editado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "redirect:/inicio";
+            return "redirect:/cuenta";
 
         } catch (ErrorServicio e) {
             e.printStackTrace();
@@ -149,7 +149,7 @@ public class UsuarioControlador {
             model.put("mensaje1", "Error al Desahbilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
 
-            return "/inicio";
+            return "/cuenta";
         }
     }
 
@@ -183,7 +183,7 @@ public class UsuarioControlador {
             model.put("mensaje1", "Error al Deshabilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
             //ver bien el Return
-            return "/inicio";
+            return "/cuenta";
         }
     }
 

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 
 
 
-    <!-- Google fonts // Si quieren las cambian-->
+    <!-- Google fonts // Si quieren las cambian -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
         rel="stylesheet" />
@@ -33,7 +33,7 @@
 
 <body>
 
-    <nav class="sidebar close">
+  <!--  <nav class="sidebar close">
         <header>
             <div class="image-text">
                 <span class="image">
@@ -81,13 +81,13 @@
                     </li>
 
                     <li class="nav-link">
-                        <!-- Llamado ModalElegirCuentaComun-->
+                        <!-- Llamado ModalElegirCuentaComun-
                         <div>
                             <a data-toggle="modal" data-target="#myModal">
                                 <i class='bx bx-group icon'></i>
                                 <span class="text nav-text">Cuenta comun</span>
                             </a>
-                        </div><!-- fin llamado ModalElegirCuentaComun-->
+                        </div><!-- fin llamado ModalElegirCuentaComun--
                     </li>
 
                     <li class="nav-link">
@@ -99,7 +99,7 @@
 
                     <li class="search-box">
                         <!--     <i class='bx bx-search icon'></i>
-                             <input type="text" placeholder="" >   -->
+                             <input type="text" placeholder="" >   --
                     </li>
 
                 </ul>
@@ -136,15 +136,7 @@
             <div class="text">Inicio</div>
         </div>
         <div class="contenido">
-            <div th:fragment="mensajes">
-                <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                    th:text="${mensaje}" class="alert" data-dismiss="alert" aria-label="close">&times;
-                </div>
-
-                <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
-                    th:text="${mensaje1}" class="alert" data-dismiss="alert" aria-label="close">&times;
-                </div>
-            </div>
+           
 
             <p class="texto">BIENVENIDO A TU PANEL DE CONTROL</p>
             <label class="text">Saldo Disponible de tu Cuenta</label>
@@ -177,11 +169,11 @@
         </div>
     </div>
 
-    <!-- ModalElegirCuentaComun -->
+    <!-- ModalElegirCuentaComun --
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
 
-            <!-- Modal content ModalElegirCuentaComun-->
+            <!-- Modal content ModalElegirCuentaComun--
             <div class="modal-content">
                 <div class="modal-header">
 
@@ -233,7 +225,7 @@
 
         </div>
     </div>
-    <!-- Final ModalElegirCuentaComun -->
+    <!-- Final ModalElegirCuentaComun --
 
     <script src="/static/js/jssPrincipal.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -241,7 +233,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>-->
 
 </body>
 
