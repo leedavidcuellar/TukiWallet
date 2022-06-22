@@ -63,26 +63,26 @@ public class CuentaControlador {
 
             cuentaServicio.modificarAlias(alias, id);
             Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
-        
-        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
-        model.addAttribute("micuenta", usuarioCuenta);
-        model.addAttribute("listaCC", listaCC);
-        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
-        session.setAttribute("usuariosession", usuarioCuenta);
- 
-        model.put("mensaje", "Se modifico correctamente el alias");
-        model.put("clase", "success");
-            
+
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+            model.addAttribute("micuenta", usuarioCuenta);
+            model.addAttribute("listaCC", listaCC);
+            model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+            session.setAttribute("usuariosession", usuarioCuenta);
+
+            model.put("mensaje", "Se modifico correctamente el alias");
+            model.put("clase", "success");
+
             return "cuenta.html";
 
         } catch (ErrorServicio e) {
-        Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
-        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
-        model.addAttribute("micuenta", usuarioCuenta);
-        model.addAttribute("listaCC", listaCC);
-        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
-        session.setAttribute("usuariosession", usuarioCuenta);
-        
+            Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+            model.addAttribute("micuenta", usuarioCuenta);
+            model.addAttribute("listaCC", listaCC);
+            model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+            session.setAttribute("usuariosession", usuarioCuenta);
+
             model.put("mensaje1", "Error al modificar el alias " + e.getMessage());
             model.put("clase1", "danger");;
             return "cuenta.html";
@@ -169,12 +169,12 @@ public class CuentaControlador {
             if (cvuCuentaComun == null) {
                 cvu1 = cvuCuenta;
                 System.out.println("llegue");
-               
+
             } else {
                 cvu1 = cvuCuentaComun;
                 System.out.println("llegue1c");
             }
- System.out.println(cvu1);
+            System.out.println(cvu1);
             Float montof = Float.valueOf(monto);
 
             String cvu2 = null;
@@ -187,7 +187,7 @@ public class CuentaControlador {
             } else if (cvuoAlias.contains("T")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorAlias(cvuoAlias);
                 cvu2 = cuenta2.getCvu();
-                 System.out.println("llegeueeee");
+                System.out.println("llegeueeee");
             } else if (cvuoAlias.substring(4, 5).equals("1")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorid(cvuoAlias);
                 cvu2 = cvuoAlias;
@@ -202,14 +202,13 @@ public class CuentaControlador {
             if (cvu2 == null) {
                 cuentaServicio.ingresoCuenta(montof, cvu1, cvu2, motivo);
             }
-            
-            if(cvuCuentaComun == null){
+
+            if (cvuCuentaComun == null) {
                 cuentaServicio.validarTransferenciaCuenta(montof, cvu1, cvu2);
-            }else{
+            } else {
                 cuentaComunServicio.validarTransferenciaCuentaComun(montof, cvu1, cvu2);
             }
 
-            
             if (cvuCuentaComun == null) {
 
                 cuentaServicio.egresoCuenta(montof, cvu1, cvu2, motivo);
@@ -225,7 +224,6 @@ public class CuentaControlador {
 
             //vistas
             if (cvuCuentaComun == null) {
-               
 
                 List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
                 modelo.addAttribute("micuenta", usuarioCuenta);
@@ -254,7 +252,7 @@ public class CuentaControlador {
 
                 List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
                 modelo.addAttribute("actividad", actividad);
-
+                modelo.addAttribute("micuenta", usuarioCuenta);
                 modelo.addAttribute("listaCC", listaCC);
                 modelo.addAttribute("micuentaC", usuarioCuentaC);
                 modelo.addAttribute("cuentaComun", cuentaComun);
@@ -264,19 +262,20 @@ public class CuentaControlador {
                 modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
                 modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
-                modelo.put("mensaje", "Desde su Cuenta Comun se transfirio correctamente");
+                modelo.put("mensaje", "Desde su Cuenta se transfirio correctamente");
                 modelo.put("clase", "success");
 
                 return "cuentaComun.html";
             }
 
         } catch (ErrorServicio e) {
-            modelo.put("error", e.getMessage());
-            System.out.println(e.getMessage());
-
+            modelo.put("mensaje1", "No se pudo transferir desde su Cuenta porque: "+ e.getMessage());
+            modelo.put("clase1", "danger");
+            modelo.put("error", "Error al cargar Usuario " + e.getMessage());
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
             modelo.addAttribute("micuenta", usuarioCuenta);
             modelo.addAttribute("listaCC", listaCC);
+            modelo.addAttribute("actividad", usuarioServicio.buscarPorId(id).getCuenta().getActividad());
             return "cuenta.html";
         }
     }
