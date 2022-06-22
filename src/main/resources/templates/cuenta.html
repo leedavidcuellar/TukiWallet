@@ -216,7 +216,7 @@
         <div class="col-md-9" style="margin:70px;">
           <label class="modal-Nombre">Nombre y Apellido:</label>
           <input class="textarea" type="text" name="nombre-usuario"
-            th:value="${nombre + ' ' + apellido}" readonly="readonly" />
+            th:value="${micuenta.nombre + ' ' + micuenta.apellido}" readonly="readonly"/>
           <br>
           <label class="modal-DNI">DNI:</label>
           <input class="textarea" type="text" name="dni-usuario" th:value="${session.usuariosession.dni}" readonly="readonly" />
