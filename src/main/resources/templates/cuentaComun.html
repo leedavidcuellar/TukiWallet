@@ -44,7 +44,7 @@
         <div class="text logo-text">
           <span class="name">¡Hola!</span>
           <span class="profession" th:if="${session.usuariosession != null}"
-            th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></span>
+            th:text="${session.usuariosession.nombre}"></span>
           <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
         </div>
       </div>
@@ -56,12 +56,12 @@
       <div class="menu">
 
         <ul class="menu-links">
-          <li class="nav-link">
+        <!--  <li class="nav-link">
             <a th:href="@{/inicio(id=${session.usuariosession.id})}">
               <i class='bx bx-home-alt icon'></i>
               <span class="text nav-text">Inicio</span>
             </a>
-          </li>
+          </li>-->
 
           <li class="nav-link">
             <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
@@ -141,6 +141,7 @@
         <input class="textarea" type="text" id="nombredark" name="nombrecc" th:value="${cuentaComun.nombre}" />
         <div class="activodesactivo">
           <button type="button" class="btn btn-success " disabled th:if="${cuentaComun.alta}==true">Activo</button>
+          
           <button type="button" class="btn btn-danger " disabled th:if="${cuentaComun.alta}==false">Inactivo</button>
         </div>
         <header class="coso">Dinero disponible</header>
@@ -150,7 +151,9 @@
                 readonly="readonly" /></h4>
           </div>
           <div class="wrapper2">
-            <button class="redondeo">Transferir</button>
+            
+            <a class="redondeo" type="button"
+                th:href="@{/cuentaComun/transferirlinkCC(id=${session.usuariosession.id})}"><button class="redondeo" >Transferir</button></a>
 
             <button class= "redondeo" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </button>
 
@@ -241,11 +244,12 @@
               <td><Strong>#</Strong></td>
               <td><Strong>Nombre</Strong></td>
               <td><Strong>Monto</Strong></td>
+              <td><Strong th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Eliminar</Strong></td>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="listaUsuariosEfectivo2,numeroE:${listaUsuariosEfectivo2}">
-              <td th:text="${numeroE.index}+1"></td>
+            <tr th:each="listaUsuariosEfectivo2,numeroES:${listaUsuariosEfectivo2}">
+              <td th:text="${numeroES.index}+1"></td>
               <td th:text="${listaUsuariosEfectivo2.comentario}"></td>
               <!--<td> 300</td>-->
               <td th:each="listaSaldosUsuariosEfectivo,numeroES1:${listaSaldosUsuariosEfectivo}"  
@@ -276,7 +280,16 @@
               th:if="${cuentaComun.propietario}==${session.usuariosession.id}"><button class="largoB" >Agregar Persona Sin Tuki</button></a>
               
              
-            <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>
+          <!--  <button class="largoB" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">Dividir</button>  -->
+
+
+            <form th:if="${cuentaComun.propietario}==${session.usuariosession.id}" action="/cuentaComun/divisionJusta"
+            method="post">
+            <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
+            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <button type="submit" class="largoB"
+              style="float:inline-start; margin-bottom: 8px; padding: 8px;">Dividir</button>
+          </form>
 
 
 
@@ -290,14 +303,16 @@
     <div class="modal-dialog">
 
       <!-- Modal content ModalElegirCuentaComun-->
-      <div class="modal-content">
+      <div class="modal-content" style="align-items: center">
         <div class="modal-header">
 
           <h4 class="modal-title">Elige una Cuenta Comun</h4>
         </div>
+        <br>
         <div class="col-md-10">
           <form>
             <label >Mis Cuentas Comun</label>
+          
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <br>
             <select class="form-control" name="idCC">
@@ -306,11 +321,13 @@
                 th:text="${listaCCAux.nombre}" th:value="${listaCCAux.id}"></option>
             </select>
             <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+            <button type="submit" class="btn btn-primary" id="selec" formaction="/cuentaComun/micuentaC">Seleccionar</button>
             <br>
           </form>
         </div>
+        <br>
         <div class="col-md-10">
+          
           <form>
             <label >Cuentas Comun Soy Parte</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
@@ -321,12 +338,12 @@
                 th:text="${listaCCAux.nombre}" th:value="${listaCCAux.id}"></option>
             </select>
             <br>
-            <button type="submit" class="btn btn-primary" formaction="/cuentaComun/micuentaC">Seleccionar</button>
+            <button type="submit" class="btn btn-primary" id="selec" formaction="/cuentaComun/micuentaC">Seleccionar</button>
             <br>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>
       </div>
 
