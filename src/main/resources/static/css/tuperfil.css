@@ -31,11 +31,11 @@ svg {
   margin-right: 5px;
 }
 
-.activodesac{
+.activodesac {
   margin-bottom: 50px;
 }
 
-.Documento{
+.Documento {
   margin-right: 310px;
 }
 .textarea {
@@ -64,17 +64,19 @@ svg {
 }
 .formControl-cvu {
   margin-top: 15px;
-  font-size: 4px;
+  font-size: 15px;
   margin-left: 4px;
   width: 454px;
   height: 38px;
+  text-align: center;
 }
 .pgrande-mail {
   margin-top: 20px;
 }
 .formControl-mail {
+  text-align: center;
   margin-top: 15px;
-  font-size: 4px;
+  font-size: 15px;
   margin-left: 4px;
   width: 455px;
   height: 38px;
@@ -118,10 +120,10 @@ svg {
   margin-left: 25px;
 }
 
-.formControl1{
+.formControl1 {
   width: 454px;
 }
-.fecha-nacimiento{
+.fecha-nacimiento {
   margin-right: 350px;
   margin-top: 35px;
   display: inline-flex;
@@ -190,3 +192,4 @@ a {
   margin-left: 10px;
   width: 125px;
 }
+/*CVY EMAIL CENTRAR EL TEXTO Y AGRANDAR LA LETRA*/
