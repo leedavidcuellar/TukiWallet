@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TUKI</title>
-    <link rel="stylesheet" href="/static/css/estiloPrincipal.css" />
-    <link rel="stylesheet" href="/static/css/tuperfil.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/estiloPrincipal.css" />
+    <link rel="stylesheet" href="/css/tuperfil.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
@@ -82,6 +82,12 @@
       <div class="menu-bar">
         <div class="menu">
           <ul class="menu-links">
+            <li class="nav-link">
+              <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">Cuenta</span>
+              </a>
+          </li>
             <li class="nav-link">
               <a
                 th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}"
@@ -219,17 +225,8 @@
             <br />
 
             <div class="cvu">
-              <svg
-                class="icono"
-                xmlns="http://www.w3.org/2000/svg"
-                viewbox="0 0 24 24"
-              >
-                <path
-                  d="M7 21h-4v-11h4v11zm7-11h-4v11h4v-11zm7 0h-4v11h4v-11zm2 12h-22v2h22v-2zm-23-13h24l-12-9-12 9z"
-                />
-              </svg>
               <br />
-              <p class="pgrande-cvu">Mi cvu</p>
+              <p class="pgrande-cvu">Mi CVU</p>
               <br />
               <input
                 class="formControl-cvu"
@@ -246,11 +243,6 @@
               <input type="file" class="form-control" name="archivo" />
             </div>
             <div class="mail">
-              <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                <path
-                  d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"
-                />
-              </svg>
               <br />
               <p class="pgrande-mail">Email</p>
               <br />

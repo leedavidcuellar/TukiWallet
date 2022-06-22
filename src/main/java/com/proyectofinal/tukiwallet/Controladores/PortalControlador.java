@@ -9,6 +9,7 @@ import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
+import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +33,9 @@ public class PortalControlador {
     
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
+    
+    @Autowired
+    private UsuarioServicio usuarioServicio;
     
     @GetMapping("/")
     public String index() {
@@ -66,6 +70,9 @@ public class PortalControlador {
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
+        Usuario usuario = usuarioServicio.buscarPorId(login.getId());
+        model.addAttribute("actividad", usuario.getCuenta().getActividad());
+        model.addAttribute("micuenta", usuario);
         model.addAttribute("listaCC",listaCC);
                 return "cuenta.html";
 

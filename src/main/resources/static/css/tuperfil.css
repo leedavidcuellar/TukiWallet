@@ -56,12 +56,10 @@ svg {
 }
 
 .cvu {
-  margin-right: 22px;
+  margin-left: 10px;
   display: inline-flex;
 }
-.pgrande-cvu {
-  margin-top: 20px;
-}
+
 .formControl-cvu {
   margin-top: 15px;
   font-size: 15px;
@@ -83,7 +81,7 @@ svg {
 }
 .mail {
   margin-top: 20px;
-  margin-right: 15px;
+  margin-right: -25px;
   padding: 4px;
   display: inline-flex;
 }
@@ -131,7 +129,7 @@ svg {
 
 .formControl2 {
   height: 37px;
-  width: 520px;
+  width: 390px;
 }
 
 a {
@@ -153,7 +151,7 @@ a {
 }
 .form-control {
   margin-left: 150px;
-  width: 400px;
+  width: 420px !important;
 }
 /* .faqs .pgrande {
   padding-top: 10px;
