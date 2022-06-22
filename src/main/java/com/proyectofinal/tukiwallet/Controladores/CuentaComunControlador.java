@@ -422,15 +422,15 @@ public class CuentaComunControlador {
     }
 
     @PostMapping("/agregarUsuarioCCTKEfectivo")
-    public String agregarUsuarioCCTKEfectivo(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idCC, String cvuUsuario, String aliasCC, String montoEfectivoTk) throws ErrorServicio {
+    public String agregarUsuarioCCTKEfectivo(ModelMap modelo, HttpSession session, @RequestParam String idUsuario, @RequestParam String idCC, String cvuoAliasUsuario, String montoEfectivoTk) throws ErrorServicio {
         List<Usuario> listaUsuario = new ArrayList<Usuario>();
         try {
 
-            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(aliasCC);
+            Cuenta cuenta = cuentaServicio.buscarCuentaPorAlias(cvuoAliasUsuario);
 
             if (cuenta == null) {
 
-                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuUsuario);
+                cuenta = cuentaServicio.buscarCuentaPorCbu(cvuoAliasUsuario);
             }
 
             //para agrego usuarios a CC
