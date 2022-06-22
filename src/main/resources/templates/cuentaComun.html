@@ -399,14 +399,9 @@
             <form action="/cuentaComun/agregarUsuarioCC/" method="POST">
               <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
               <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
-              <label>Cvu:</label>
-              <input class="form-control" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
+              <label>Cvu/Alias:</label>
+              <input class="form-control" style="width:70%;" type="text" name="cvuoAliasUsuario" th:value="${cvuoAliasUsuario}" />
               <br>
-              <p>O</p>
-              <br>
-              <label>Alias:</label>
-              <input class="form-control" style="width:90%;" type="text" name="aliasCC" th:value="${aliasCC}" />
-
               <button type="submit" class="btn btn-primary">Agregar</button>
             </form>
           </div>
@@ -435,13 +430,8 @@
             <label>Persona que tiene Tuki pero aporto en Efectivo</label>
             <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <input type="hidden" name="idCC" th:value="${cuentaComun.id}" />
-            <label>Cvu:</label>
-            <input class="form-control" style="width:70%;" type="text" name="cvuUsuario" th:value="${cvuUsuario}" />
-            <br>
-            <p>O</p>
-            <br>
-            <label>Alias:</label>
-            <input class="form-control" style="width:90%;" type="text" name="aliasCC" th:value="${aliasCC}" />
+            <label>Cvu/Alias:</label>
+            <input class="form-control" style="width:70%;" type="text" name="cvuoAliasUsuario" th:value="${cvuoAliasUsuario}" />
             <br>
             <label>Monto:</label>
             <input class="form-control" type="number" name="montoEfectivoTk" th:value="${montoEfectivoTk}" required=""/>
