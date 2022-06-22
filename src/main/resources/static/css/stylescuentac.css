@@ -51,6 +51,14 @@ body {
   text-align: center;
 }
 
+.text {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+  color: black;
+}
 
 h5{
   font-size: 1.70rem !important;
@@ -244,6 +252,14 @@ margin-top: 150px;
 
 .redondeo{
   border-radius: 6px;
+}
+
+.wrapper2 .redondeo1{
+  border-radius: 6px;
+  background: #3719bb;
+  height: 50px;
+  width: 150px;
+  color: #fff;
 }
 
 .coso{
