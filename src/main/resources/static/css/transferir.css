@@ -1,6 +1,6 @@
 .wrapper {
 border-radius: 10px;
-height: 750px;
+height: 690px;
 margin-left: 50%;
 transform: translateX(-50%) ;
 padding: 20px;
@@ -14,7 +14,7 @@ text-align: -webkit-center ;
     text-align: center;
 }
 .wrapper header {
-    margin-top: 25px;
+    margin-top: 20px;
     height: 50px;
     width: 85%;
     font-size: 22px;
@@ -22,6 +22,12 @@ text-align: -webkit-center ;
     text-align: center;
     border: 1px solid #999;
     border-radius: 10px; 
+    background: linear-gradient(45deg, #007aff, rgb(159, 26, 226));
+    color: #fff;
+}
+
+.realizartrans{
+    padding-top: 5px;
 }
 
 .wrapper form {
@@ -36,7 +42,7 @@ form :where(input, select, button) {
 }
 
 form p {
-    font-size: 22px;
+    font-size: 20px;
     margin-bottom: 5px;
     
 }
