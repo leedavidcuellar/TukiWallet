@@ -90,8 +90,9 @@ body.dark .wrapper header {
 body.dark .wrapper {
   background: transparent;
 }
-body.dark .wrapper header {
-  background: transparent;
+body.dark .wrapper header{
+    background: linear-gradient(45deg, #007aff, rgb(159, 26, 226));
+    color: #fff;
 }
 body.dark .monto {
   background: transparent;
