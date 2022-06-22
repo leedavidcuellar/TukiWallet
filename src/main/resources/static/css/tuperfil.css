@@ -40,7 +40,7 @@
 }
 svg {
   width: 34px;
-  
+
   margin-right: 5px;
 }
 .textarea {
@@ -62,7 +62,6 @@ svg {
 
 .cvu {
   display: inline-flex;
- 
 }
 .pgrande-cvu {
   margin-top: 20px;
@@ -101,12 +100,12 @@ svg {
 .pgrande-contrasena {
   margin-top: 10px;
 }
-.pgrande-clave{
+.pgrande-clave {
   margin-top: 20px;
   margin-right: 4px;
 }
 
-.repetircontra{
+.repetircontra {
   display: inline-flex;
   margin-top: 20px;
   margin-left: 60px;
@@ -116,7 +115,7 @@ svg {
   padding: 8px;
 }
 
-.contrasena{
+.contrasena {
   display: inline-flex;
   margin-left: 38px;
 }
@@ -165,4 +164,20 @@ a {
 }
 .DNI {
   margin-left: 42px;
+}
+.modal-text {
+  margin-left: 10px;
+}
+.modal-idUsuario {
+  color: black;
+}
+.modal-control {
+  margin-left: 10px;
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#modal-btn {
+  margin-left: 10px;
+  width: 125px;
 }
