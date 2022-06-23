@@ -82,6 +82,7 @@ public class PortalControlador {
         model.addAttribute("actividad", usuario.getCuenta().getActividad());
         model.addAttribute("micuenta", usuario);
         model.addAttribute("listaCC",listaCC);
+        model.addAttribute("usuariosession", login);
                 return "cuenta.html";
                 
                 

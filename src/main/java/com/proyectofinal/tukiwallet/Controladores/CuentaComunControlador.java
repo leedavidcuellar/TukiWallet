@@ -183,7 +183,7 @@ public class CuentaComunControlador {
 
             modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
-            modelo.put("mensaje1", "No se transfirio desde la Cuenta Comun, "+e.getMessage());
+            modelo.put("mensaje1", "No se transfirio desde la Cuenta Comun por: "+e.getMessage());
             modelo.put("clase1", "Danger");
             
             return "cuentaComun.html";
@@ -192,16 +192,60 @@ public class CuentaComunControlador {
 
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/crearCC")
+    public String crearCC(ModelMap modelo, HttpSession session, String idUsuario) throws ErrorServicio {
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(idUsuario)) {
+            return "redirect:/login";
+        }
+        //modelo.putIfAbsent(idUsuario, login);
+     return "crearCuentaComun.html";   
+    }
+    
+    
     @PostMapping("/nuevaCuentaComun")
-    public String crearCC(ModelMap modelo, @RequestParam String nombre, @RequestParam String idUsuario, @RequestParam List<Usuario> usuarios) throws ErrorServicio {
-
+    public String crearCC(ModelMap modelo, @RequestParam String nombre, @RequestParam String idUsuario) throws ErrorServicio {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        usuarios.add(usuarioServicio.buscarPorId(idUsuario));
         try {
-            cuentaComunServicio.crearCuentaComun(nombre, idUsuario, usuarios);
-            return "misCuentasComunes.html"; //check  
+            CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(nombre, idUsuario, usuarios);
+            
+                        //para que se vea usuarios con tuki
+            List<Float> saldosUsuarios = new ArrayList<Float>();
+            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+            for (Usuario usuarioAux : listaUsuarios) {
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            }
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+
+            //para que se vea usuarios sin tuki
+            List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+            List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+            for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+                saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+            }
+
+            List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(cuentaComun.getId());
+            modelo.addAttribute("actividad", actividad);
+
+            modelo.addAttribute("listaCC", listaCC);
+            modelo.addAttribute("micuentaC", usuarioCuentaC);
+            modelo.addAttribute("cuentaComun", cuentaComun);
+            modelo.addAttribute("listaUsuarios", listaUsuarios);
+            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+
+            modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+            modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+            modelo.put("mensaje", "Se Creo correctamente la Cuenta Comun");
+            modelo.put("clase", "success");
+            
+            return "cuentaComun.html"; //check  
 
         } catch (ErrorServicio error) {
             modelo.put("error", error.getMessage());
+            modelo.put("nombre",nombre);
+            //modelo.put("a",);
             return "crearCuentaComun.html"; //check 
         }
 
@@ -391,7 +435,7 @@ public class CuentaComunControlador {
             session.setAttribute("usuariosession", usuarioCC);
 
             modelo.put("mensaje1", "Error al modificar el alias " + e.getMessage());
-            modelo.put("clase1", "danger");;
+            modelo.put("clase1", "danger");
             return "cuentaComun.html";
         }
     }
@@ -441,6 +485,10 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
+            
+                    modelo.put("mensaje", "Se Agrego Correctamente Usuario de Tuki a Cuenta Comun");
+            modelo.put("clase", "success");
+            
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
@@ -474,7 +522,7 @@ public class CuentaComunControlador {
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
             modelo.addAttribute("actividad", actividad);
 
-            modelo.put("mensaje1", "Error al editar Usuario " + e.getMessage());
+            modelo.put("mensaje1", "Error al agregar Usuario de Tuki a Cuenta Comun por: " + e.getMessage());
             modelo.put("clase1", "danger");
 
             return "cuentaComun.html"; //check 
@@ -533,6 +581,9 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuarios", listaUsuarios);
             modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
 
+                             modelo.put("mensaje", "Se Agrego Correctamente Usuario Sin Tuki a Cuenta Comun");
+            modelo.put("clase", "success");
+            
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
@@ -565,6 +616,10 @@ public class CuentaComunControlador {
 
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
             modelo.addAttribute("actividad", actividad);
+            
+               modelo.put("mensaje1", "Error al agregar Usuario sin Tuki a Cuenta Comun por: " + e.getMessage());
+            modelo.put("clase1", "danger");
+            
             return "cuentaComun.html"; //check 
         }
     }
@@ -607,6 +662,9 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
+            modelo.put("mensaje", "Se Agrego Correctamente Usuario de Tuki que aporto además en efectivo a Cuenta Comun");
+            modelo.put("clase", "success");
+            
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
@@ -639,6 +697,10 @@ public class CuentaComunControlador {
 
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
             modelo.addAttribute("actividad", actividad);
+            
+                           modelo.put("mensaje1", "Error al agregar Usuario de Tuki que aporto en efectivo a Cuenta Comun por: " + e.getMessage());
+            modelo.put("clase1", "danger");
+            
             return "cuentaComun.html"; //check 
         }
     }
@@ -677,6 +739,10 @@ public class CuentaComunControlador {
         modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
         modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
+        
+                   modelo.put("mensaje", "Se Elimino correctamente Usuario de Tuki de la Cuenta Comun");
+            modelo.put("clase", "success");
+        
         return "cuentaComun.html";
 
     }
@@ -715,6 +781,8 @@ public class CuentaComunControlador {
         modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
         modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
+                           modelo.put("mensaje", "Se Elimino correctamente Usuario que aporto en efectivo de la Cuenta Comun");
+            modelo.put("clase", "success");
         return "cuentaComun.html";
 
     }
@@ -786,7 +854,7 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
-            modelo.put("mensaje1", "Error al cividir Saldo " + e.getMessage());
+            modelo.put("mensaje1", "Error al dividir Saldo por: " + e.getMessage());
             modelo.put("clase1", "danger");
             return "cuentaComun.html";
         }

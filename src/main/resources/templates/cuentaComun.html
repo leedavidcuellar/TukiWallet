@@ -347,6 +347,16 @@
             <br>
           </form>
         </div>
+        <br>
+        <br>
+        <div class="gap-2 col-mid-5">
+          <label class="modal-text">Genera Una Nueva Cuenta Comun</label>
+          <form>
+            <input class="modal-idUsuario" type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+            <button id="modal-btn" type="submit" class="btn btn-primary"
+            formaction="/cuentaComun/crearCC">Crear</button>
+          </form>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>
@@ -479,7 +489,8 @@
 
           <h4 class="modal-title">A que queres transferir?</h4>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10" style="margin:50px;">
+          <label class="modal-text">Otro Usuario Tuki</label>
           <form>
             <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
             <button id="modal-btn" type="input" class="btn btn-primary"
@@ -487,8 +498,7 @@
             <br>
           </form>
         </div>
-        <br>
-        <div class="col-md-10">
+        <div class="col-md-10" style="margin:50px;">
           <form>
 
             <label class="modal-text">Mis Cuentas Comun</label>
