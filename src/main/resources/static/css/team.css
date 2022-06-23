@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  background-color: rgb(206, 206, 206);
+  background-color: rgb(0, 0, 0);
 }
 * {
   box-sizing: border-box;
@@ -136,11 +136,11 @@ body {
 }
 .titulo__principal {
   text-align: center;
-  color: black;
+  color: rgb(255, 255, 255);
 }
 .descripcion {
   text-align: center;
-  color: black;
+  color: rgb(255, 255, 255);
 }
 .foto__team {
   align-items: center;
@@ -155,4 +155,28 @@ body {
 }
 .segunda__clase {
   margin-top: 100px;
+}
+@font-face {
+  src: url("https://www.axis-praxis.org/fonts/webfonts/MetaVariableDemo-Set.woff2")
+    format("woff2");
+  font-family: "Meta";
+  font-style: normal;
+  font-weight: normal;
+}
+.titulon {
+  transition: all 0.5s;
+  -webkit-text-stroke: 4px #d6f4f4;
+  font-variation-settings: "wght" 900, "ital" 1;
+  font-size: 15rem;
+  text-align: center;
+  color: transparent;
+  font-family: "Meta", sans-serif;
+  text-shadow: 10px 10px 0px #640cb6, 15px 15px 0px #310cb6,
+    20px 20px 0px #1c0ee4, 25px 25px 0px #f40468, 45px 45px 10px #482896;
+  cursor: pointer;
+}
+
+.titulon:hover {
+  font-variation-settings: "wght" 100, "ital" 0;
+  text-shadow: none;
 }
