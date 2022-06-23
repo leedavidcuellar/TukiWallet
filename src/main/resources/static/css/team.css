@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  background-color: grey;
+  background-color: rgb(206, 206, 206);
 }
 * {
   box-sizing: border-box;
@@ -136,11 +136,11 @@ body {
 }
 .titulo__principal {
   text-align: center;
-  color: white;
+  color: black;
 }
 .descripcion {
   text-align: center;
-  color: whitesmoke;
+  color: black;
 }
 .foto__team {
   align-items: center;
