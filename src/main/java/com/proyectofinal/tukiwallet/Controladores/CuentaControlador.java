@@ -126,7 +126,7 @@ public class CuentaControlador {
             Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
             //model.addAttribute("perfil", usuario);
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
-            model.addAttribute("micuenta", usuario);
+            model.addAttribute("miCuenta", usuario);
             model.addAttribute("listaCC", listaCC);
              model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje", "Se Deshabilitado correctamente la Cuenta");
@@ -138,7 +138,7 @@ public class CuentaControlador {
             Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
 
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
-            model.addAttribute("micuenta", usuario);
+            model.addAttribute("miCuenta", usuario);
             model.addAttribute("listaCC", listaCC);
              model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje1", "Error al Deshabilitar la Cuenta " + e.getMessage());
@@ -232,7 +232,7 @@ public class CuentaControlador {
                
 
                 List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
-                modelo.addAttribute("micuenta", usuarioCuenta);
+                modelo.addAttribute("miCuenta", usuarioCuenta);
                 modelo.addAttribute("listaCC", listaCC);
                 modelo.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
                 modelo.put("mensaje", "Desde su Cuenta se transfirio correctamente");
@@ -258,7 +258,7 @@ public class CuentaControlador {
 
                 List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
                 modelo.addAttribute("actividad", actividad);
-                 modelo.addAttribute("micuenta", usuarioCuenta);
+                 modelo.addAttribute("miCuenta", usuarioCuenta);
                 modelo.addAttribute("listaCC", listaCC);
                 modelo.addAttribute("micuentaC", usuarioCuentaC);
                 modelo.addAttribute("cuentaComun", cuentaComun);
