@@ -723,10 +723,39 @@ public class CuentaComunControlador {
     public String divisionJusta(HttpSession session, ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCuentaComun) throws ErrorServicio {
         try {
             cuentaComunServicio.divisionSoloTuki(idCuentaComun);
+            
+                        //para que se vea usuarios con tuki
+            List<Float> saldosUsuarios = new ArrayList<Float>();
+            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
+            CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
+            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+            for (Usuario usuarioAux : listaUsuarios) {
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            }
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
-          
+            //para que se vea usuarios sin tuki
+            List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+            List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+            for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+                saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+            }
 
-            return "index.html";
+            List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+            modelo.addAttribute("actividad", actividad);
+            modelo.addAttribute("listaCC", listaCC);
+            modelo.addAttribute("micuentaC", usuarioCuentaC);
+            modelo.addAttribute("cuentaComun", cuentaComun);
+            modelo.addAttribute("listaUsuarios", listaUsuarios);
+            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+
+            modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+            modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+
+            modelo.put("mensaje", "Se hizo la division justa correctamente ");
+            modelo.put("clase", "success");
+
+            return "cuentaComun.html";
         } catch (ErrorServicio e) {
 
             //para que se vea usuarios con tuki

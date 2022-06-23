@@ -87,7 +87,7 @@ public class UsuarioControlador {
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario Editado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "redirect:/cuenta";
+            return "cuenta.html";
 
         } catch (ErrorServicio e) {
             e.printStackTrace();
