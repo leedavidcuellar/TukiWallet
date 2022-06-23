@@ -58,6 +58,16 @@ public class PortalControlador {
     return "TEAM.html";
     }
     
+    @GetMapping("/faq")
+    public String faq(){
+    return "faq.html";
+    }
+    
+    @GetMapping("/legal")
+    public String legal(){
+    return "legal.html";
+    }
+    
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")    
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {

@@ -51,6 +51,15 @@ body {
   text-align: center;
 }
 
+.textarea1 {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+  font-size: 200%;
+}
+
 .text {
   border: none;
   background-color: transparent;
