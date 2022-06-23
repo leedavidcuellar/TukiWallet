@@ -92,38 +92,51 @@
               </a>
             </li>
 
-            <li class="nav-link">
-              <a
-                th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}"
-              >
-                <i class="bx bx-user icon"></i>
-                <span class="text nav-text">Tu perfil</span>
-              </a>
-            </li>
 
-            <li class="nav-link">
-              <!-- Llamado ModalElegirCuentaComun-->
-              <div>
-                <a data-toggle="modal" data-target="#myModal">
-                  <i class="bx bx-group icon"></i>
-                  <span class="text nav-text">Cuenta comun</span>
-                </a>
-              </div>
-              <!-- fin llamado ModalElegirCuentaComun-->
-            </li>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
 
-            <li class="nav-link">
-              <a href="#">
-                <i class="bx bx-transfer icon"></i>
-                <span class="text nav-text">Transferir</span>
-              </a>
-            </li>
+        <div class="menu-bar">
+            <div class="menu">
 
-            <li class="search-box">
-              <!--     <i class='bx bx-search icon'></i>
+                <ul class="menu-links">
+                     <li class="nav-link">
+                        <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
+                            <i class='bx bx-wallet icon'></i>
+                            <span class="text nav-text">Cuenta</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
+                            <i class='bx bx-user icon' ></i>
+                            <span class="text nav-text">Tu perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                          <!-- Llamado ModalElegirCuentaComun-->
+                     <div>
+                            <a
+                                data-toggle="modal" data-target="#myModal">
+                            <i class='bx bx-group icon' ></i>
+                            <span class="text nav-text">Cuenta comun</span>
+                          </a>
+                    </div><!-- fin llamado ModalElegirCuentaComun-->
+                    </li>
+                   <li class="nav-link">
+                       <div>
+                           <a 
+                            data-toggle="modal" data-target="#transfModal">
+                            <i class='bx bx-transfer icon' ></i>
+                            <span class="text nav-text">Transferir</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="search-box">
+                        <!--     <i class='bx bx-search icon'></i>
                              <input type="text" placeholder="" >   -->
-            </li>
-          </ul>
+                    </li>
+               </ul>
         </div>
 
         <div class="bottom-content">
@@ -219,7 +232,6 @@
         </div>
       </div>
     </div>
-
     <!-- ModalElegirCuentaComun -->
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -244,7 +256,7 @@
                 th:value="${session.usuariosession.id}"
               />
               <br />
-              <select class="form-control modal-control" name="idCC">
+              <select class="form-control modal-control" name="idCC" required="">
                 <option></option>
                 <option
                   th:if="${listaCCAux.propietario}==${session.usuariosession.id}"
@@ -275,7 +287,7 @@
                 th:value="${session.usuariosession.id}"
               />
               <br />
-              <select class="form-control modal-control" name="idCC">
+              <select class="form-control modal-control" name="idCC" required="">
                 <option></option>
                 <option
                   th:if="${listaCCAux.propietario}!=${session.usuariosession.id}"
@@ -295,14 +307,69 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">
               Close
             </button>
           </div>
         </div>
       </div>
     </div>
-    <!-- Final ModalElegirCuentaComun -->
+  </div>
+  <!-- Final ModalElegirCuentaComun -->
+
+<!-- ModalTransferir -->
+        <div id="transfModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content transferir -->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">A que queres transferir?</h4>
+                    </div>
+                    <div class="col-md-10">
+                        <form>
+                            
+                            <!--<label class="modal-text"></label>
+                            <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
+                            <br>
+                            <select class="form-control modal-control" name="idCC" required="">
+                              <option></option>
+                              <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+                                th:value="${listaCCAux.id}"></option> 
+                            </select>-->
+                            <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+                            <button id="modal-btn" type="input" class="btn btn-primary" formaction="/cuenta/transferirlink">Cuenta</button>
+                            <br>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="col-md-10">
+                        <form>
+          
+                            <label class="modal-text">Mis Cuentas Comun</label>
+                            <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+                            <br>
+                            <select class="form-control modal-control" name="idCuentaComun" required="">
+                                <option></option>
+                                <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+                                        th:value="${listaCCAux.id}"></option> 
+                            </select>
+                            <button id="modal-btn" type="submit" class="btn btn-primary" formaction="/cuentaComun/transferirlinkCC">Seleccionar</button>
+                            <br>
+                          
+                        </form>
+                    </div>
+                    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Final ModalTransferir -->
 
     <script src="/js/jssPrincipal.js"></script>
     <script
@@ -317,3 +384,4 @@
     ></script>
   </body>
 </html>
+
