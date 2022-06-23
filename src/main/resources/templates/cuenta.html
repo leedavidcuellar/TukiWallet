@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TUKI</title>
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TUKI</title>
 
-        <link rel="stylesheet" href="/css/estiloPrincipal.css">
-        <link href="/css/stylescuenta.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/estiloPrincipal.css">
+  <link href="/css/stylescuenta.css" rel="stylesheet" />
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
-        <!-- CSS only -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+
+  <!-- Google fonts // Si quieren las cambian-->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
 
         <!-- Google fonts // Si quieren las cambian-->
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -24,12 +33,117 @@
               rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
 
-
-
         <!----===== Boxicons CSS ===== -->
         <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
+
+<body>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img th:if="${session.usuariosession.foto != null}" style="max-height: 200px; border-radius:100%"
+            th:src="${'/foto/usuario/'+ session.usuariosession.id}" alt="">
+          <img th:if="${session.usuariosession.foto == null}" style="max-height: 200px; border-radius:100%"
+            src="/assets/img/birrita.png" alt="">
+        </span>
+
+        <div class="text logo-text">
+          <span class="name">¡Hola!</span>
+          <span class="profession" th:if="${session.usuariosession != null}"
+            th:text="${session.usuariosession.nombre}"></span>
+          <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+
+        <ul class="menu-links">
+
+          <li class="nav-link">
+            <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
+              <i class='bx bx-wallet icon'></i>
+              <span class="text nav-text">Cuenta</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
+              <i class='bx bx-user icon'></i>
+              <span class="text nav-text">Tu perfil</span>
+            </a>
+          </li>
+
+
+          <li class="nav-link">
+            <!-- Llamado ModalElegirCuentaComun-->
+            <div>
+              <a data-toggle="modal" data-target="#myModal">
+                <i class='bx bx-group icon'></i>
+                <span class="text nav-text">Cuenta comun</span>
+              </a>
+            </div><!-- fin llamado ModalElegirCuentaComun-->
+          </li>
+
+          <li class="nav-link">
+            <a href="#">
+              <i class='bx bx-transfer icon'></i>
+              <span class="text nav-text">Transferir</span>
+            </a>
+          </li>
+
+          <li class="search-box">
+            <!--     <i class='bx bx-search icon'></i>
+                             <input type="text" placeholder="" >   -->
+          </li>
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+
+        <li class="mode">
+          <div class="sun-moon">
+            <i class='bx bx-moon icon moon'></i>
+            <i class='bx bx-sun icon sun'></i>
+          </div>
+          <span class="mode-text text">Noche</span>
+
+          <div class="toggle-switch">
+            <span class="switch"></span>
+          </div>
+        </li>
+
+        <li class="salir">
+          <a href="/logout">
+            <i class='bx bx-log-out icon'></i>
+            <span class="text nav-text">Salir</span>
+          </a>
+        </li>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="encabezado">
+    <div class="cabeza">
+      <div class="textTuki">TukiWallet</div>
+      <div class="text">Cuenta</div>
+    </div>
+    <div class="contenido">
+      <div th:fragment="mensajes">
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+          th:text="${mensaje}" class="alert" data-dismiss="alert" aria-label="close">&times;
+        </div>
+
+        <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
+          th:text="${mensaje1}" class="alert" data-dismiss="alert" aria-label="close">&times;
+        </div>
+      </div>
 
     <body>
         <nav class="sidebar close">
@@ -236,6 +350,29 @@
         <!-- Final ModalMostrarDatos -->
 
 
+      <div class="wrapper" Style="text-align:center">
+        <h4 name="nombre" th:value="${nombre}" th:if="${session.usuariosession != null}"
+          th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
+        <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+
+        <button type="button" class="btn btn-success " disabled
+          th:if="${session.usuariosession.cuenta.alta}==true">Activo</button>
+        <button type="button" class="btn btn-danger " disabled
+          th:if="${session.usuariosession.cuenta.alta}==false">Inactivo</button>
+
+        <header>Dinero disponible</header>
+        <form action="#">
+          <div class="monto">
+            <h4><input class="textarea" type="number" id="saldodark" name="saldo"
+                th:value="${miCuenta.cuenta.saldo}" readonly="readonly" /></h4>
+          </div>
+          <div class="wrapper2">
+            <a class="button" th:href="@{/cuenta/transferirlink(id=${session.usuariosession.id})}">
+              Transferir
+            </a>
+            <a class="button" type="button" data-toggle="modal" data-target="#misDatos">Ingresar </a>
+        </form>
+
         <!-- ModalTransferir -->
         <div id="transfModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog">
@@ -353,3 +490,4 @@
         crossorigin="anonymous"></script>
     </body>
 </html>
+
