@@ -149,7 +149,7 @@ a {
   margin-top: 50px;
 }
 .encabezado {
-  background-color: white;
+  background-color: #dadada;
 }
 .form-control {
   margin-left: 150px;
@@ -195,3 +195,7 @@ a {
   width: 125px;
 }
 /*CVY EMAIL CENTRAR EL TEXTO Y AGRANDAR LA LETRA*/
+body.dark .segunda-parte{
+  color: aliceblue;
+  background: transparent;
+}
