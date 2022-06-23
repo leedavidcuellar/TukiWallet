@@ -119,16 +119,76 @@ public class CuentaComunControlador {
             } else {
                 cuentaComunServicio.ingresoCuentaComun(motivof, cvu2, cvu1, motivo);
             }
-            modelo.put("exito", "Se realizo la transferencia con Exito ");
-            return "redirect:/micuentaC";
+            
+            //para que se vea usuarios con tuki
+            List<Float> saldosUsuarios = new ArrayList<Float>();
+            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
+            CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorCvuCC(cvu1);
+            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+            for (Usuario usuarioAux : listaUsuarios) {
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            }
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+
+            //para que se vea usuarios sin tuki
+            List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+            List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+            for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+                saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+            }
+
+            List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(cuentaComunServicio.buscarCuentaPorCvuCC(cvu1).getId());
+            modelo.addAttribute("actividad", actividad);
+
+            modelo.addAttribute("listaCC", listaCC);
+            modelo.addAttribute("micuentaC", usuarioCuentaC);
+            modelo.addAttribute("cuentaComun", cuentaComun);
+            modelo.addAttribute("listaUsuarios", listaUsuarios);
+            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+
+            modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+            modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+            modelo.put("mensaje", "Se Tranfirio correctamente desde la Cuenta Comun");
+            modelo.put("clase", "success");
+           
+            return "cuentaComun.html";
 
         } catch (ErrorServicio e) {
-            modelo.put("mensaje", e.getMessage());
-            modelo.put("error", "Error al transferir " + e.getMessage());
-            //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
+            
+                        //para que se vea usuarios con tuki
+            List<Float> saldosUsuarios = new ArrayList<Float>();
+            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
+            CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorCvuCC(cvu1);
+            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+            for (Usuario usuarioAux : listaUsuarios) {
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+            }
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+
+            //para que se vea usuarios sin tuki
+            List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+            List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+            for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+                saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+            }
+
+            List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(cuentaComunServicio.buscarCuentaPorCvuCC(cvu1).getId());
+            modelo.addAttribute("actividad", actividad);
+
+            modelo.addAttribute("listaCC", listaCC);
+            modelo.addAttribute("micuentaC", usuarioCuentaC);
+            modelo.addAttribute("cuentaComun", cuentaComun);
+            modelo.addAttribute("listaUsuarios", listaUsuarios);
+            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+
+            modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+            modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+            modelo.put("mensaje1", "No se transfirio desde la Cuenta Comun, "+e.getMessage());
+            modelo.put("clase1", "Danger");
+            
             return "cuentaComun.html";
         }
-        //REDIRECT: A LA CUENTA COMUN (como no está todavía no la puedo poner)
+      
 
     }
 
@@ -662,41 +722,11 @@ public class CuentaComunControlador {
     @PostMapping("/divisionJusta")
     public String divisionJusta(HttpSession session, ModelMap modelo, @RequestParam String idUsuario, @RequestParam String idCuentaComun) throws ErrorServicio {
         try {
-            cuentaComunServicio.divisionJusta(idCuentaComun);
+            cuentaComunServicio.divisionSoloTuki(idCuentaComun);
 
-            //para que se vea usuarios con tuki
-            List<Float> saldosUsuarios = new ArrayList<Float>();
-            Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
-            CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
-            List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
-            for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
-            }
-            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
+          
 
-            //para que se vea usuarios sin tuki
-            List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
-            List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
-            for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
-                saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
-            }
-
-            List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
-            modelo.addAttribute("actividad", actividad);
-
-            modelo.addAttribute("listaCC", listaCC);
-            modelo.addAttribute("micuentaC", usuarioCuentaC);
-            modelo.addAttribute("cuentaComun", cuentaComun);
-            modelo.addAttribute("listaUsuarios", listaUsuarios);
-            modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
-
-            modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
-            modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
-
-            modelo.put("mensaje", "El saldo de la cuenta ha sido repartido exitosamente");
-            modelo.put("clase", "success");
-
-            return "cuentaComun.html";
+            return "index.html";
         } catch (ErrorServicio e) {
 
             //para que se vea usuarios con tuki
@@ -727,7 +757,7 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
-            modelo.put("mensaje1", "Error al editar Usuario " + e.getMessage());
+            modelo.put("mensaje1", "Error al cividir Saldo " + e.getMessage());
             modelo.put("clase1", "danger");
             return "cuentaComun.html";
         }

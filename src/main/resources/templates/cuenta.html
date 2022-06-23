@@ -186,10 +186,7 @@
                             <td th:text="${actividad.fecha}"></td>
                         </tr>
                     </table>
-
                 </div>
-
-
                 <form class="separacion" th:if= "${micuenta.cuenta.alta}==true" action="/cuenta/bajaCuenta" method="post">
                     <input type="hidden" name="idCuenta" th:value="${micuenta.cuenta.id}" />
                     <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
@@ -203,39 +200,39 @@
                             style="float:inline-start; margin-bottom: 8px; padding: 8px;">Alta Cuenta</button>
                 </form>
             </div>
-        </div>
-        <!-- Modal ModalMostrarDatos -->
-        <div id="misDatos" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
+         </div>
+      <!-- Modal ModalMostrarDatos -->
+  <div id="misDatos" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
 
-                <!-- Modal content ModalMostrarDatos-->
-                <div class="modal-content">
-                    <div class="modal-header" style="margin:10px;">
-                        <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
-                        <h4 class="modal-title">Datos para que Ingresen Dinero</h4>
-                    </div>
-                    <div class="col-md-9" style="margin:70px;">
-                        <label class="text">Nombre y Apellido:</label>
-                        <input class="textarea" type="text" name="nombre-usuario"
-                               th:value="${micuenta.nombre + ' ' + micuenta.apellido}" readonly="readonly"  />
-                        <br>
-                        <label class="text">DNI:</label>
-                        <input class="textarea" type="text" name="dni-usuario" th:value="${session.usuariosession.dni}" readonly="readonly" />
-                        <br>
-                        <label class="text">Cvu:</label>
-                        <input class="textarea" style="width:60%;" type="text" name="cvu-cuenta-usuario"
-                               th:value="${micuenta.cuenta.cvu}" readonly="readonly" />
-                        <br>
-                        <label class="text">Alias:</label>
-                        <input class="textarea" type="text" name="alias-cuenta-usuario" th:value="${micuenta.cuenta.alias}"
-                               readonly="readonly" />
-                    </div>
-                    <div class="modal-footer">
+      <!-- Modal content ModalMostrarDatos-->
+      <div class="modal-content">
+        <div class="modal-header" style="margin:10px;">
+          <!-- <button type="button" class="btn-close btn-close-black" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title modal-datosIngresar">Datos para que Ingresen Dinero</h4>
+        </div>
+        <div class="col-md-9" style="margin:70px;">
+          <label class="modal-Nombre">Nombre y Apellido:</label>
+          <input class="textarea" type="text" name="nombre-usuario"
+            th:value="${micuenta.nombre + ' ' + micuenta.apellido}" readonly="readonly"/>
+          <br>
+          <label class="modal-DNI">DNI:</label>
+          <input class="textarea" type="text" name="dni-usuario" th:value="${session.usuariosession.dni}" readonly="readonly" />
+          <br>
+          <label class=" modal-CVU">Cvu:</label>
+          <input class="textarea" style="width:60%;" type="text" name="cvu-cuenta-usuario"
+            th:value="${micuenta.cuenta.cvu}" readonly="readonly" />
+          <br>
+          <label class=" modal-ALIAS">Alias:</label>
+          <input class="textarea" type="text" name="alias-cuenta-usuario" th:value="${micuenta.cuenta.alias}"
+            readonly="readonly"/>
+          </div>
+           <div class="modal-footer">
                         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                    </div>
                 </div>
             </div>
         </div>
+     </div>
         <!-- Final ModalMostrarDatos -->
 
 
@@ -260,6 +257,7 @@
                               <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
                                 th:value="${listaCCAux.id}"></option> 
                             </select>-->
+                          
                             <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
                             <button id="modal-btn" type="input" class="btn btn-primary" formaction="/cuenta/transferirlink">Cuenta</button>
                             <br>

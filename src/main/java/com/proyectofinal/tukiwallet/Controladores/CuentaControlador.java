@@ -99,6 +99,7 @@ public class CuentaControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje", "Se Habilitado correctamente la Cuenta");
             model.put("clase", "success");
             return "cuenta.html";
@@ -108,6 +109,7 @@ public class CuentaControlador {
             model.addAttribute("perfil", usuario);
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.addAttribute("listaCC", listaCC);
             model.put("mensaje1", "Error al Habilitar la Cuenta " + e.getMessage());
             model.put("clase1", "danger");
@@ -126,6 +128,7 @@ public class CuentaControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje", "Se Deshabilitado correctamente la Cuenta");
             model.put("clase", "success");
             return "cuenta.html";
@@ -137,6 +140,7 @@ public class CuentaControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje1", "Error al Deshabilitar la Cuenta " + e.getMessage());
             model.put("clase1", "danger");
             return "cuenta.html";
@@ -329,6 +333,7 @@ public class CuentaControlador {
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         model.addAttribute("transferirlink", usuarioCuenta);
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+         model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
         //model.addAttribute("cuentaComun", cuentaComun);
         model.addAttribute("listaCC", listaCC);
         return "transferir.html";

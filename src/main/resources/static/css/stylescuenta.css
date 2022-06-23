@@ -223,3 +223,12 @@ body.dark #saldodark {
   margin-left: 10px;
   width: 125px;
 }
+.modal-datosIngresar,
+.modal-Nombre,
+.modal-DNI,
+.modal-CVU,
+.modal-ALIAS {
+  color: black;
+  font-size: 15px;
+  text-align: left;
+}

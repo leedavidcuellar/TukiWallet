@@ -42,6 +42,12 @@ public class UsuarioControlador {
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
             Usuario usuario = usuarioServicio.buscarPorMail(mail);
             session.setAttribute("usuariosession", usuario);
+
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+        model.addAttribute("micuenta", usuario);
+        model.addAttribute("listaCC", listaCC);
+
+        model.addAttribute("actividad", usuario.getCuenta().getActividad());
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario agregado correctamente")
                     .addFlashAttribute("clase", "success");
@@ -73,7 +79,10 @@ public class UsuarioControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
-            
+                    Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+
+
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
             
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario Editado correctamente")
