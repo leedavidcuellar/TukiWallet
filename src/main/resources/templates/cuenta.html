@@ -42,7 +42,7 @@
   <nav class="sidebar close">
     <header>
       <div class="image-text">
-        <span class="image">
+        <span class="image fotoA">
           <img th:if="${session.usuariosession.foto != null}" style="max-height: 200px; border-radius:100%"
             th:src="${'/foto/usuario/'+ session.usuariosession.id}" alt="">
           <img th:if="${session.usuariosession.foto == null}" style="max-height: 200px; border-radius:100%"
@@ -147,7 +147,7 @@
 
                 <div class="wrapper" Style="text-align:center">
                     <h4 name="nombre" th:value="${nombre}" id="saldodark" th:if="${session.usuariosession != null}"
-                        th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
+                        th:text="${micuenta.nombre + ' ' + micuenta.apellido}"></h4>
                     <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
 
                     <button type="button" class="btn btn-success " disabled th:if="${session.usuariosession.cuenta.alta}==true">Activo</button>

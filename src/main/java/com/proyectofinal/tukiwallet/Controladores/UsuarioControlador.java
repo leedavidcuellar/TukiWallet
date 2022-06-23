@@ -74,7 +74,7 @@ public class UsuarioControlador {
             usuario = usuarioServicio.buscarPorId(id);
 
             usuarioServicio.modificarUsuario(archivo, id, nombre, apellido, dni, mail, fechaNacimientoAux, clave1, clave2);
-            session.setAttribute("usuariosession", usuario);
+            //session.setAttribute("usuariosession", usuario);
 
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
@@ -91,7 +91,7 @@ public class UsuarioControlador {
 
         } catch (ErrorServicio e) {
             e.printStackTrace();
-            session.setAttribute("usuariosession", usuario);
+            //session.setAttribute("usuariosession", usuario);
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
@@ -117,12 +117,12 @@ public class UsuarioControlador {
             return "redirect:/inicio";
         }
 
-        Usuario usuario = usuarioServicio.buscarPorId(id);
-        model.addAttribute("perfil", usuario);
+  
+        
 
             Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
-        
-            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+        model.addAttribute("perfil", usuarioCuenta);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
             model.addAttribute("micuenta", usuarioCuenta);
             model.addAttribute("listaCC", listaCC);
 
