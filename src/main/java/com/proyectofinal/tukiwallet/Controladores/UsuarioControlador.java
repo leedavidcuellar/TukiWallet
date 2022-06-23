@@ -66,7 +66,7 @@ public class UsuarioControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-perfil")
     public String editarUsuario(ModelMap model, HttpSession session, MultipartFile archivo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException {
-        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("dd-mm-yyyy");
         Date fechaNacimientoAux = formatoDateFecha.parse(fechaNacimiento);
         System.out.println(fechaNacimientoAux + " " + fechaNacimiento);
         Usuario usuario = null;
