@@ -65,7 +65,7 @@ public class UsuarioServicio implements UserDetailsService{
          Cuenta cuenta = cuentaServicio.registrar(dni);
             
          validar(nombre, apellido, dni, mail, fechaNacimiento, clave1, clave2, cuenta);
-        
+        //a
          
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
