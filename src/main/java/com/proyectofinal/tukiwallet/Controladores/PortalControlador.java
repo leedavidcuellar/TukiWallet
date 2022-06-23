@@ -72,7 +72,7 @@ public class PortalControlador {
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
         Usuario usuario = usuarioServicio.buscarPorId(login.getId());
         model.addAttribute("actividad", usuario.getCuenta().getActividad());
-        model.addAttribute("micuenta", usuario);
+        model.addAttribute("miCuenta", usuario);
         model.addAttribute("listaCC",listaCC);
                 return "cuenta.html";
 
