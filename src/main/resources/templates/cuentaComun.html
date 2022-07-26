@@ -60,7 +60,8 @@
             <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
               <i class='bx bx-wallet icon'></i>
               <span class="text nav-text">Cuenta</span>
-
+              </a>
+          </li>
           <li class="nav-link">
             <a th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}">
               <i class='bx bx-user icon'></i>
@@ -354,7 +355,7 @@
           <form>
             <input class="modal-idUsuario" type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
             <button id="modal-btn" type="submit" class="btn btn-primary"
-            formaction="/cuentaComun/crearCC">Crear</button>
+              formaction="/cuentaComun/crearCC">Crear</button>
           </form>
         </div>
         <div class="modal-footer">

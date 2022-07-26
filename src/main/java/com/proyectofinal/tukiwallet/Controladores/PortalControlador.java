@@ -83,7 +83,7 @@ public class PortalControlador {
         model.addAttribute("micuenta", usuario);
         model.addAttribute("listaCC",listaCC);
         model.addAttribute("usuariosession", login);
-                return "redirect:/micuenta";
+                return "cuenta.html";
                 
                 
 }

@@ -155,9 +155,9 @@
         <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
 
         <button type="button" class="btn btn-success " disabled
-          th:if="${session.usuariosession.cuenta.alta}==true">Activo</button>
+          th:if="${micuenta.cuenta.alta}==true">Activo</button>
         <button type="button" class="btn btn-danger " disabled
-          th:if="${session.usuariosession.cuenta.alta}==false">Inactivo</button>
+          th:if="${micuenta.cuenta.alta}==false">Inactivo</button>
 
         <header>Dinero disponible</header>
         <form action="#" class="loquequeiras">
