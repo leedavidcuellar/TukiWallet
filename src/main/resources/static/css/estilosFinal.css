@@ -112,6 +112,7 @@ body.dark{
 .sidebar header{
     position: relative;
   padding: 1px;
+
 }
 
 .sidebar header .image-text{
@@ -148,6 +149,8 @@ header .image-text .profession{
     width: 80px;
     border-radius: 100px;
     padding: 1px 1px;
+
+    
 }
 
 .sidebar header .toggle{

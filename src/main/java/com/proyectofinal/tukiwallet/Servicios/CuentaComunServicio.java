@@ -64,7 +64,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
             return cuentaComun;
         } else {
-            throw new ErrorServicio("No se enceontró el usuario solicitado.");
+            throw new ErrorServicio("No se encontró el usuario solicitado en Cuenta Comun.");
         }
     }
 

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Controladores;
 
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
@@ -23,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author leedavidcuellar
- */
+
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
@@ -60,6 +53,21 @@ public class PortalControlador {
     }
     
     
+    @GetMapping("/team")
+    public String team(){
+    return "TEAM.html";
+    }
+    
+    @GetMapping("/faq")
+    public String faq(){
+    return "faq.html";
+    }
+    
+    @GetMapping("/legal")
+    public String legal(){
+    return "legal.html";
+    }
+    
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")    
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {
@@ -72,9 +80,11 @@ public class PortalControlador {
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
         Usuario usuario = usuarioServicio.buscarPorId(login.getId());
         model.addAttribute("actividad", usuario.getCuenta().getActividad());
-        model.addAttribute("miCuenta", usuario);
+        model.addAttribute("micuenta", usuario);
         model.addAttribute("listaCC",listaCC);
+        model.addAttribute("usuariosession", login);
                 return "cuenta.html";
-
+                
+                
 }
 }
