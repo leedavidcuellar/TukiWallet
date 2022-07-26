@@ -1,0 +1,234 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
+}
+.monto {
+  font-size: 40px;
+  text-align: center;
+}
+body {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100vh;
+  padding: 0 10px;
+  background: rgb(216, 216, 216);
+  margin-top: 100px;
+
+  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
+}
+
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+}
+
+::selection {
+  color: rgb(241, 241, 241);
+  background: #675afe;
+}
+
+.wrapper {
+  margin-left: 280px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 10px;
+  margin-top: 70px;
+  display: inline-block;
+}
+
+header {
+  margin-top: 20px;
+  padding: 10px;
+}
+.p-3 {
+  border-radius: 10px;
+}
+.wrapper2 {
+  display: flex;
+  justify-content: space-evenly;
+  width: 600px;
+  padding: 0px;
+  border-radius: 10px;
+  padding-bottom: 40px;
+  background: rgb(241, 241, 241);
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+}
+
+.wrapper header {
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.wrapper form {
+  margin: 40px 0 20px 0;
+}
+
+form :where(input, select, button) {
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+}
+
+form p {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+form input {
+  height: 50px;
+  font-size: 17px;
+  padding: 0 15px;
+  border: 1px solid rgb(241, 241, 241);
+}
+
+form input:focus {
+  padding: 0 14px;
+  border: 2px solid #675afe;
+}
+
+form .drop-list {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drop-list .select-box {
+  margin-top: 20px;
+  display: flex;
+  width: 200px;
+  height: 45px;
+  align-items: center;
+  border-radius: 5px;
+  justify-content: center;
+  border: 1px solid #999;
+}
+.drop-list .select-box1 {
+  margin-top: 20px;
+  display: flex;
+  width: 500px;
+  height: 45px;
+  align-items: center;
+  border-radius: 5px;
+  justify-content: center;
+  border: 1px solid #999;
+}
+
+.select-box img {
+  max-width: 11px;
+}
+
+.select-box select {
+  width: auto;
+  font-size: 16px;
+  background: none;
+  margin: 0 -5px 0 5px;
+}
+
+form .button {
+  margin-top: 30px;
+  height: 40px;
+  width: 130px;
+  color: rgb(241, 241, 241);
+  font-size: 19px;
+  cursor: pointer;
+  background: #3719bb;
+  transition: 0.3s ease;
+  border-radius: 10px;
+  text-decoration: none;
+  padding-top: 4px;
+}
+
+form .button:hover {
+  background: #4e1daa;
+}
+.container {
+  margin: 100px;
+  text-align: center;
+  margin-top: 150px;
+}
+
+.row gx-5 {
+  display: block;
+  padding: 100px;
+  width: 1500px;
+}
+
+.col {
+  border: 200px;
+  background: red;
+  margin-top: 100px;
+  height: 200px;
+}
+
+.btn {
+  width: 150px;
+}
+
+.separacion {
+  height: 20px;
+}
+
+/*MODONOCHE*/
+
+body.dark .wrapper {
+  background-color: transparent;
+}
+
+body.dark .wrapper2 {
+  background-color: transparent;
+}
+
+body.dark .p-3 {
+  background-color: transparent !important;
+}
+
+body.dark header {
+  color: #fff;
+}
+
+body.dark .table {
+  color: #fff;
+}
+
+body.dark #saldodark {
+  color: #fff;
+}
+.modal-text {
+  margin-left: 10px;
+}
+.modal-idUsuario {
+  color: black;
+}
+.modal-control {
+  margin-left: 10px;
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#modal-btn {
+  margin-left: 10px;
+  width: 125px;
+}
+.modal-datosIngresar,
+.modal-Nombre,
+.modal-DNI,
+.modal-CVU,
+.modal-ALIAS {
+  color: black;
+  font-size: 15px;
+  text-align: left;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login - TukiWallet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- Custom Theme files -->
+    <link
+      href="/css/registro.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link
+      href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
+    <!-- //web font -->
+  </head>
+
+  <body>
+    <!-- main -->
+    <div class="main-w3layouts wrapper">
+      <h1>Login</h1>
+      <div class="main-agileinfo">
+        <div class="agileits-top">
+          <form action="/logincheck" method="post">
+            <p
+              th:if="${error != null}"
+              th:text="${error}"
+              style="color: red"
+            ></p>
+            <p
+              th:if="${logout != null}"
+              th:text="${logout}"
+              style="color: green"
+            ></p>
+            <input
+              class="text email"
+              type="email"
+              name="username"
+              placeholder="Email"
+              required=""
+            />
+            <input
+              class="text"
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              required=""
+            />
+
+            <input type="submit" value="Ingresar" />
+          </form>
+          <!--centrar el registrarse-->
+          <a href="/registrarse">Registrarse</a>
+        </div>
+      </div>
+      <!-- copyright -->
+      <div class="colorlibcopy-agile">
+        <p>
+          © 2022 TukiWallet Formulario de registro. Se reservan todos los
+          derechos
+        </p>
+      </div>
+
+      <!-- //copyright -->
+      <ul class="colorlib-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <!-- //main -->
+  </body>
+</html>

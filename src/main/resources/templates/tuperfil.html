@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TUKI</title>
+    <link rel="stylesheet" href="/css/estiloPrincipal.css" />
+    <link rel="stylesheet" href="/css/tuperfil.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
+
+    <!-- Google fonts // Si quieren las cambian-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!----===== Boxicons CSS ===== -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="body">
+    <nav class="sidebar close">
+      <header>
+        <div class="image-text">
+          <span class="image">
+            <img
+              th:if="${session.usuariosession.foto != null}"
+              style="max-height: 200px; border-radius: 100%"
+              th:src="${'/foto/usuario/'+ session.usuariosession.id}"
+              alt=""
+            />
+            <img
+              th:if="${session.usuariosession.foto == null}"
+              style="max-height: 200px; border-radius: 100%"
+              src="/assets/img/birrita.png"
+              alt=""
+            />
+          </span>
+
+          <div class="text logo-text">
+            <span class="name">¡Hola!</span>
+            <span
+              class="profession"
+              th:if="${session.usuariosession != null}"
+              th:text="${session.usuariosession.nombre}"
+            ></span>
+            <input
+              type="hidden"
+              name="id"
+              th:value="${session.usuariosession.id}"
+            />
+          </div>
+        </div>
+
+        <i class="bx bx-chevron-right toggle"></i>
+      </header>
+
+      <div class="menu-bar">
+        <div class="menu">
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a th:href="@{/cuenta/micuenta(id=${session.usuariosession.id})}">
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">Cuenta</span>
+              </a>
+          </li>
+            <li class="nav-link">
+              <a
+                th:href="@{/usuario/editar-perfil(id=${session.usuariosession.id})}"
+              >
+                <i class="bx bx-user icon"></i>
+                <span class="text nav-text">Tu perfil</span>
+              </a>
+            </li>
+
+     
+
+            <li class="nav-link">
+              <!-- Llamado ModalElegirCuentaComun-->
+              <div>
+                <a data-toggle="modal" data-target="#myModal">
+                  <i class="bx bx-group icon"></i>
+                  <span class="text nav-text">Cuenta comun</span>
+                </a>
+              </div>
+              <!-- fin llamado ModalElegirCuentaComun-->
+            </li>
+
+             <li class="nav-link">
+                 <div>
+                   <a 
+                     data-toggle="modal" data-target="#transfModal">
+                     <i class='bx bx-transfer icon' ></i>
+                     <span class="text nav-text">Transferir</span>
+                    </a>
+            </li>
+
+            <li class="search-box">
+              <!--     <i class='bx bx-search icon'></i>
+                             <input type="text" placeholder="" >   -->
+            </li>
+          </ul>
+        </div>
+
+        <div class="bottom-content">
+          <li class="mode">
+            <div class="sun-moon">
+              <i class="bx bx-moon icon moon"></i>
+              <i class="bx bx-sun icon sun"></i>
+            </div>
+            <span class="mode-text text">Noche</span>
+
+            <div class="toggle-switch">
+              <span class="switch"></span>
+            </div>
+          </li>
+
+          <li class="salir">
+            <a href="/logout">
+              <i class="bx bx-log-out icon"></i>
+              <span class="text nav-text">Salir</span>
+            </a>
+          </li>
+        </div>
+      </div>
+    </nav>
+    <div class="encabezado">
+      <div class="cabeza">
+       
+        <div class="textTuki">TukiWallet</div>
+        <div class="text">Perfil</div>
+      </div>
+      <div th:replace="cuenta::mensajes"></div>
+      <div class="contenido">
+       
+
+        <div class="bloque">
+          
+          <!--En esta seccion va la foto del usuario y el nombre del usuario-->
+          <!--En esta seccion van los datos
+
+          <div th:replace="cuenta::mensajes"></div> -->
+        </div>
+
+        <section class="segunda-parte">
+          <div class="activodesac">
+          <button
+            type="button"
+            class="btn btn-success"
+            id="botonesss"
+            disabled
+            th:if="${perfil.alta}==true"
+          >
+            Activo
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            id="botonesss"
+            disabled
+            th:if="${perfil.alta}==false"
+          >
+            Inactivo
+          </button>
+        </div>
+          <form
+            action="/usuario/editar-perfil"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <p
+              th:if="${error != null}"
+              th:text="${error}"
+              style="color: red"
+            ></p>
+            <input type="hidden" name="id" th:value="${perfil.id}" />
+            <div class="Nombre">
+              <label>Nombre</label>
+              <input
+                class="formControl"
+                type="text"
+                name="nombre"
+                th:value="${perfil.nombre}"
+              />
+            </div>
+            <br />
+            <div class="Apellido">
+              <label>Apellido</label>
+              <input
+                class="formControl"
+                type="text"
+                name="apellido"
+                th:value="${perfil.apellido}"
+              />
+            </div>
+            <br />
+            <div class="Documento">
+              <label class="DNI">DNI</label>
+              <input
+                class="formControlDNI"
+                type="text"
+                name="dni"
+                th:value="${perfil.dni}"
+              />
+            </div>
+            <br />
+
+            <div class="cvu">
+              <br />
+              <p class="pgrande-cvu">Mi CVU</p>
+              <br />
+              <input
+                class="formControl-cvu"
+                type="text"
+                name="cvu"
+                th:value="${perfil.cuenta.cvu}"
+                readonly="readonly"
+              />
+            </div>
+
+            <br />
+            <div class="Foton">
+              <label>Foto</label>
+              <input type="file" class="form-control" name="archivo" />
+            </div>
+            <div class="mail">
+              <br />
+              <p class="pgrande-mail">Email</p>
+              <br />
+              <input
+                class="formControl-mail"
+                type="text"
+                name="mail"
+                th:value="${perfil.mail}"
+              />
+            </div>
+            <br />
+
+            <div class="contrasena">
+              <p class="pgrande-clave">Clave</p>
+              <input
+                class="formControl-clave"
+                type="password"
+                name="clave1"
+                th:value="${clave1}"
+              />
+            </div>
+            <br />
+            <div class="repetircontra">
+              <label>Repetir</label>
+              <br />
+              <input
+                type="password"
+                class="formControl1"
+                name="clave2"
+                th:value="${clave2}"
+              />
+            </div>
+
+            <div class="fecha-nacimiento">
+              <br />
+              <p class="pgrande">Fecha de Nacimiento</p>
+              <br />
+              <input
+                type="date"
+                class="formControl2"
+                name="fechaNacimiento"
+                th:value="${perfil.fechaNacimiento}"
+              />
+            </div>
+
+            <br />
+
+            <br />
+            <button
+              type="submit"
+              class="btn btn-primary btn-xl rounded mt-2"
+              style="float: inline-start; margin-bottom: 8px; padding: 8px"
+            >
+              Actualizar Perfil
+            </button>
+            <a
+              th:href="@{/inicio}"
+              class="btn btn-info btn-xl rounded mt-2"
+              style="float: inline-start; margin-bottom: 8px; padding: 8px"
+              >Volver</a
+            >
+          </form>
+
+          <form
+            th:if="${perfil.alta}==true"
+            action="/usuario/bajaUsuario"
+            method="post"
+          >
+            <input
+              type="hidden"
+              name="id"
+              th:value="${session.usuariosession.id}"
+            />
+            <button
+              type="submit"
+              class="btn btn-danger btn-xl rounded mt-2"
+              style="float: inline-start; margin-bottom: 8px; padding: 8px"
+            >
+              Baja
+            </button>
+          </form>
+          <form
+            th:if="${perfil.alta}==false"
+            action="/usuario/altaUsuario"
+            method="post"
+          >
+            <input
+              type="hidden"
+              name="id"
+              th:value="${session.usuariosession.id}"
+            />
+            <button
+              type="submit"
+              class="btn btn-success btn-xl rounded mt-2"
+              style="float: inline-start; margin-bottom: 8px; padding: 8px"
+            >
+              Alta
+            </button>
+          </form>
+
+          <div class="terminos">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+              <path
+                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z"
+              />
+            </svg>
+            <a href="legal.html" target="_blank" class="pgrande">Legal</a>
+            <!--Para dejarlo mas completo? -->
+          </div>
+          <div class="faqs">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+              <path
+                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25c.691 0 1.25.56 1.25 1.25s-.559 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"
+              />
+            </svg>
+            <a href="faq.html" target="_blank" class="pgrande">FAQs</a>
+            <!--Preguntas que tiene el usuario, tengo un html de faqs desp lo subo-->
+          </div>
+          <div class="salir">
+            <a href="/logout" class="pgrande">Salir</a>
+            <!--Te lleva al index-->
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ModalElegirCuentaComun -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content ModalElegirCuentaComun-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close btn-close-black"
+              data-dismiss="modal"
+            >
+              &times;
+            </button>
+            <h4 class="modal-title">Elige una Cuenta Comun</h4>
+          </div>
+          <div class="col-md-5">
+            <form>
+              <label class="modal-text">Mis Cuentas Comun</label>
+              <input
+                class="modal-idUsuario"
+                type="hidden"
+                name="idUsuario"
+                th:value="${session.usuariosession.id}"
+              />
+              <br />
+              <select class="form-control modal-control" name="idCC" required="">
+                <option></option>
+                <option
+                  th:if="${listaCCAux.propietario}==${session.usuariosession.id}"
+                  th:each="listaCCAux:${listaCC}"
+                  th:text="${listaCCAux.nombre}"
+                  th:value="${listaCCAux.id}"
+                  
+                ></option>
+              </select>
+              <button
+                id="modal-btn"
+                type="submit"
+                class="btn btn-primary"
+                formaction="/cuentaComun/micuentaC"
+              >
+                Seleccionar
+              </button>
+              <br />
+            </form>
+          </div>
+          <div class="col-md-5">
+            <br />
+            <form>
+              <label class="modal-text">Cuentas Comun Soy Parte</label>
+              <input
+                class="modal-idUsuario"
+                type="hidden"
+                name="idUsuario"
+                th:value="${session.usuariosession.id}"
+              />
+              <br />
+              <select class="form-control modal-control" name="idCC" required="">
+                <option></option>
+                <option
+                  th:if="${listaCCAux.propietario}!=${session.usuariosession.id}"
+                  th:each="listaCCAux:${listaCC}"
+                  th:text="${listaCCAux.nombre}"
+                  th:value="${listaCCAux.id}"
+                ></option>
+              </select>
+              <button
+                id="modal-btn"
+                type="submit"
+                class="btn btn-primary"
+                formaction="/cuentaComun/micuentaC"
+              >
+                Seleccionar
+              </button>
+              <br />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Final ModalElegirCuentaComun -->
+    
+    
+        <!-- ModalTransferir -->
+        <div id="transfModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content transferir -->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">A que queres transferir?</h4>
+                    </div>
+                    <div class="col-md-10">
+                        <form>
+                           
+                            <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+                            <button id="modal-btn" type="input" class="btn btn-primary" formaction="/cuenta/transferirlink">Cuenta</button>
+                            <br>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="col-md-10">
+                        <form>
+          
+                            <label class="modal-text">Mis Cuentas Comun</label>
+                            <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
+                            <br>
+                            <select class="form-control modal-control" name="idCuentaComun" required="">
+                                <option></option>
+                                <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}" th:text="${listaCCAux.nombre}"
+                                        th:value="${listaCCAux.id}"></option> 
+                            </select>
+                            <button id="modal-btn" type="submit" class="btn btn-primary" formaction="/cuentaComun/transferirlinkCC">Seleccionar</button>
+                            <br>
+                        </form>
+                    </div>
+                            
+                           
+   
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Final ModalTransferir -->
+
+
+
+    <script src="../js/jssPrincipal.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
