@@ -548,7 +548,7 @@ public class CuentaComunControlador {
             if (usuario.getId() == cuentaComunServicio.buscarUsuarioEspecificoCC(usuario.getId()).getId()) {
                 //registro el monto efectivo
                 Float montof = Float.valueOf(montoEfectivoTk);
-                efectivoCCServicio.crear(idUsuario, montof, cuentaComunServicio.buscarUsuarioEspecificoCC(usuario.getId()).getNombre());
+                efectivoCCServicio.crearEfectivo(idUsuario, montof, cuentaComunServicio.buscarUsuarioEspecificoCC(usuario.getId()).getNombre());
                 //aca deberia agregar actividad el importe falta
             } else {
 
@@ -560,7 +560,7 @@ public class CuentaComunControlador {
 
                 //registro el monto efectivo
                 Float montof = Float.valueOf(montoEfectivoTk);
-                efectivoCCServicio.crear(idUsuario, montof, usuario.getNombre());
+                efectivoCCServicio.crearEfectivo(idUsuario, montof, usuario.getNombre());
 
                 //aca deberia agregar actividad el importe falta
             }
@@ -630,7 +630,7 @@ public class CuentaComunControlador {
         try {
 
             Float montof = Float.valueOf(montoEfectivo);
-            listaUsuariosEfectivo.add(efectivoCCServicio.crear("efectivo", montof, nombreEfectivo));
+            listaUsuariosEfectivo.add(efectivoCCServicio.crearEfectivo("efectivo", montof, nombreEfectivo));
 
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
             listaUsuariosEfectivo.addAll(cuentaComun.getEfectivoCC());

@@ -41,11 +41,11 @@ public class CuentaComunServicio {
         validar(nombre, usuarios);
 
         CuentaComun cuentaComun = new CuentaComun();
-        cuentaComun.setNombre(nombre);
+        cuentaComun.setNombreCC(nombre);
         cuentaComun.setUsuarios(usuarios);
         String alias = nombre + "CC" + ".TUKI";
         cuentaComun.setAliasCC(alias);
-        cuentaComun.setAlta(true);
+        cuentaComun.setAltaCC(true);
         cuentaComun.setSaldoCC(0f);
         cuentaComun.setCvuCC(crearCvuCC());
         cuentaComun.setPropietario(idUsuario);
@@ -60,7 +60,7 @@ public class CuentaComunServicio {
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
-            cuentaComun.setNombre(nombre);
+            cuentaComun.setNombreCC(nombre);
             cuentaComunRepositorio.save(cuentaComun);
             return cuentaComun;
         } else {
@@ -240,7 +240,7 @@ public class CuentaComunServicio {
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() + cantidad);
             cuentaComunRepositorio.save(cuentaComun);
             Actividad actividad = actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
-            cuentaComun.setActividad(actividad);
+            cuentaComun.setActividadCC(actividad);
 
         } else {
             throw new ErrorServicio("No se pudo ingresar Dinero, porque No se ha encontrado la Cuenta Comun");
@@ -257,7 +257,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
             System.out.println("casi termina");
             Actividad actividad = actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
-            cuentaComun.setActividad(actividad);
+            cuentaComun.setActividadCC(actividad);
             System.out.println("termino");
         } else {
             throw new ErrorServicio("No se pudo sacar Dinero, porque No se ha encontrado la Cuenta Comun");
@@ -290,7 +290,7 @@ public class CuentaComunServicio {
 
             if (cuentaComun.getSaldoCC() == 0f) {
 
-                cuentaComun.setAlta(Boolean.FALSE);
+                cuentaComun.setAltaCC(Boolean.FALSE);
                 cuentaComunRepositorio.save(cuentaComun);
             } else {
                 throw new ErrorServicio("No se puede dar Baja porque tiene saldo Cuenta Comun, debe transferir a otra Cuenta");
@@ -307,7 +307,7 @@ public class CuentaComunServicio {
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
-            cuentaComun.setAlta(Boolean.TRUE);
+            cuentaComun.setAltaCC(Boolean.TRUE);
             cuentaComunRepositorio.save(cuentaComun);
         } else {
             throw new ErrorServicio("NO se encontró el usuario solicitado.");

@@ -104,7 +104,6 @@ public class UsuarioServicio implements UserDetailsService{
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class}) 
     public void modificarUsuario(MultipartFile archivo, String idUsuario, String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
         
-        //validar2(nombre, apellido, dni, mail,fechaNacimiento,clave1, clave2);
        
         
          Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
@@ -136,7 +135,6 @@ public class UsuarioServicio implements UserDetailsService{
                 
             usuarioRepositorio.save(usuario);
             
-           // cuentaComunServicio.modificarCuentaComun(idUsuario, nombre);
 
             
             notificacionServicio.enviar("Se Modifico su Usuario de TukiWallet", "TukiWallet", usuario.getMail());
@@ -258,9 +256,6 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("La fecha de nacimiento debe ser valida");
         }
         
-//        if(cuentaComun == null){
-//            throw new ErrorServicio("No se encontro la cuenta comun solicitada");
-//        }
      }
     
     private void validar2(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2) throws ErrorServicio{
@@ -294,12 +289,6 @@ public class UsuarioServicio implements UserDetailsService{
             throw new ErrorServicio("El e-mail ingresado ya tiene una cuenta vinculada!");
         }
         
-//        if(fechaNacimiento == null){
-//            throw new ErrorServicio("La fecha de nacimiento debe ser valida");
-//        }
-//        if(cuenta == null){
-//            throw new ErrorServicio("No se encontro la cuenta solicitada");
-//        }
     }
     
     @Override
