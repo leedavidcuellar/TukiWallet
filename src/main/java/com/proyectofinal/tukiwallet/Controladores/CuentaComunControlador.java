@@ -96,17 +96,17 @@ public class CuentaComunControlador {
             Boolean cocc = true;
             if (cvuoAlias.contains("C")) {
                 CuentaComun cuenta2 = cuentaComunServicio.buscarCuentaPorAliasCC(cvuoAlias);
-                cvu2 = cuenta2.getCvuCC();
+                cvu2 = cuenta2.getCvuCC().trim();
                 cocc = false;
             } else if (cvuoAlias.contains("T")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorAlias(cvuoAlias);
-                cvu2 = cuenta2.getCvu();
+                cvu2 = cuenta2.getCvu().trim();
             } else if (cvuoAlias.substring(4).equals("1")) {
                 Cuenta cuenta2 = cuentaServicio.buscarCuentaPorid(cvuoAlias);
-                cvu2 = cuenta2.getCvu();
+                cvu2 = cuenta2.getCvu().trim();
             } else if (cvuoAlias.substring(4).equals("2")) {
                 CuentaComun cuenta2 = cuentaComunServicio.buscarCuentaPorIdCC(cvuoAlias);
-                cvu2 = cuenta2.getCvuCC();
+                cvu2 = cuenta2.getCvuCC().trim();
                 cocc = false;
             }
             if (cvu2 == null) {

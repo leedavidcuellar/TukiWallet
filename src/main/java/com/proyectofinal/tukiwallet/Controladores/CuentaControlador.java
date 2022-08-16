@@ -171,11 +171,11 @@ public class CuentaControlador {
             }
 
             if (cvuCuentaComun == null) {
-                cvu1 = cvuCuenta;
+                cvu1 = cvuCuenta.trim();
                 System.out.println("llegue");
                
             } else {
-                cvu1 = cvuCuentaComun;
+                cvu1 = cvuCuentaComun.trim();
                 System.out.println("llegue1c");
             }
  System.out.println(cvu1);
