@@ -130,7 +130,7 @@
       <div th:replace="cuenta::mensajes"></div>
       <div class="BLOQUE1">
         <div class="wrapper" Style="text-align:center">
-          <h4 name="nombre" id="nombredark" th:value="${micuentaC.nombreCC}" th:if="${session.usuariosession != null}"
+          <h4 name="nombre" id="nombredark" th:value="${micuentaC.nombre}" th:if="${session.usuariosession != null}"
             th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h4>
           <input type="hidden" name="id" th:value="${session.usuariosession.id}" />
           <input class="textarea" type="text" id="nombredark" name="nombrecc" th:value="${cuentaComun.nombreCC}" />
@@ -186,13 +186,13 @@
 
 
           <div class="botones4" th:if="${cuentaComun.propietario}==${session.usuariosession.id}">
-            <form th:if="${cuentaComun.alta}==true" action="/cuentaComun/deshabilitarCC" method="post">
+            <form th:if="${cuentaComun.altaCC}==true" action="/cuentaComun/deshabilitarCC" method="post">
               <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
               <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
               <button type="submit" id="b" class="btn btn-danger btn-xl rounded mt-2"
                 style="float:inline-start; margin-bottom: 8px; padding: 8px;">Baja Cuenta Comun</button>
             </form>
-            <form th:if="${cuentaComun.alta}==false" action="/cuentaComun/habilitarCC" method="post">
+            <form th:if="${cuentaComun.altaCC}==false" action="/cuentaComun/habilitarCC" method="post">
               <input type="hidden" name="idCuentaComun" th:value="${cuentaComun.id}" />
               <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
               <button type="submit" id="b" class="btn btn-success btn-xl rounded mt-2"
