@@ -55,7 +55,7 @@ public class CuentaComunControlador {
         CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
         List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
         for (Usuario usuarioAux : listaUsuarios) {
-            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
 
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
@@ -127,7 +127,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorCvuCC(cvu1);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,cuentaComun.getId()));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
 
@@ -162,7 +162,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorCvuCC(cvu1);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,cuentaComun.getId()));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
 
@@ -214,7 +214,7 @@ public class CuentaComunControlador {
             Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,cuentaComun.getId()));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -261,7 +261,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCuentaComun));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -296,7 +296,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCuentaComun));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -338,7 +338,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCuentaComun));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -372,7 +372,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCuentaComun));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -462,7 +462,7 @@ public class CuentaComunControlador {
         //CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
         List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
         for (Usuario usuarioAux : listaUsuarios) {
-            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
         }
 
         //para que se vean suaurios sin tuki efectivo
@@ -500,7 +500,7 @@ public class CuentaComunControlador {
         CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
         List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
         for (Usuario usuarioAux : listaUsuarios) {
-            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
 
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
@@ -573,7 +573,7 @@ public class CuentaComunControlador {
 
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,cuentaComun.getId()));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
 
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
@@ -597,7 +597,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
 
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
@@ -652,7 +652,7 @@ public class CuentaComunControlador {
             List<Float> saldosUsuarios = new ArrayList<Float>();
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,cuentaComun.getId()));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
 
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
@@ -680,7 +680,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
 
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
@@ -722,7 +722,7 @@ public class CuentaComunControlador {
         CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
         List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
         for (Usuario usuarioAux : listaUsuarios) {
-            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -764,7 +764,7 @@ public class CuentaComunControlador {
         CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCC);
         List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
         for (Usuario usuarioAux : listaUsuarios) {
-            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCC));
+            saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
         }
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -804,7 +804,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCuentaComun));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 
@@ -838,7 +838,7 @@ public class CuentaComunControlador {
             CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
             for (Usuario usuarioAux : listaUsuarios) {
-                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux,idCuentaComun));
+                saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
             }
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(idUsuario);
 

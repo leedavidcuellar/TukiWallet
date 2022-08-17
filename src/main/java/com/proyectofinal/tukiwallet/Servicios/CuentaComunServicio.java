@@ -127,12 +127,12 @@ public class CuentaComunServicio {
         for (Usuario usuario : cuentaComun.getUsuarios()) {
             if (usuario != null) {
                 aux[i][0] = usuario.getId();
-                if ((cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu(),cuentaComun.getId())) == null) {
+                if ((cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu())) == null) {
                     Integer cero = 0;
                     aux[i][1] = cero.toString();
 
                 } else {
-                    aux[i][1] = (cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu(),cuentaComun.getId())).toString();
+                    aux[i][1] = (cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu())).toString();
                 }
 
                 if ((cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId())) == null) {
@@ -184,7 +184,7 @@ public class CuentaComunServicio {
     public void divisionSoloTuki(String idCuentaComun) throws ErrorServicio {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
         Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
-        Float gastoTotal = cuentaComunRepositorio.sumaSaldoCCporCVU(cuentaComun.getCvuCC(),cuentaComun.getId());
+        Float gastoTotal = cuentaComunRepositorio.sumaSaldoCCporCVU(cuentaComun.getCvuCC());
         Float gastoPorPersona = gastoTotal / cantidadUsuarios;
         System.out.println(cantidadUsuarios);
          System.out.println(gastoTotal);
@@ -196,7 +196,7 @@ public class CuentaComunServicio {
                 throw new ErrorServicio("NO se encontró el usuario solicitado.");
             }
             System.out.println("primero");
-            Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu(),cuentaComun.getId());
+            Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
             if (pago < gastoPorPersona) {
                 b = false;
                 System.out.println("segundo");
@@ -214,7 +214,7 @@ public class CuentaComunServicio {
             for (Usuario usuario2 : cuentaComun.getUsuarios()) {
                 i++;
                 String cvu2 = usuario2.getCuenta().getCvu();
-                Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario2.getCuenta().getCvu(),cuentaComun.getId());
+                Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario2.getCuenta().getCvu());
                 Float monto = pago-gastoPorPersona;
                 String montostring = monto.toString();
                 aux[i][0] = cvu2;
@@ -421,9 +421,9 @@ public class CuentaComunServicio {
     }
 
     @Transactional(readOnly = true)
-    public Float sumaSaldoPorUsuario(Usuario usuario, String idCC) {
+    public Float sumaSaldoPorUsuario(Usuario usuario) {
 
-        Float saldoUsuario = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu(),idCC);
+        Float saldoUsuario = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
         return saldoUsuario;
     }
 

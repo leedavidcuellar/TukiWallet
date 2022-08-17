@@ -53,12 +53,12 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
     public Float sumaSaldoCCporUsuarioEfectivo (@Param("idUsuario") String idUsuario, @Param("nombre") String nombre);     
  
     
-@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividadCC acc WHERE acc.cvu = :idCvu AND acc.cvu2 = :idCC")
-    public Float sumaSaldoCCporCVU (@Param("idCvu") String idCvu, @Param("idCC") String idCC);   //Engreso a CC, para saber usuario deposito
+@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividadCC acc WHERE acc.cvu = :idCvu AND acc.movimiento = False")
+    public Float sumaSaldoCCporCVU (@Param("idCvu") String idCvu);   //Engreso a CC, para saber usuario deposito
 
     
-@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividadCC acc WHERE acc.cvu2 = :idCvu AND acc.cvu = :idCC")
-    public Float sumaSaldoCCporCVU2 (@Param("idCvu") String idCvu,@Param("idCC") String idCC);  //Igreso a CC 
+@Query("SELECT sum(acc.monto) FROM CuentaComun a JOIN a.actividadCC acc WHERE acc.cvu2 = :idCvu")
+    public Float sumaSaldoCCporCVU2 (@Param("idCvu") String idCvu);  //Igreso a CC 
     
     
 @Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario")
