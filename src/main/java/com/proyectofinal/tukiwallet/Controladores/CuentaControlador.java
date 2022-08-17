@@ -6,6 +6,7 @@ import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
+import com.proyectofinal.tukiwallet.Servicios.ActividadServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
@@ -36,6 +37,9 @@ public class CuentaControlador {
 
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
+    
+    @Autowired
+    private ActividadServicio actividadServicio;
 
     @GetMapping("/micuenta")
     public String miCuenta(ModelMap modelo, HttpSession session, String id) throws ErrorServicio {
@@ -245,6 +249,7 @@ public class CuentaControlador {
                 CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
                 List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
                 for (Usuario usuarioAux : listaUsuarios) {
+                   
                     saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
                 }
                 List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);

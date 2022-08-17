@@ -2,6 +2,7 @@
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Actividad;
+import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Repositorios.ActividadRepositorio;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import java.util.Date;
