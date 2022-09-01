@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
 
 <head>
-  <title>Gestión de Billetera  </title>
+  <title>Gestión de Billetera </title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap -->
@@ -19,13 +19,55 @@ and open the template in the editor.
     rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="/TukiWallet/src/main/resources/static/css/formato.css" rel="stylesheet">
+  <link href="/css/formato.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navigation -->
-    <div th:replace="index::navbar"></div>
-    <!-- fin Navigation -->
+  <!-- Navigation -->
+  <div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">ADMINISTRADOR</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/usuarios">usuarios</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/cuentas">Cuentas</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/cuentasComunes">Cuentas Comunes</a>
+            </li>
+        
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/transferencias">Transferencias</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/actividades">Actividades</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/diviciones">Diviciones</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Salir</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- fin Navigation -->
 
   <header class="masthead text-center text-white">
     <div class="masthead-content bg-dark">
@@ -43,93 +85,90 @@ and open the template in the editor.
 
   </header>
 
-  <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-  th:text="${mensaje}"
-  class="alert" data-dismiss="alert" aria-label="close">&times;
-</div>
+  <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}" th:text="${mensaje}"
+    class="alert" data-dismiss="alert" aria-label="close">&times;
+  </div>
 
-<div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
-  th:text="${mensaje1}"
-  class="alert" data-dismiss="alert" aria-label="close">&times;
-</div>
+  <div th:classappend="'alert-' + (${clase1 != null} ? ${clase1} : info)" th:if="${mensaje1 != null}"
+    th:text="${mensaje1}" class="alert" data-dismiss="alert" aria-label="close">&times;
+  </div>
 
-<div class="row">
-<div class="tabla col-md-4" style="padding-left: 50px;">
-  <table class="table table-borderless">
-  <tbody>
-    <thead>
-      <tr>
-        <th><strong> Filtrar por Alias </strong></th>
-     
-      </tr>
-    </thead>
-    <td>
-      <form th:action="@{/libro/filtrarE}" method="post">
-    <select class="form-control" name="filtro">
-        <option></option>
-       <option>Activo</option>
-       <option>Desactivado</option>
-    </select>
-    </td>
-    <td>
-    <button type="submit" class="btn btn-warning">Filtrar</button>
-  </form>
-  </td>
-  </tbody>
-</table>
-</div> 
+  <div class="row">
+    <div class="tabla col-md-4" style="padding-left: 50px;">
+      <table class="table table-borderless">
+        <tbody>
+          <thead>
+            <tr>
+              <th><strong> Filtrar por Alias </strong></th>
 
-<div class="tabla col-md-4" style="padding-left: 50px;">
-  <table class="table table-borderless">
-  <tbody>
-    <thead>
-      <tr>
-        <th><strong> Filtrar por Nombre </strong></th>
-     
-      </tr>
-    </thead>
-    <td>
-      <form th:action="@{/libro/filtrarEd}" method="post">
-    <select class="form-control" name="idEditorial">
-        <option th:value="0"></option>
-        <option th:each="editorialAux:${Editoriales}" 
-        th:text="${editorialAux.nombre}" th:value="${editorialAux.id}"></option>
-    </select>
-    </td>
-    <td>
-    <button type="submit" class="btn btn-warning">Filtrar</button>
-  </form>
-  </td>
-  </tbody>
-</table>
-</div> 
+            </tr>
+          </thead>
+          <td>
+            <form th:action="@{/libro/filtrarE}" method="post">
+              <select class="form-control" name="filtro">
+                <option></option>
+                <option>Activo</option>
+                <option>Desactivado</option>
+              </select>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-warning">Filtrar</button>
+            </form>
+          </td>
+        </tbody>
+      </table>
+    </div>
 
-<div class="tabla col-md-4" style="padding-left: 50px;">
-  <table class="table table-borderless">
-  <tbody>
-    <thead>
-      <tr>
-        <th><strong> Filtrar por Cvu </strong></th>
-     
-      </tr>
-    </thead>
-    <td>
-      <form th:action="@{/libro/filtrarA}" method="post">
-    <select class="form-control" name="idAutor">
-        <option th:value="0"></option>
-        <option th:each="autorAux:${Autores}" 
-                th:text="${autorAux.nombre}" th:value="${autorAux.id}"></option>
-    </select>
-    </td>
-    <td>
-    <button type="submit" class="btn btn-warning">Filtrar</button>
-  </form>
-  </td>
-  </tbody>
-</table>
-</div> 
-</div>
-<br>
+    <div class="tabla col-md-4" style="padding-left: 50px;">
+      <table class="table table-borderless">
+        <tbody>
+          <thead>
+            <tr>
+              <th><strong> Filtrar por Nombre </strong></th>
+
+            </tr>
+          </thead>
+          <td>
+            <form th:action="@{/libro/filtrarEd}" method="post">
+              <select class="form-control" name="idEditorial">
+                <option th:value="0"></option>
+                <option th:each="editorialAux:${Editoriales}" th:text="${editorialAux.nombre}"
+                  th:value="${editorialAux.id}"></option>
+              </select>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-warning">Filtrar</button>
+            </form>
+          </td>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tabla col-md-4" style="padding-left: 50px;">
+      <table class="table table-borderless">
+        <tbody>
+          <thead>
+            <tr>
+              <th><strong> Filtrar por Cvu </strong></th>
+
+            </tr>
+          </thead>
+          <td>
+            <form th:action="@{/libro/filtrarA}" method="post">
+              <select class="form-control" name="idAutor">
+                <option th:value="0"></option>
+                <option th:each="autorAux:${Autores}" th:text="${autorAux.nombre}" th:value="${autorAux.id}"></option>
+              </select>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-warning">Filtrar</button>
+            </form>
+          </td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
 
   <div class="tabla col-md-10" style="padding-left: 20px;">
     <table class="table">
@@ -147,7 +186,7 @@ and open the template in the editor.
       </thead>
       <tbody>
         <tr th:each="libroAux:${libros}">
-          <td th:text="${libroAux.isbn}"></td>  
+          <td th:text="${libroAux.isbn}"></td>
           <td th:text="${libroAux.titulo}"></td>
           <td th:text="${libroAux.anio}"></td>
           <td th:text="${libroAux.ejemplares}"></td>
@@ -156,21 +195,21 @@ and open the template in the editor.
           <td th:text="${libroAux.editorial.nombre}"></td>
           <td th:text="${libroAux.autor.nombre}"></td>
           <td>
-            <span th:if="${libroAux.alta}==true">Activo</span> 
+            <span th:if="${libroAux.alta}==true">Activo</span>
             <span th:unless="${libroAux.alta}==true">Desactivado</span>
           </td>
-         
+
           <td>
             <form th:action="@{/libro/habilitar}" method="post">
-              <input type="hidden" name="id" th:value="${libroAux.id}"/>
+              <input type="hidden" name="id" th:value="${libroAux.id}" />
               <button type="submit" class="btn btn-info">Alta</button>
-            </form> 
+            </form>
           </td>
           <td>
             <form th:action="@{/libro/deshabilitar}" method="post">
-              <input type="hidden" name="idD" th:value="${libroAux.id}"/>
+              <input type="hidden" name="idD" th:value="${libroAux.id}" />
               <button type="submit" class="btn btn-primary">Baja</button>
-            </form> 
+            </form>
           </td>
           <td>
             <form th:action="@{/libro/eliminar}" method="post">

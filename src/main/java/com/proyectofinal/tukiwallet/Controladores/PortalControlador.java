@@ -1,4 +1,3 @@
-
 package com.proyectofinal.tukiwallet.Controladores;
 
 import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
@@ -19,72 +18,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
-    
+
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
-    
+
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @GetMapping("/")
     public String index() {
         return "index.html";
     }
-    
+
     @GetMapping("/login")
-    public String login(@RequestParam(required=false)String error, ModelMap modelo,@RequestParam(required =false) String logout,  RedirectAttributes redirectAttrs) {
-        if(error!= null){
-            modelo.put("error","Usuario o Clave incorrecta");
+    public String login(@RequestParam(required = false) String error, ModelMap modelo, @RequestParam(required = false) String logout, RedirectAttributes redirectAttrs) {
+        if (error != null) {
+            modelo.put("error", "Usuario o Clave incorrecta");
         }
-        
-        if(logout != null){
-            modelo.put("logout","Ha salido correctamente de la plataforma");
+
+        if (logout != null) {
+            modelo.put("logout", "Ha salido correctamente de la plataforma");
         }
         return "login.html";
-    } 
-    
+    }
+
     @GetMapping("/registrarse")
-    public String registrarse(){
-    return "registrarse.html";
+    public String registrarse() {
+        return "registrarse.html";
     }
-    
-    
+
     @GetMapping("/team")
-    public String team(){
-    return "TEAM.html";
+    public String team() {
+        return "TEAM.html";
     }
-    
+
     @GetMapping("/faq")
-    public String faq(){
-    return "faq.html";
+    public String faq() {
+        return "faq.html";
     }
-    
+
     @GetMapping("/legal")
-    public String legal(){
-    return "legal.html";
+    public String legal() {
+        return "legal.html";
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")    
+
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
-        if(login == null){
+        if (login == null) {
 
-            
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
-        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
-        Usuario usuario = usuarioServicio.buscarPorId(login.getId());
-        model.addAttribute("actividad", usuario.getCuenta().getActividad());
-        model.addAttribute("micuenta", usuario);
-        model.addAttribute("listaCC",listaCC);
-        model.addAttribute("usuariosession", login);
-                return "cuenta.html";
-                
-                
-}
+
+        if ("admin@tukiwallet.com".equals(login.getMail())) {
+            return "administrador.html";
+        } else {
+
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
+            Usuario usuario = usuarioServicio.buscarPorId(login.getId());
+            model.addAttribute("actividad", usuario.getCuenta().getActividad());
+            model.addAttribute("micuenta", usuario);
+            model.addAttribute("listaCC", listaCC);
+            model.addAttribute("usuariosession", login);
+            return "cuenta.html";
+        }
+
+    }
 }
