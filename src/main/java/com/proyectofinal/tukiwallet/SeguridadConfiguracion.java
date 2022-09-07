@@ -39,19 +39,18 @@ public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter {
           
             http.headers().frameOptions().sameOrigin().and()
                     .authorizeRequests()
-                    .antMatchers("/admin").hasRole("_ADMINISTRADOR")
-                    .antMatchers().hasRole("")
-                    .antMatchers("/css/*", "/js/*", "/img/*", "/**")
-                    .permitAll()
+                        .antMatchers("/admin/").hasRole("ADMINISTRADOR")
+                        .antMatchers().hasRole("")
+                        .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                        .permitAll()
                     
 	.and().formLogin()    
                 .loginPage("/login")                    
                         .loginProcessingUrl("/logincheck")  
                         .usernameParameter("username")     	
                         .passwordParameter("password")
-                        
                         .defaultSuccessUrl("/inicio")
-                    .permitAll()
+                        .permitAll()
                     
                     .and().logout()
                         .logoutUrl("/logout")

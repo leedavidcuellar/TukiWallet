@@ -65,7 +65,7 @@ public class PortalControlador {
         return "legal.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO','ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
@@ -73,9 +73,11 @@ public class PortalControlador {
 
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
-
+        
         if ("admin@tukiwallet.com".equals(login.getMail())) {
-            return "administrador.html";
+            
+            //poner todo lo que necesita para cargar
+            return "redirect:/admin/dashboard";
         } else {
 
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(login.getId());
