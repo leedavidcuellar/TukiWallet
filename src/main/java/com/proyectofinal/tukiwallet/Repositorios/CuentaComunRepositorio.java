@@ -48,6 +48,12 @@ public interface CuentaComunRepositorio extends JpaRepository<CuentaComun, Strin
 @Query("SELECT a FROM CuentaComun a WHERE a.aliasCC = :aliasCC")
     public CuentaComun buscarCuentaPorAliasCC (@Param("aliasCC") String alias); 
     
+    @Query("SELECT a FROM CuentaComun a WHERE a.altaCC = true")
+    public List<CuentaComun> mostrarCuentaComunAlta ();
+    
+    @Query("SELECT a FROM CuentaComun a WHERE a.altaCC = false")
+    public List<CuentaComun> mostrarCuentaComunBaja ();    
+    
     
 @Query("SELECT sum(ecc.monto) FROM CuentaComun a JOIN a.efectivoCC ecc WHERE ecc.idUsuario = :idUsuario AND ecc.comentario = :nombre")
     public Float sumaSaldoCCporUsuarioEfectivo (@Param("idUsuario") String idUsuario, @Param("nombre") String nombre);     

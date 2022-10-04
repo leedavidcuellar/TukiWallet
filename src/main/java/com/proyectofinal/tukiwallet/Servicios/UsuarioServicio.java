@@ -205,6 +205,16 @@ public class UsuarioServicio implements UserDetailsService {
     public List<Usuario> listarUsuarios() {
         return usuarioRepositorio.findAll();
     }
+    
+    @Transactional(readOnly = true)
+    public List<Usuario> mostrarAlta() {
+        return usuarioRepositorio.mostrarUsuarioAlta();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Usuario> mostrarBaja() {
+        return usuarioRepositorio.mostrarUsuarioBaja();
+    }
 
     private void validar(String nombre, String apellido, String dni, String mail, Date fechaNacimiento, String clave1, String clave2, Cuenta cuenta) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {

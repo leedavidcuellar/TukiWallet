@@ -21,7 +21,7 @@ and open the template in the editor.
         <br>
         <br>
         <h1 class="masthead-heading mb-0">Administración de TukiWallet</h1>
-        <h2 class="masthead-subheading mb-0">Gestioná Tus Cuentas</h2>
+        <h2 class="masthead-subheading mb-0">Gestioná Tus Cuentas Comunes</h2>
         <br>
         <br>
       </div>
@@ -48,7 +48,7 @@ and open the template in the editor.
             </tr>
           </thead>
           <td>
-            <form th:action="@{/admin/buscarPorEstado}" method="post">
+            <form th:action="@{/admin/buscarPorEstadoCC}" method="post">
               <select class="form-control" name="estado">
                 <option></option>
                 <option th:value="Activo">Activo</option>
@@ -73,7 +73,7 @@ and open the template in the editor.
             </tr>
           </thead>
           <td>
-            <form th:action="@{/admin/buscarPorAlias}" method="post">
+            <form th:action="@{/admin/buscarPorAliasCC}" method="post">
               <input type="text" class="form-control" name="alias" />
           </td>
           <td>
@@ -95,7 +95,7 @@ and open the template in the editor.
           </thead>
           <td>
 
-            <form th:action="@{/admin/buscarPorCvu}" method="post">
+            <form th:action="@{/admin/buscarPorCvuCC}" method="post">
               <input type="text" class="form-control" name="cvu" />
           </td>
           <td>
@@ -107,7 +107,7 @@ and open the template in the editor.
     </div>
 
     <div class="tabla col-md-2" style="padding-left: 50px; padding-top: 60px;">
-      <form th:action="@{/admin/dashboard}" method="get">
+      <form th:action="@{/admin/cuentasComunes}" method="get">
         <button type="submit" class="btn btn-warning" >Sacar Filtros</button>
       </form>
     </div>
@@ -129,30 +129,30 @@ and open the template in the editor.
         </tr>
       </thead>
       <tbody>
-        <tr th:each="cuentas:${listaCuentas}">
-          <td th:text="${cuentas.alias}"></td>
-          <td th:text="${cuentas.saldo}"></td>
-          <td th:text="${cuentas.cvu}"></td>
+        <tr th:each="cuentasComunes:${listaCuentasComunes}">
+          <td th:text="${cuentasComunes.aliasCC}"></td>
+          <td th:text="${cuentasComunes.saldoCC}"></td>
+          <td th:text="${cuentasComunes.cvuCC}"></td>
           <td>
-            <span th:if="${cuentas.alta}==true">Activo</span>
-            <span th:unless="${cuentas.alta}==true">Desactivado</span>
+            <span th:if="${cuentasComunes.altaCC}==true">Activo</span>
+            <span th:unless="${cuentasComunes.altaCC}==true">Desactivado</span>
           </td>
 
           <td>
-            <form th:action="@{/admin/habilitar}" method="post">
-              <input type="hidden" name="id" th:value="${cuentas.id}" />
+            <form th:action="@{/admin/habilitarCC}" method="post">
+              <input type="hidden" name="id" th:value="${cuentasComunes.id}" />
               <button type="submit" class="btn btn-info">Alta</button>
             </form>
           </td>
           <td>
-            <form th:action="@{/admin/deshabilitar}" method="post">
-              <input type="hidden" name="idD" th:value="${cuentas.id}" />
+            <form th:action="@{/admin/deshabilitarCC}" method="post">
+              <input type="hidden" name="idD" th:value="${cuentasComunes.id}" />
               <button type="submit" class="btn btn-primary">Baja</button>
             </form>
           </td>
           <td>
-            <form th:action="@{/admin/eliminar}" method="post">
-              <input type="hidden" name="idE" th:value="${cuentas.id}" />
+            <form th:action="@{/admin/eliminarCC}" method="post">
+              <input type="hidden" name="idE" th:value="${cuentasComunes.id}" />
               <button type="submit" class="btn btn-danger">Eliminar</i>
               </button>
             </form>

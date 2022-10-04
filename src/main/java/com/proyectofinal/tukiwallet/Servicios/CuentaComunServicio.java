@@ -334,6 +334,22 @@ public class CuentaComunServicio {
     }
 
     @Transactional(readOnly = true)
+    public List<CuentaComun> mostrarTodos() {
+        return cuentaComunRepositorio.findAll();
+    }
+    
+    @Transactional(readOnly = true)
+    public List<CuentaComun> mostrarAlta() {
+        return cuentaComunRepositorio.mostrarCuentaComunAlta();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CuentaComun> mostrarBaja() {
+        return cuentaComunRepositorio.mostrarCuentaComunBaja();
+    }
+    
+    
+    @Transactional(readOnly = true)
     public List<Usuario> enlistar(String idCuentaComun) {
         return cuentaComunRepositorio.mostrarUsuarios(idCuentaComun);
     }
@@ -347,6 +363,17 @@ public class CuentaComunServicio {
         return cuentaComunRepositorio.buscarUsuarioCC(idCuentaComun);
     }
 
+    @Transactional(propagation = Propagation.NESTED)
+    public void borrarPorIdCC(String id) throws ErrorServicio {
+        Optional<CuentaComun> optional = cuentaComunRepositorio.findById(id);
+        if (optional.isPresent()) {
+            cuentaComunRepositorio.delete(optional.get());
+        } else {
+            throw new ErrorServicio("No se encontró el id Cuenta Comun");
+        }
+    }
+    
+    
     public String crearCvuCC() {
         String cvu = "00002";
         Integer cant = 5; //Para agregar 00001 al principio
