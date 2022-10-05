@@ -28,7 +28,7 @@ public class ActividadControlador {
     
     @GetMapping("/actividadCC")
     public String listarActividadesCC(ModelMap modelo, String cvu){
-        modelo.addAttribute("lista", actividadServicio.listadoActividadIngeso(cvu));
+        modelo.addAttribute("lista", actividadServicio.listadoActividadIngreso(cvu));
         return "actividadCC.html";
     }
     

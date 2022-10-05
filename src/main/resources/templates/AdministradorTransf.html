@@ -21,7 +21,7 @@ and open the template in the editor.
         <br>
         <br>
         <h1 class="masthead-heading mb-0">Administración de TukiWallet</h1>
-        <h2 class="masthead-subheading mb-0">Gestioná Tus Clientes</h2>
+        <h2 class="masthead-subheading mb-0">Gestioná Las Transferencias</h2>
         <br>
         <br>
       </div>
@@ -38,21 +38,21 @@ and open the template in the editor.
   </div>
 
   <div class="row">
-    <div class="tabla col-md-3" style="padding-left: 50px;">
+    <div class="tabla col-md-3" style="padding-left: 30px;">
       <table class="table table-borderless">
         <tbody>
           <thead>
             <tr>
-              <th><strong> Filtrar por Estado </strong></th>
+              <th><strong> Filtrar por Movimiento </strong></th>
 
             </tr>
           </thead>
           <td>
-            <form th:action="@{/admin/buscarPorEstado}" method="post">
-              <select class="form-control" name="estado">
+            <form th:action="@{/admin/buscarPorMovimiento}" method="post">
+              <select class="form-control" name="movimiento">
                 <option></option>
-                <option th:value="Activo">Activo</option>
-                <option th:value="Desactivado">Desactivado</option>
+                <option th:value="Ingreso">Ingreso</option>
+                <option th:value="Egreso">Egreso</option>
               </select>
           </td>
           <td>
@@ -63,18 +63,18 @@ and open the template in the editor.
       </table>
     </div>
 
-    <div class="tabla col-md-3" style="padding-left: 50px;">
+    <div class="tabla col-md-3" style="padding-left: 30px;">
       <table class="table table-borderless">
         <tbody>
           <thead>
             <tr>
-              <th><strong> Filtrar por Alias </strong></th>
+              <th><strong> Filtrar por Nro Op. </strong></th>
 
             </tr>
           </thead>
           <td>
-            <form th:action="@{/admin/buscarPorAlias}" method="post">
-              <input type="text" class="form-control" name="alias" />
+            <form th:action="@{/admin/buscarPorOperacion}" method="post">
+              <input type="text" class="form-control" name="nOperacion" />
           </td>
           <td>
             <button type="submit" class="btn btn-warning">Filtrar</button>
@@ -84,19 +84,19 @@ and open the template in the editor.
       </table>
     </div>
 
-    <div class="tabla col-md-3" style="padding-left: 50px;">
+    <div class="tabla col-md-3" style="padding-left: 30px;">
       <table class="table table-borderless">
         <tbody>
           <thead>
             <tr>
-              <th><strong> Filtrar por Cvu </strong></th>
+              <th><strong> Filtrar por Cvu Origen </strong></th>
 
             </tr>
           </thead>
           <td>
 
-            <form th:action="@{/admin/buscarPorCvu}" method="post">
-              <input type="text" class="form-control" name="cvu" />
+            <form th:action="@{/admin/buscarPorCvuOrigen}" method="post">
+              <input type="text" class="form-control" name="cvuO" />
           </td>
           <td>
             <button type="submit" class="btn btn-warning">Filtrar</button>
@@ -106,8 +106,31 @@ and open the template in the editor.
       </table>
     </div>
 
-    <div class="tabla col-md-2" style="padding-left: 50px; padding-top: 60px;">
-      <form th:action="@{/admin/dashboard}" method="get">
+    <div class="tabla col-md-3" style="padding-left: 30px;">
+      <table class="table table-borderless">
+        <tbody>
+          <thead>
+            <tr>
+              <th><strong> Filtrar por Cvu Destino </strong></th>
+
+            </tr>
+          </thead>
+          <td>
+
+            <form th:action="@{/admin/buscarPorCvuDestino}" method="post">
+              <input type="text" class="form-control" name="cvuD" />
+          </td>
+          <td>
+            <button type="submit" class="btn btn-warning">Filtrar</button>
+            </form>
+          </td>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="tabla col-md-2" style="padding-left: 50px; padding-top: 10px;">
+      <form th:action="@{/admin/transferencias}" method="get">
         <button type="submit" class="btn btn-warning" >Sacar Filtros</button>
       </form>
     </div>
@@ -119,41 +142,30 @@ and open the template in the editor.
     <table class="table">
       <thead>
         <tr>
-          <th><strong> Alias</strong></th>
-          <th><strong> Saldo </strong></th>
-          <th><strong> Cvu </strong></th>
-          <th><strong> Estado </strong></th>
-          <th><strong> Dar Alta </strong></th>
-          <th><strong> Dar Baja </strong></th>
+          <th><strong> Nro. Op.</strong></th>
+          <th><strong> Monto </strong></th>
+          <th><strong> Fecha </strong></th>
+          <th><strong> Movimiento </strong></th>
+          <th><strong> Cvu Origen </strong></th>
+          <th><strong> Cvu Destino </strong></th>
           <th><strong> Eliminar </strong></th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="cuentas:${listaCuentas}">
-          <td th:text="${cuentas.alias}"></td>
-          <td th:text="${cuentas.saldo}"></td>
-          <td th:text="${cuentas.cvu}"></td>
+        <tr th:each="actividades:${listaActividades}">
+          <td th:text="${actividades.nOperacion}"></td>
+          <td th:text="${actividades.monto}"></td>
+          <td th:text="${actividades.fecha}"></td>
           <td>
-            <span th:if="${cuentas.alta}==true">Activo</span>
-            <span th:unless="${cuentas.alta}==true">Desactivado</span>
+            <span th:if="${actividades.movimiento}==true">Egreso</span>
+            <span th:unless="${actividades.movimiento}==true">Ingreso</span>
           </td>
-
+          <td th:text="${actividades.cvu}"></td>
+          <td th:text="${actividades.cvu2}"></td>
           <td>
-            <form th:action="@{/admin/habilitar}" method="post">
-              <input type="hidden" name="id" th:value="${cuentas.id}" />
-              <button type="submit" class="btn btn-info">Alta</button>
-            </form>
-          </td>
-          <td>
-            <form th:action="@{/admin/deshabilitar}" method="post">
-              <input type="hidden" name="idD" th:value="${cuentas.id}" />
-              <button type="submit" class="btn btn-primary">Baja</button>
-            </form>
-          </td>
-          <td>
-            <form th:action="@{/admin/eliminar}" method="post">
-              <input type="hidden" name="idE" th:value="${cuentas.id}" />
-              <button type="submit" class="btn btn-danger">Eliminar</i>
+            <form th:action="@{/admin/eliminarTransf}" method="post">
+              <input type="hidden" name="idE" th:value="${actividades.id}" />
+              <button type="submit" class="btn btn-danger" disabled="true">Eliminar</i>
               </button>
             </form>
           </td>

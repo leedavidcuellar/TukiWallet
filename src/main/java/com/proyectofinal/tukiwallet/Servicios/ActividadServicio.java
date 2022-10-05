@@ -7,6 +7,7 @@ import com.proyectofinal.tukiwallet.Repositorios.ActividadRepositorio;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -74,14 +75,45 @@ public class ActividadServicio {
         }
 
     }
+    
+    @Transactional(propagation = Propagation.NESTED)
+    public void borrarPorId(String id) throws ErrorServicio {
+        Optional<Actividad> optional = actividadRepositorio.findById(id);
+        if (optional.isPresent()) {
+            actividadRepositorio.delete(optional.get());
+        } else {
+            throw new ErrorServicio("No se encontró el id de la transferencia");
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public Actividad buscarActividadPorNroOperacion (String nOperacion) {
+        return  actividadRepositorio.buscarActividadPorNroOperacion(Integer.parseInt(nOperacion));
+    }
 
     @Transactional(readOnly = true)
     public List<Actividad> listadoActividadEgreso(String cvu) {
         return (List<Actividad>) actividadRepositorio.buscarActividadEsegreso(cvu);
     }
+    
+    @Transactional(readOnly = true)
+    public List<Actividad> listadoActividadIngreso(String cvu) {
+        return (List<Actividad>) actividadRepositorio.buscarActividadIngreso(cvu);
+    }
 
     @Transactional(readOnly = true)
-    public List<Actividad> listadoActividadIngeso(String cvu) {
-        return (List<Actividad>) actividadRepositorio.buscarActividadesIngreso(cvu);
+    public List<Actividad> listadoTodosMovimientoIngeso() {
+        return (List<Actividad>) actividadRepositorio.buscarTodasActividadesIngreso();
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Actividad> listadoTodosMovimientoEgresoSalida() {
+        return (List<Actividad>) actividadRepositorio.buscarTodasActividadesEgreso();
+    }
+    
+    
+    @Transactional(readOnly = true)
+    public List<Actividad> listarTodasActividades() {
+        return actividadRepositorio.findAll();
     }
 }

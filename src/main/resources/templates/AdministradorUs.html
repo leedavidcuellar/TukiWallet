@@ -74,7 +74,7 @@ and open the template in the editor.
           </thead>
           <td>
             <form th:action="@{/admin/buscarPorDni}" method="post">
-              <input type="text" class="form-control" name="alias" />
+              <input type="text" class="form-control" name="dni" />
           </td>
           <td>
             <button type="submit" class="btn btn-warning">Filtrar</button>
@@ -96,7 +96,7 @@ and open the template in the editor.
           <td>
 
             <form th:action="@{/admin/buscarPorMail}" method="post">
-              <input type="text" class="form-control" name="cvu" />
+              <input type="text" class="form-control" name="mail" />
           </td>
           <td>
             <button type="submit" class="btn btn-warning">Filtrar</button>
@@ -141,19 +141,19 @@ and open the template in the editor.
           </td>
 
           <td>
-            <form th:action="@{/admin/habilitar}" method="post">
+            <form th:action="@{/admin/habilitarUs}" method="post">
               <input type="hidden" name="id" th:value="${usuarios.id}" />
               <button type="submit" class="btn btn-info">Alta</button>
             </form>
           </td>
           <td>
-            <form th:action="@{/admin/deshabilitar}" method="post">
+            <form th:action="@{/admin/deshabilitarUs}" method="post">
               <input type="hidden" name="idD" th:value="${usuarios.id}" />
               <button type="submit" class="btn btn-primary">Baja</button>
             </form>
           </td>
           <td>
-            <form th:action="@{/admin/eliminar}" method="post">
+            <form th:action="@{/admin/eliminarUs}" method="post">
               <input type="hidden" name="idE" th:value="${usuarios.id}" />
               <button type="submit" class="btn btn-danger">Eliminar</i>
               </button>

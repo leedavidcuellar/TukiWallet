@@ -22,7 +22,7 @@ public class Actividad {
     
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    private Boolean movimiento;//True Salida 1 y False Ingreso 0
+    private Boolean movimiento;//True Salida o Egreso 1 y False Ingreso 0
     private String cvu;
     private String cvu2;
     
