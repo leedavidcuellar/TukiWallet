@@ -338,9 +338,11 @@ public class CuentaControlador {
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         model.addAttribute("transferirlink", usuarioCuenta);
         List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+        List<Cuenta> listaCta = cuentaServicio.mostrarTodos();
          model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
         //model.addAttribute("cuentaComun", cuentaComun);
         model.addAttribute("listaCC", listaCC);
+        model.addAttribute("listaCta", listaCta);
         return "transferir.html";
     }
 
