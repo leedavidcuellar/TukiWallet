@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Entidades;
 
 import javax.persistence.Basic;
@@ -13,10 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import org.hibernate.annotations.GenericGenerator;
 
-/**
- *
- * @author leedavidcuellar
- */
+
 @Entity
 public class Foto {
     @Id
@@ -27,7 +20,7 @@ public class Foto {
     private String nombre;
     private String mime;      
     
-    // nos permite no cargar inmediatamente, solo cuando lo pida, los query es mas liviano, es decir solo los atributos, y solo foto carga cuando haga el get de este
+    
     @Lob @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
 

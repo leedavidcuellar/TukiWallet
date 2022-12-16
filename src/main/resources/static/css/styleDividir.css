@@ -1,0 +1,96 @@
+.appgastos{
+  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  width: 750px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 150px;
+    margin-bottom: 100px;
+    padding-bottom: 200px;
+}
+.flex-container {
+   
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(241, 241, 241);
+    align-items: center;
+  }
+.flex-container3 {
+  display: flex;
+  width: 450px;
+  flex-direction: column;
+  background-color: lightblue;
+  align-items: center;
+}
+  .input-group.flex-nowrap{
+    text-align: center;
+    font-size: 40px;
+    padding: 10px;
+  }
+  .addPeople{
+    width: 200px;
+    height: 10px;
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  }
+  #btn-add{
+    border-radius: 5px;
+    margin: 10px;
+    align-items: center;
+    text-align: center;
+    padding: 12px;
+    width: 150px;
+    color: rgb(241, 241, 241);
+    background-color: #3719bb;
+    font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  }
+  #btn-add:hover{
+    
+    background-color: #4e1daa;
+  }
+  .division-gente{
+    font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    width: fit-content;
+    padding: 20px;
+    font-size: 15px;
+    height: 10px;
+    width: 200px;
+  }
+  .flex-container > div {
+    padding: 5px;
+    background-color: rgb(241, 241, 241);
+    width: 100;
+    text-align: center;
+    line-height: 10px;
+    font-size: 12px;
+  
+  }
+  .flex-item   {
+   
+    background-color: lightblue;
+   
+  }
+  #borrar{
+    padding: 50px;
+    color: white;
+    padding: 20px;
+  }
+.division-gente{
+  margin-bottom: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.flex-item1{
+  margin-top: 15px;
+}
+
+button{
+  font-family: Mulish, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  margin-bottom: 20px;
+}
+  

@@ -19,9 +19,10 @@ public class Actividad {
     private Integer nOperacion;
     private Float monto;
     private String motivo;
+    
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    private Boolean movimiento;//True Salida y False Ingreso
+    private Boolean movimiento;//True Salida o Egreso 1 y False Ingreso 0
     private String cvu;
     private String cvu2;
     

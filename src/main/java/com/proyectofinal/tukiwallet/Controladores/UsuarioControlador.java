@@ -42,10 +42,16 @@ public class UsuarioControlador {
             usuarioServicio.registrarUsuario(archivo, nombre, apellido, fechaNacimientoAux, dni, mail, clave1, clave2);
             Usuario usuario = usuarioServicio.buscarPorMail(mail);
             session.setAttribute("usuariosession", usuario);
+
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+        model.addAttribute("micuenta", usuario);
+        model.addAttribute("listaCC", listaCC);
+
+        model.addAttribute("actividad", usuario.getCuenta().getActividad());
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario agregado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "principalfinal.html";
+            return "cuenta.html";
         } catch (ErrorServicio e) {
             model.put("error", "Error al cargar Usuario " + e.getMessage());
             model.put("nombre", nombre);
@@ -60,7 +66,7 @@ public class UsuarioControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-perfil")
     public String editarUsuario(ModelMap model, HttpSession session, MultipartFile archivo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String fechaNacimiento, @RequestParam String clave1, @RequestParam String clave2, RedirectAttributes redirectAttrs) throws ErrorServicio, ParseException {
-        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat formatoDateFecha = new SimpleDateFormat("dd-mm-yyyy");
         Date fechaNacimientoAux = formatoDateFecha.parse(fechaNacimiento);
         System.out.println(fechaNacimientoAux + " " + fechaNacimiento);
         Usuario usuario = null;
@@ -68,21 +74,24 @@ public class UsuarioControlador {
             usuario = usuarioServicio.buscarPorId(id);
 
             usuarioServicio.modificarUsuario(archivo, id, nombre, apellido, dni, mail, fechaNacimientoAux, clave1, clave2);
-            session.setAttribute("usuariosession", usuario);
+            //session.setAttribute("usuariosession", usuario);
 
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
-            
+                    Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
+
+
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
             
             redirectAttrs
                     .addFlashAttribute("mensaje", "Usuario Editado correctamente")
                     .addFlashAttribute("clase", "success");
-            return "redirect:/inicio";
+            return "cuenta.html";
 
         } catch (ErrorServicio e) {
             e.printStackTrace();
-            session.setAttribute("usuariosession", usuario);
+            //session.setAttribute("usuariosession", usuario);
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
@@ -108,12 +117,12 @@ public class UsuarioControlador {
             return "redirect:/inicio";
         }
 
-        Usuario usuario = usuarioServicio.buscarPorId(id);
-        model.addAttribute("perfil", usuario);
+  
+        
 
             Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
-        
-            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
+        model.addAttribute("perfil", usuarioCuenta);
+            List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
             model.addAttribute("micuenta", usuarioCuenta);
             model.addAttribute("listaCC", listaCC);
 
@@ -149,7 +158,7 @@ public class UsuarioControlador {
             model.put("mensaje1", "Error al Desahbilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
 
-            return "/inicio";
+            return "/cuenta";
         }
     }
 
@@ -183,7 +192,7 @@ public class UsuarioControlador {
             model.put("mensaje1", "Error al Deshabilitar al Usuario: " + e.getMessage());
             model.put("clase1", "danger");
             //ver bien el Return
-            return "/inicio";
+            return "/cuenta";
         }
     }
 

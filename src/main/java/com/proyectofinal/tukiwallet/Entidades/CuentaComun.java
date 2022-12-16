@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,19 +18,19 @@ public class CuentaComun {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
-    private String nombre;
-    private Boolean alta;
+    private String nombreCC;
+    private Boolean altaCC;
     private String cvuCC;
     private String movimientoCC;
     private Float saldoCC;
     private String aliasCC;
     private String propietario;
     
-    @OneToMany ( targetEntity=Usuario.class )
+    @ManyToMany ( targetEntity=Usuario.class )
     private List<Usuario> usuarios;
     
     @OneToMany
-    private List<Actividad> actividad;
+    private List<Actividad> actividadCC;
     
     @OneToMany
     private List<EfectivoCC> efectivoCC;
@@ -37,10 +38,10 @@ public class CuentaComun {
     public CuentaComun() {
     }
 
-public CuentaComun(String nombre, List<Usuario> usuarios) {
-        this.nombre = nombre;
+public CuentaComun(String nombreCC, List<Usuario> usuarios) {
+        this.nombreCC = nombreCC;
         this.usuarios = usuarios;
-        this.alta = Boolean.TRUE;
+        this.altaCC = Boolean.TRUE;
     }
 
     /**
@@ -58,31 +59,31 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
     }
 
     /**
-     * @return the nombre
+     * @return the nombreCC
      */
-    public String getNombre() {
-        return nombre;
+    public String getNombreCC() {
+        return nombreCC;
     }
 
     /**
-     * @param nombre the nombre to set
+     * @param nombreCC the nombreCC to set
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreCC(String nombreCC) {
+        this.nombreCC = nombreCC;
     }
 
     /**
-     * @return the alta
+     * @return the altaCC
      */
-    public Boolean getAlta() {
-        return alta;
+    public Boolean getAltaCC() {
+        return altaCC;
     }
 
     /**
-     * @param alta the alta to set
+     * @param altaCC the altaCC to set
      */
-    public void setAlta(Boolean alta) {
-        this.alta = alta;
+    public void setAltaCC(Boolean altaCC) {
+        this.altaCC = altaCC;
     }
 
     /**
@@ -156,17 +157,17 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
     }
 
     /**
-     * @return the actividad
+     * @return the actividadCC
      */
-    public List<Actividad> getActividad() {
-        return actividad;
+    public List<Actividad> getActividadCC() {
+        return actividadCC;
     }
 
     /**
-     * @param actividad the actividad to set
+     * @param actividadCC the actividadCC to set
      */
-    public void setActividad(Actividad actividad) {
-        this.actividad.add(actividad);
+    public void setActividadCC(Actividad actividadCC) {
+        this.actividadCC.add(actividadCC);
     }
     /**
      * @return the efectivoCC
@@ -190,7 +191,7 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
     }
 
     /**
-     * @param propietario the nombre to set
+     * @param propietario the nombreCC to set
      */
     public void setPropietario(String propietario) {
         this.propietario = propietario;
@@ -198,7 +199,7 @@ public CuentaComun(String nombre, List<Usuario> usuarios) {
 
     @Override
     public String toString() {
-        return "CuentaComun{" + "nombre=" + nombre + ", alta=" + alta + ", cvuCC=" + cvuCC + ", movimientoCC=" + movimientoCC + ", saldoCC=" + saldoCC + ", aliasCC=" + aliasCC + ", propietario=" + propietario + ", usuarios=" + usuarios + ", actividad=" + actividad + ", efectivoCC=" + efectivoCC + '}';
+        return "CuentaComun{" + "nombreCC=" + nombreCC + ", altaCC=" + altaCC + ", cvuCC=" + cvuCC + ", movimientoCC=" + movimientoCC + ", saldoCC=" + saldoCC + ", aliasCC=" + aliasCC + ", propietario=" + propietario + ", usuarios=" + usuarios + ", actividadCC=" + actividadCC + ", efectivoCC=" + efectivoCC + '}';
     }
     
 }

@@ -6,6 +6,7 @@ import com.proyectofinal.tukiwallet.Entidades.CuentaComun;
 import com.proyectofinal.tukiwallet.Entidades.EfectivoCC;
 import com.proyectofinal.tukiwallet.Entidades.Usuario;
 import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
+import com.proyectofinal.tukiwallet.Servicios.ActividadServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaComunServicio;
 import com.proyectofinal.tukiwallet.Servicios.CuentaServicio;
 import com.proyectofinal.tukiwallet.Servicios.UsuarioServicio;
@@ -36,6 +37,9 @@ public class CuentaControlador {
 
     @Autowired
     private CuentaComunServicio cuentaComunServicio;
+    
+    @Autowired
+    private ActividadServicio actividadServicio;
 
     @GetMapping("/micuenta")
     public String miCuenta(ModelMap modelo, HttpSession session, String id) throws ErrorServicio {
@@ -56,22 +60,36 @@ public class CuentaControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/editar-cuenta")
-    public String editarCuenta(ModelMap model, HttpSession session, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException {
+    public String editarCuenta(ModelMap model, HttpSession session, @RequestParam String idUsuario, @RequestParam String id, @RequestParam String alias) throws ErrorServicio, ParseException {
         Cuenta cuenta = null;
         try {
             cuenta = cuentaServicio.buscarPorId(id);
 
             cuentaServicio.modificarAlias(alias, id);
-
-            session.setAttribute("usuariosession", cuenta);
-            //VER BIEN EL REDIRECT
-            return "redirect:/inicio";
+            Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
+        
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        model.addAttribute("micuenta", usuarioCuenta);
+        model.addAttribute("listaCC", listaCC);
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+        session.setAttribute("usuariosession", usuarioCuenta);
+ 
+        model.put("mensaje", "Se modifico correctamente el alias");
+        model.put("clase", "success");
+            
+            return "cuenta.html";
 
         } catch (ErrorServicio e) {
-            model.put("perfil", cuenta);
-            model.put("mensaje", e.getMessage());
-            //VER BIEN EL REDIRECT
-            return "tuperfil.html";
+        Usuario usuarioCuenta = usuarioServicio.buscarPorId(idUsuario);
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
+        model.addAttribute("micuenta", usuarioCuenta);
+        model.addAttribute("listaCC", listaCC);
+        model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+        session.setAttribute("usuariosession", usuarioCuenta);
+        
+            model.put("mensaje1", "Error al modificar el alias " + e.getMessage());
+            model.put("clase1", "danger");;
+            return "cuenta.html";
         }
     }
 
@@ -85,6 +103,7 @@ public class CuentaControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje", "Se Habilitado correctamente la Cuenta");
             model.put("clase", "success");
             return "cuenta.html";
@@ -94,6 +113,7 @@ public class CuentaControlador {
             model.addAttribute("perfil", usuario);
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.addAttribute("listaCC", listaCC);
             model.put("mensaje1", "Error al Habilitar la Cuenta " + e.getMessage());
             model.put("clase1", "danger");
@@ -112,6 +132,7 @@ public class CuentaControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje", "Se Deshabilitado correctamente la Cuenta");
             model.put("clase", "success");
             return "cuenta.html";
@@ -123,6 +144,7 @@ public class CuentaControlador {
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuario.getId());
             model.addAttribute("micuenta", usuario);
             model.addAttribute("listaCC", listaCC);
+             model.addAttribute("actividad", usuario.getCuenta().getActividad());
             model.put("mensaje1", "Error al Deshabilitar la Cuenta " + e.getMessage());
             model.put("clase1", "danger");
             return "cuenta.html";
@@ -153,11 +175,11 @@ public class CuentaControlador {
             }
 
             if (cvuCuentaComun == null) {
-                cvu1 = cvuCuenta;
+                cvu1 = cvuCuenta.trim();
                 System.out.println("llegue");
                
             } else {
-                cvu1 = cvuCuentaComun;
+                cvu1 = cvuCuentaComun.trim();
                 System.out.println("llegue1c");
             }
  System.out.println(cvu1);
@@ -227,6 +249,7 @@ public class CuentaControlador {
                 CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
                 List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
                 for (Usuario usuarioAux : listaUsuarios) {
+                   
                     saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
                 }
                 List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
@@ -240,7 +263,7 @@ public class CuentaControlador {
 
                 List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
                 modelo.addAttribute("actividad", actividad);
-
+                 modelo.addAttribute("micuenta", usuarioCuenta);
                 modelo.addAttribute("listaCC", listaCC);
                 modelo.addAttribute("micuentaC", usuarioCuentaC);
                 modelo.addAttribute("cuentaComun", cuentaComun);
@@ -259,23 +282,67 @@ public class CuentaControlador {
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             System.out.println(e.getMessage());
-
+            
+            if(idCuentaComun==null){
+            modelo.put("mensaje1", "No se pudo transferir desde su Cuenta porque: "+ e.getMessage());
+            modelo.put("clase1", "danger");
+            modelo.put("error", "Error al cargar Usuario " + e.getMessage());
             List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(usuarioCuenta.getId());
             modelo.addAttribute("micuenta", usuarioCuenta);
             modelo.addAttribute("listaCC", listaCC);
+            modelo.addAttribute("actividad", usuarioServicio.buscarPorId(id).getCuenta().getActividad());
             return "cuenta.html";
+            }else{
+                                //para que se vea usuarios con tuki
+                List<Float> saldosUsuarios = new ArrayList<Float>();
+                Usuario usuarioCuentaC = usuarioServicio.buscarPorId(id);
+                CuentaComun cuentaComun = cuentaComunServicio.buscarCuentaPorIdCC(idCuentaComun);
+                List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
+                for (Usuario usuarioAux : listaUsuarios) {
+                    saldosUsuarios.add(cuentaComunServicio.sumaSaldoPorUsuario(usuarioAux));
+                }
+                List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+
+                //para que se vea usuarios sin tuki
+                List<Float> saldosUsuariosEfectivo = new ArrayList<Float>();
+                List<EfectivoCC> listaUsuariosEfectivo2 = cuentaComunServicio.enlistarEfectivos(cuentaComun.getId());
+                for (EfectivoCC usuarioEfectivoAux : listaUsuariosEfectivo2) {
+                    saldosUsuariosEfectivo.add(cuentaComunServicio.sumaSaldoPorUsuarioEfectivo(usuarioEfectivoAux));
+                }
+
+                List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCuentaComun);
+                modelo.addAttribute("actividad", actividad);
+                 modelo.addAttribute("micuenta", usuarioCuenta);
+                modelo.addAttribute("listaCC", listaCC);
+                modelo.addAttribute("micuentaC", usuarioCuentaC);
+                modelo.addAttribute("cuentaComun", cuentaComun);
+                modelo.addAttribute("listaUsuarios", listaUsuarios);
+                modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
+
+                modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
+                modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
+
+                modelo.put("mensaje1", "No se trasfirio desde su Cuenta Comun por: "+e.getMessage());
+                modelo.put("clase1", "danger");
+                return "cuentaComun.html";
+            }
         }
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/transferirlink")
     public String transferirlink(ModelMap model, HttpSession session, String id) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
-        }
+        }   
         Usuario usuarioCuenta = usuarioServicio.buscarPorId(id);
         model.addAttribute("transferirlink", usuarioCuenta);
-      
+        List<CuentaComun> listaCC = cuentaComunServicio.buscarCuentaComunPorIdUsuario(id);
+        List<Cuenta> listaCta = cuentaServicio.mostrarTodos();
+         model.addAttribute("actividad", usuarioCuenta.getCuenta().getActividad());
+        //model.addAttribute("cuentaComun", cuentaComun);
+        model.addAttribute("listaCC", listaCC);
+        model.addAttribute("listaCta", listaCta);
         return "transferir.html";
     }
 

@@ -36,10 +36,13 @@ public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+          
             http.headers().frameOptions().sameOrigin().and()
                     .authorizeRequests()
-                    .antMatchers("/css/*", "/js/*", "/img/*", "/**")
-                    .permitAll()
+                        .antMatchers("/admin/").hasRole("ADMINISTRADOR")
+                        .antMatchers().hasRole("")
+                        .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                        .permitAll()
                     
 	.and().formLogin()    
                 .loginPage("/login")                    
@@ -47,7 +50,7 @@ public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter {
                         .usernameParameter("username")     	
                         .passwordParameter("password")
                         .defaultSuccessUrl("/inicio")
-                    .permitAll()
+                        .permitAll()
                     
                     .and().logout()
                         .logoutUrl("/logout")

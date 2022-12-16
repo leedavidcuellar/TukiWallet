@@ -18,10 +18,19 @@ public interface ActividadRepositorio extends JpaRepository<Actividad, String>{
     @Query("SELECT max(a.nOperacion) FROM Actividad a")
     public Integer buscarNumOperacionMayor();
     
+    @Query("SELECT a FROM Actividad a WHERE a.nOperacion = :nOperacion")
+    public Actividad buscarActividadPorNroOperacion(@Param("nOperacion") Integer nOperacion);
+    
     @Query("SELECT a FROM Actividad a WHERE a.cvu = :cvu AND a.movimiento = true")
     public List<Actividad> buscarActividadEsegreso(@Param("cvu") String cvu);
     
     @Query("SELECT a FROM Actividad a WHERE a.cvu2 = :cvu AND a.movimiento = false")
-    public List<Actividad> buscarActividadesIngreso(@Param("cvu") String cvu);
+    public List<Actividad> buscarActividadIngreso(@Param("cvu") String cvu);
+    
+    @Query("SELECT a FROM Actividad a WHERE a.movimiento = true")
+    public List<Actividad> buscarTodasActividadesEgreso();
+    
+    @Query("SELECT a FROM Actividad a WHERE a.movimiento = false")
+    public List<Actividad> buscarTodasActividadesIngreso();
 }
 

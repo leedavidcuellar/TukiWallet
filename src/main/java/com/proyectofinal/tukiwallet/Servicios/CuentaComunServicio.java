@@ -8,6 +8,7 @@ import com.proyectofinal.tukiwallet.Errores.ErrorServicio;
 import com.proyectofinal.tukiwallet.Repositorios.CuentaComunRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.EfectivoCCRepositorio;
 import com.proyectofinal.tukiwallet.Repositorios.UsuarioRepositorio;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -40,34 +41,30 @@ public class CuentaComunServicio {
         validar(nombre, usuarios);
 
         CuentaComun cuentaComun = new CuentaComun();
-        cuentaComun.setNombre(nombre);
+        cuentaComun.setNombreCC(nombre);
         cuentaComun.setUsuarios(usuarios);
         String alias = nombre + "CC" + ".TUKI";
         cuentaComun.setAliasCC(alias);
-        cuentaComun.setAlta(true);
+        cuentaComun.setAltaCC(true);
         cuentaComun.setSaldoCC(0f);
         cuentaComun.setCvuCC(crearCvuCC());
         cuentaComun.setPropietario(idUsuario);
-        
+
         cuentaComunRepositorio.save(cuentaComun);
         return cuentaComun;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public void modificarCuentaComun(String id, String nombre, List<Usuario> usuarios) throws ErrorServicio {
-
-        validar(nombre, usuarios);
-
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CuentaComun modificarCuentaComun(String id, String nombre) throws ErrorServicio {
+        validarNombreEditado(nombre);
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
-            cuentaComun.setNombre(nombre);
-            cuentaComun.setUsuarios(usuarios);
-
+            cuentaComun.setNombreCC(nombre);
             cuentaComunRepositorio.save(cuentaComun);
-
+            return cuentaComun;
         } else {
-            throw new ErrorServicio("NO se enceontró el usuario solicitado.");
+            throw new ErrorServicio("No se encontró el usuario solicitado en Cuenta Comun.");
         }
     }
 
@@ -82,7 +79,7 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
 
         } else {
-            throw new ErrorServicio("NO se encontró la cuenta comun  solicitada.");
+            throw new ErrorServicio("No se encontró la cuenta comun  solicitada.");
         }
     }
 
@@ -97,11 +94,11 @@ public class CuentaComunServicio {
             cuentaComunRepositorio.save(cuentaComun);
 
         } else {
-            throw new ErrorServicio("NO se encontró la cuenta comun  solicitada.");
+            throw new ErrorServicio("No se encontró la cuenta comun  solicitada.");
         }
     }
 
-    @Transactional (propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void divisionJusta(String idCuentaComun) throws ErrorServicio {
 
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
@@ -121,43 +118,41 @@ public class CuentaComunServicio {
 
         int i = 0;
         Float gastoTotal = cuentaComunRepositorio.sumaGastoTotalCC() + cuentaComunRepositorio.sumaGastoTotalEfectivoCC();
-        
+
         System.out.println(gastoTotal);
-        
+
         Float gastoPorPersona = gastoTotal / cantidadUsuarios;
         String mensaje = "No se pudo realizar la división ya que: ";
 
         for (Usuario usuario : cuentaComun.getUsuarios()) {
             if (usuario != null) {
                 aux[i][0] = usuario.getId();
-                if((cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu()))==null){
-                    Integer cero=0;
-                    aux[i][1]= cero.toString();
-                    
-                }else{
+                if ((cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu())) == null) {
+                    Integer cero = 0;
+                    aux[i][1] = cero.toString();
+
+                } else {
                     aux[i][1] = (cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu())).toString();
                 }
-                
-                if((cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId()))==null){
-                    Integer cero=0;
-                    aux[i][2]= cero.toString();
-                }else{
+
+                if ((cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId())) == null) {
+                    Integer cero = 0;
+                    aux[i][2] = cero.toString();
+                } else {
                     aux[i][2] = (cuentaComunRepositorio.sumaSaldoEfectivoPorIdUsuario(usuario.getId())).toString();
-                } 
-               System.out.println(aux[i][1]);
-               System.out.println(aux[i][2]);
+                }
+                System.out.println(aux[i][1]);
+                System.out.println(aux[i][2]);
                 System.out.println(gastoTotal);
-                  System.out.println(cantidadUsuarios);
+                System.out.println(cantidadUsuarios);
                 System.out.println(gastoPorPersona);
-              
-                
-                   aux[i][3] = ((Float) (Float.valueOf(aux[i][1]) + Float.valueOf(aux[i][2]) - gastoPorPersona)).toString();
+
+                aux[i][3] = ((Float) (Float.valueOf(aux[i][1]) + Float.valueOf(aux[i][2]) - gastoPorPersona)).toString();
                 if (Float.valueOf(aux[i][2]) < 0) {
                     flag = Boolean.FALSE;
                     mensaje = mensaje + usuario.getNombre() + " debe " + aux[i][2] + "; ";
-                } 
-                
-                
+                }
+
                 i++;
             } else {
                 throw new ErrorServicio("NO hay otros usuarios");
@@ -182,6 +177,61 @@ public class CuentaComunServicio {
         }
     }
 
+    
+    
+    
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public void divisionSoloTuki(String idCuentaComun) throws ErrorServicio {
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaComunPorId(idCuentaComun);
+        Integer cantidadUsuarios = cuentaComun.getUsuarios().size();
+        Float gastoTotal = cuentaComunRepositorio.sumaSaldoCCporCVU(cuentaComun.getCvuCC());
+        Float gastoPorPersona = gastoTotal / cantidadUsuarios;
+        System.out.println(cantidadUsuarios);
+         System.out.println(gastoTotal);
+          System.out.println(gastoPorPersona);
+        boolean b = true;
+        String mensaje = "No se puede realizar la división ya que: ";
+        for (Usuario usuario : cuentaComun.getUsuarios()) {
+            if (usuario == null) {
+                throw new ErrorServicio("NO se encontró el usuario solicitado.");
+            }
+            System.out.println("primero");
+            Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
+            if (pago < gastoPorPersona) {
+                b = false;
+                System.out.println("segundo");
+                String nombre = usuario.getNombre();
+                String debe = ((Float) (gastoPorPersona - pago)).toString();
+                mensaje = mensaje + nombre + "debe: " + debe + "; ";
+            }
+        }
+        String cvu1 = cuentaComun.getCvuCC();
+      if (b) {
+            System.out.println("tercero");
+            String[][] aux = new String[cantidadUsuarios][2];
+            int i=-1;
+            
+            for (Usuario usuario2 : cuentaComun.getUsuarios()) {
+                i++;
+                String cvu2 = usuario2.getCuenta().getCvu();
+                Float pago = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario2.getCuenta().getCvu());
+                Float monto = pago-gastoPorPersona;
+                String montostring = monto.toString();
+                aux[i][0] = cvu2;
+                aux[i][1] = montostring;
+            }
+            
+            for (int j = 0; j < cantidadUsuarios; j++) {
+                String cvuUsuario2 = aux[j][0];
+                Float monto = Float.valueOf(aux[j][1]);
+                egresoCuentaComun(monto, cvu1, cvuUsuario2, "Division Cuenta Comun");
+                cuentaServicio.ingresoCuenta(monto, cvu1, cvuUsuario2, "Division Cuenta Comun");
+            }
+       } else {
+            throw new ErrorServicio(mensaje);
+        }
+    }
+
     //ingresa
     @Transactional(propagation = Propagation.NESTED)
     public void ingresoCuentaComun(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
@@ -189,9 +239,8 @@ public class CuentaComunServicio {
         if (cuentaComun != null) {
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() + cantidad);
             cuentaComunRepositorio.save(cuentaComun);
-                  Actividad actividad = actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
-            cuentaComun.setActividad(actividad);
-
+            Actividad actividad = actividadServicio.registrar(motivo, cantidad, false, cvuEgresa, cvuIngresa);
+            cuentaComun.setActividadCC(actividad);
 
         } else {
             throw new ErrorServicio("No se pudo ingresar Dinero, porque No se ha encontrado la Cuenta Comun");
@@ -203,10 +252,13 @@ public class CuentaComunServicio {
     public void egresoCuentaComun(Float cantidad, String cvuEgresa, String cvuIngresa, String motivo) throws ErrorServicio {
         CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaPorCvuCC(cvuEgresa);
         if (cuentaComun != null) {
+            System.out.println("estamos");
             cuentaComun.setSaldoCC(cuentaComun.getSaldoCC() - cantidad);
             cuentaComunRepositorio.save(cuentaComun);
+            System.out.println("casi termina");
             Actividad actividad = actividadServicio.registrar(motivo, cantidad, true, cvuEgresa, cvuIngresa);
-            cuentaComun.setActividad(actividad);
+            cuentaComun.setActividadCC(actividad);
+            System.out.println("termino");
         } else {
             throw new ErrorServicio("No se pudo sacar Dinero, porque No se ha encontrado la Cuenta Comun");
         }
@@ -235,15 +287,15 @@ public class CuentaComunServicio {
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
-            
-             if(cuentaComun.getSaldoCC()==0f){
-                                
-            cuentaComun.setAlta(Boolean.FALSE);
-            cuentaComunRepositorio.save(cuentaComun);
-            }else{
+
+            if (cuentaComun.getSaldoCC() == 0f) {
+
+                cuentaComun.setAltaCC(Boolean.FALSE);
+                cuentaComunRepositorio.save(cuentaComun);
+            } else {
                 throw new ErrorServicio("No se puede dar Baja porque tiene saldo Cuenta Comun, debe transferir a otra Cuenta");
             }
-           
+
         } else {
             throw new ErrorServicio("NO se ha encontrado Id de la Cuenta Comun solicitada.");
         }
@@ -255,10 +307,10 @@ public class CuentaComunServicio {
         Optional<CuentaComun> respuesta = cuentaComunRepositorio.findById(id);
         if (respuesta.isPresent()) {
             CuentaComun cuentaComun = respuesta.get();
-            cuentaComun.setAlta(Boolean.TRUE);
+            cuentaComun.setAltaCC(Boolean.TRUE);
             cuentaComunRepositorio.save(cuentaComun);
         } else {
-            throw new ErrorServicio("NO se enceontró el usuario solicitado.");
+            throw new ErrorServicio("NO se encontró el usuario solicitado.");
         }
 
     }
@@ -274,6 +326,29 @@ public class CuentaComunServicio {
         }
     }
 
+    public void validarNombreEditado(String nombre) throws ErrorServicio {
+
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo.");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<CuentaComun> mostrarTodos() {
+        return cuentaComunRepositorio.findAll();
+    }
+    
+    @Transactional(readOnly = true)
+    public List<CuentaComun> mostrarAlta() {
+        return cuentaComunRepositorio.mostrarCuentaComunAlta();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CuentaComun> mostrarBaja() {
+        return cuentaComunRepositorio.mostrarCuentaComunBaja();
+    }
+    
+    
     @Transactional(readOnly = true)
     public List<Usuario> enlistar(String idCuentaComun) {
         return cuentaComunRepositorio.mostrarUsuarios(idCuentaComun);
@@ -288,6 +363,17 @@ public class CuentaComunServicio {
         return cuentaComunRepositorio.buscarUsuarioCC(idCuentaComun);
     }
 
+    @Transactional(propagation = Propagation.NESTED)
+    public void borrarPorIdCC(String id) throws ErrorServicio {
+        Optional<CuentaComun> optional = cuentaComunRepositorio.findById(id);
+        if (optional.isPresent()) {
+            cuentaComunRepositorio.delete(optional.get());
+        } else {
+            throw new ErrorServicio("No se encontró el id Cuenta Comun");
+        }
+    }
+    
+    
     public String crearCvuCC() {
         String cvu = "00002";
         Integer cant = 5; //Para agregar 00001 al principio
@@ -329,6 +415,16 @@ public class CuentaComunServicio {
             return null;
         }
     }
+    
+     @Transactional(readOnly = true)
+    public CuentaComun buscarCuentaPorCvuCC(String cvu1) {
+        CuentaComun cuentaComun = cuentaComunRepositorio.buscarCuentaPorCvuCC(cvu1);
+        if (cuentaComun != null) {
+            return cuentaComun;
+        } else {
+            return null;
+        }
+    }
 
     @Transactional(readOnly = true)
     public CuentaComun buscarCuentaPorIdCC(String id) {
@@ -357,24 +453,22 @@ public class CuentaComunServicio {
         Float saldoUsuario = cuentaComunRepositorio.sumaSaldoCCporCVU(usuario.getCuenta().getCvu());
         return saldoUsuario;
     }
-    
-    
-     @Transactional(readOnly = true)
-    public List<Actividad> mostrarActividadCuentaComun(String id) throws ErrorServicio{
+
+    @Transactional(readOnly = true)
+    public List<Actividad> mostrarActividadCuentaComun(String id) throws ErrorServicio {
         Optional<CuentaComun> optional = cuentaComunRepositorio.findById(id);
         if (optional.isPresent()) {
             List<Actividad> actividad = cuentaComunRepositorio.mostrarActividaddeCuentaComun(id);
             return actividad;
-        }else{
+        } else {
             throw new ErrorServicio("No se encontró el id");
         }
-    }  
-    
+    }
 
     @Transactional(readOnly = true) // no es de tuki
     public Float sumaSaldoPorUsuarioEfectivo(EfectivoCC efectivoCC) {
 
-        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario(),efectivoCC.getComentario());
+        Float saldoUsuarioEfectivo = cuentaComunRepositorio.sumaSaldoCCporUsuarioEfectivo(efectivoCC.getIdUsuario(), efectivoCC.getComentario());
         return saldoUsuarioEfectivo;
     }
 
