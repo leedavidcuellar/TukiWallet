@@ -31,6 +31,12 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
     @Query("SELECT u FROM Usuario u WHERE u.cuenta.id = :idCuenta")
     public Usuario buscarPorCuentaId(@Param("idCuenta") String idCuenta);
     
+    @Query("SELECT a FROM Usuario a WHERE a.alta = true")
+    public List<Usuario> mostrarUsuarioAlta ();
+    
+    @Query("SELECT a FROM Usuario a WHERE a.alta = false")
+    public List<Usuario> mostrarUsuarioBaja ();
+    
     @Query("SELECT u FROM Usuario u JOIN u.cuentaComun cc WHERE cc.id = :idCuentaComun")
     public Usuario buscarPorCuentaComunId(@Param("idCuentaComun") String idCuentaComun);
 

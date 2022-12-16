@@ -31,7 +31,8 @@ and open the template in the editor.
         <form action="/cuentaComun/nuevaCuentaComun" method="post">
           <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
           <input class="modal-idUsuario" type="hidden" name="idUsuario" th:value="${session.usuariosession.id}" />
-          <input class="text" type="text" name="nombre" placeholder="Nombre de cuenta comun" th:value="${nombre}" required="" />
+
+          <input class="text" type="text" name="nombre" placeholder="Nombre de cuenta comun" th:value="${nombreCC}" required="" />
           <br>
           <label class="text">Alias de la cuenta (Si no quiere agregar un alias, se creara por defecto)</label>
           <input class="text" type="text" name="alias" placeholder="ingrese alias"  required="">

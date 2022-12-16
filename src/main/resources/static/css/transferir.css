@@ -26,6 +26,15 @@
   color: #fff;
 }
 
+.textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  text-align: center;
+}
+
+
 .realizartrans {
   padding-top: 5px;
 }
@@ -56,7 +65,13 @@ form input {
 .transfe input {
   background: linear-gradient(45deg, #007aff, rgb(159, 26, 226));
   color: #fff;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+
+.corro button {
+  background: linear-gradient(45deg, #007aff, rgb(159, 26, 226));
+  color: #fff;
+  margin-top: 10px;
 }
 
 form input:focus {
@@ -66,7 +81,7 @@ form input:focus {
 
 form .drop-list {
   display: block;
-  margin-top: 30px;
+  margin-top: 20px;
   align-items: center;
   justify-content: space-between;
 }

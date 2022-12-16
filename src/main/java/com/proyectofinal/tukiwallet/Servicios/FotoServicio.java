@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.proyectofinal.tukiwallet.Servicios;
 
 import com.proyectofinal.tukiwallet.Entidades.Foto;
@@ -14,11 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author Joaquin Calderon
- */
-
 @Service
 public class FotoServicio {
     @Autowired
@@ -27,7 +18,7 @@ public class FotoServicio {
         @Transactional
     public Foto guardar(MultipartFile archivo) throws ErrorServicio{
       if(archivo != null && !archivo.isEmpty()){
-        try{  // seteamos la foto y copiamos, si ocurre error, lo muestra
+        try{  
             Foto foto = new Foto();
             foto.setMime(archivo.getContentType());
             foto.setNombre(archivo.getName());

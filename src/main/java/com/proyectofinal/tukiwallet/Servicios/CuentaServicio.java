@@ -184,7 +184,7 @@ public class CuentaServicio {
 
     @Transactional(readOnly = true)
     public Cuenta buscarCuentaPorCbu(String cbu) {
-        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorAlias(cbu);
+        Cuenta cuenta = cuentaRepositorio.buscarCuentaPorCvu(cbu);
         if (cuenta != null) {
             return cuenta;
         } else {
