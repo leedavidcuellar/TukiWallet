@@ -124,7 +124,7 @@
       <div th:replace="cuenta::mensajes"></div>
 
       <div class="wrapper">
-        
+
         <header class="realizartrans">Realizar transferencia</header>
         <form action="/cuenta/transferir" method="post">
           <input type="hidden" th:value="${session.usuariosession.id}" name="id" />
@@ -148,12 +148,16 @@
               <p>Para:</p>
               <!--Nombre de la cuenta(o mail) que queremos transferir-->
               <div class="select-box2">
+
                 <input type="text" placeholder="Alias o CVU" name="cvuoAlias" required=""/>
+
               </div>
             </div>
             <div class="reason">
               <p>Motivo:</p>
+
               <input type="text" placeholder="Motivo:" name="motivo" required=""/>
+
             </div>
           </div>
           <div class="transfe">
@@ -161,6 +165,7 @@
           </div>
         </form>
         <p th:if="${error != null}" th:text="${error}" style="color: red"></p>
+
       </div>
     </div>
   </div>
@@ -309,8 +314,6 @@
      </div>
     </div> 
   <!-- Final ModalCorroborarDatos --> 
-
-    
 
 
   <script src="/js/jssPrincipal.js"></script>

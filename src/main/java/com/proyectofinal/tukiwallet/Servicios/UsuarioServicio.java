@@ -129,6 +129,10 @@ public class UsuarioServicio implements UserDetailsService {
 
             usuarioRepositorio.save(usuario);
 
+            
+           cuentaComunServicio.modificarCuentaComun(idUsuario, nombre);
+
+
             notificacionServicio.enviar("Se Modifico su Usuario de TukiWallet", "TukiWallet", usuario.getMail());
         } else {
             throw new ErrorServicio("No se encontro el usuario solicitado");

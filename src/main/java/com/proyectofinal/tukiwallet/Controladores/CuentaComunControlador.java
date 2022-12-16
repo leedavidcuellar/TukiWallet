@@ -212,7 +212,9 @@ public class CuentaComunControlador {
         try {
             CuentaComun cuentaComun = cuentaComunServicio.crearCuentaComun(nombre, idUsuario, usuarios);
 
+
             //para que se vea usuarios con tuki
+
             List<Float> saldosUsuarios = new ArrayList<Float>();
             Usuario usuarioCuentaC = usuarioServicio.buscarPorId(idUsuario);
             List<Usuario> listaUsuarios = cuentaComunServicio.enlistar(cuentaComun.getId());
@@ -241,13 +243,13 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
             modelo.put("mensaje", "Se Creo correctamente la Cuenta Comun");
             modelo.put("clase", "success");
-
             return "cuentaComun.html"; //check  
 
         } catch (ErrorServicio error) {
             modelo.put("error", error.getMessage());
+
             modelo.put("nombre", nombre);
-            //modelo.put("a",);
+
             return "crearCuentaComun.html"; //check 
         }
 
@@ -584,9 +586,9 @@ public class CuentaComunControlador {
             modelo.addAttribute("listaUsuarios", listaUsuarios);
             modelo.addAttribute("listaSaldosUsuarios", saldosUsuarios);
 
+
             modelo.put("mensaje", "Se Agrego Correctamente Usuario Sin Tuki a Cuenta Comun");
             modelo.put("clase", "success");
-
             return "cuentaComun.html"; //check   
         } catch (ErrorServicio e) {
             e.printStackTrace();
@@ -619,6 +621,7 @@ public class CuentaComunControlador {
 
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
             modelo.addAttribute("actividad", actividad);
+
 
             modelo.put("mensaje1", "Error al agregar Usuario sin Tuki a Cuenta Comun por: " + e.getMessage());
             modelo.put("clase1", "danger");
@@ -703,9 +706,9 @@ public class CuentaComunControlador {
             List<Actividad> actividad = cuentaComunServicio.mostrarActividadCuentaComun(idCC);
             modelo.addAttribute("actividad", actividad);
 
+
             modelo.put("mensaje1", "Error al agregar Usuario de Tuki que aporto en efectivo a Cuenta Comun por: " + e.getMessage());
             modelo.put("clase1", "danger");
-
             return "cuentaComun.html"; //check 
         }
     }
@@ -785,8 +788,10 @@ public class CuentaComunControlador {
         modelo.addAttribute("listaUsuariosEfectivo2", listaUsuariosEfectivo2);
         modelo.addAttribute("listaSaldosUsuariosEfectivo", saldosUsuariosEfectivo);
 
+
         modelo.put("mensaje", "Se Elimino correctamente Usuario que aporto en efectivo de la Cuenta Comun");
         modelo.put("clase", "success");
+
         return "cuentaComun.html";
 
     }

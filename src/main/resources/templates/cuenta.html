@@ -273,7 +273,9 @@
             <select class="form-control modal-control" name="idCuentaComun" required="">
               <option></option>
               <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}"
+
                 th:text="${listaCCAux.nombreCC}" th:value="${listaCCAux.id}"></option>
+
             </select>
             <button id="modal-btn" type="submit" class="btn btn-primary"
               formaction="/cuentaComun/transferirlinkCC">Seleccionar</button>
@@ -308,7 +310,9 @@
             <select class="form-control modal-control" name="idCC" required="">
               <option></option>
               <option th:if="${listaCCAux.propietario}==${session.usuariosession.id}" th:each="listaCCAux:${listaCC}"
+
                 th:text="${listaCCAux.nombreCC}" th:value="${listaCCAux.id}"></option>
+
             </select>
             <button id="modal-btn" type="submit" class="btn btn-primary"
               formaction="/cuentaComun/micuentaC">Seleccionar</button>
@@ -324,7 +328,9 @@
             <select class="form-control modal-control" name="idCC" required="">
               <option></option>
               <option th:if="${listaCCAux.propietario}!=${session.usuariosession.id}" th:each="listaCCAux:${listaCC}"
+
                 th:text="${listaCCAux.nombreCC}" th:value="${listaCCAux.id}"></option>
+
             </select>
             <button id="modal-btn" type="submit" class="btn btn-primary"
               formaction="/cuentaComun/micuentaC">Seleccionar</button>

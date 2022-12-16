@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
@@ -64,8 +65,25 @@ public class PortalControlador {
     public String legal() {
         return "legal.html";
     }
+    
+    
+    @GetMapping("/team")
+    public String team(){
+    return "TEAM.html";
+    }
+    
+    @GetMapping("/faq")
+    public String faq(){
+    return "faq.html";
+    }
+    
+    @GetMapping("/legal")
+    public String legal(){
+    return "legal.html";
+    }
+    
+     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO','ROLE_ADMINISTRADOR')")
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO','ROLE_ADMINISTRADOR')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap model) {
         Usuario login = (Usuario) session.getAttribute("usuariosession");//recupero usuario logueado
@@ -73,6 +91,7 @@ public class PortalControlador {
 
             return "redirect:/login";// si pasa tiempo y no hace nada para vuelva a inicio
         }
+
         
         if ("admin@tukiwallet.com".equals(login.getMail())) {
             
@@ -90,4 +109,5 @@ public class PortalControlador {
         }
 
     }
+
 }
